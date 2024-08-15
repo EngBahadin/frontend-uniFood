@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FieldOptions } from "../../../types";
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   const response = await fetch("https://example.com/api/signup", {
@@ -8,40 +9,66 @@ export async function loginForm(formData: FormData) {
     },
     body: JSON.stringify(formObject),
   });
+
+  /*  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData);
+  } */
+
   const data = await response.json();
   console.log("Form submitted with from login:", formObject);
+  return data;
 }
+
+
 
 export async function signUpForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
-  /*  const response = await fetch("https://example.com/api/signup", {
+
+  const response = await fetch("http://localhost:8000/auth/users/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formObject),
   });
-  const data = await response.json(); */
-  console.log("Form submitted with from sign up:", formObject);
+  const data = await response.json();
+
+    console.log(data);
+  if (!response.ok) {
+    const error = new Error(`An error Occurred : ${response.status}`);
+    error.cause = data;
+    throw error;
+  }
+
+  return data;
 }
 
 export async function resetPassForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
-
+  const response = await fetch("https://example.com/api/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formObject),
+  });
+  const data = await response.json();
   console.log("Form submitted with from reset pass:", formObject);
 }
 
 export async function forgotPassForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries()); // Convert to object
+  const response = await fetch("https://example.com/api/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formObject),
+  });
+  const data = await response.json();
   console.log("Form submitted with from forgot pass:", formObject);
 }
-
-type FieldOptions = {
-  email?: boolean;
-  password?: boolean;
-  username?: boolean;
-  repeatPassword?: boolean;
-};
 
 // Factory function to create schema based on fields
 
@@ -66,9 +93,9 @@ export function createSchema(options: FieldOptions) {
       .min(8, { message: "Password should be at least 8 characters long" });
   }
 
-  if (options.repeatPassword) {
-    // Define repeatPassword without additional constraints
-    schema.repeatPassword = z.string().min(8, {
+  if (options.re_password) {
+    // Define re_password without additional constraints
+    schema.re_password = z.string().min(8, {
       message: "Confirm your password",
     });
   }
@@ -76,11 +103,11 @@ export function createSchema(options: FieldOptions) {
   // Define the schema with custom validation
   const formSchema = z.object(schema).refine(
     (data) => {
-      // Ensure that repeatPassword matches password
+      // Ensure that re_password matches password
       if (
         data.password &&
-        data.repeatPassword &&
-        data.password !== data.repeatPassword
+        data.re_password &&
+        data.password !== data.re_password
       ) {
         return false;
       }
@@ -88,7 +115,7 @@ export function createSchema(options: FieldOptions) {
     },
     {
       message: "Passwords must match",
-      path: ["repeatPassword"], // Set error on repeatPassword
+      path: ["re_password"], // Set error on re_password
     }
   );
 

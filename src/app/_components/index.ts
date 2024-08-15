@@ -14,8 +14,10 @@ import SignInForm from "./SignInForm";
 import { TfiArrowCircleLeft } from "react-icons/tfi";
 import { CiMail, CiUser } from "react-icons/ci";
 import { PiLockKeyThin } from "react-icons/pi";
-
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 export {
+  IoEyeOutline,
+  IoEyeOffOutline,  
   CiMail,
   CiUser,
   PiLockKeyThin,

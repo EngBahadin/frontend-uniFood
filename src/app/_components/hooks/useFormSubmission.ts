@@ -1,23 +1,29 @@
-import { useMutation } from "@tanstack/react-query";
+import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { signUpForm } from "..";
+import { errorProp } from "../../../../types";
 
-export const useFormSubmission = () => {
-  const [formData, setFormData] = useState<FormData | null>(null);
 
-  const { isError, isSuccess, error, mutate, isPending } = useMutation({
-    mutationFn: (data: FormData) => signUpForm(data),
+// Make the hook generic
+export const useFormSubmission = <TData, TVariables>(
+  submitFunction: MutationFunction<TData, TVariables>
+) => {
+  const [formData, setFormData] = useState<TVariables | undefined>();
+
+  const { isError, isSuccess, error, mutate, isPending, data } = useMutation<
+    TData,
+    errorProp,
+    TVariables
+  >({
+    mutationFn: submitFunction,
     onSuccess: () => {
-      // Handle success, e.g., show a success message or redirect
       console.log("Form submitted successfully");
     },
-    onError: (error: any) => {
-      // Handle error, e.g., show an error message
-      console.error("Error submitting form:", error.message);
+    onError: (error) => {
+      console.error("Error submitting form: "+ error);
     },
   });
 
-  const submit = (data: FormData) => {
+  const submit = (data: TVariables) => {
     setFormData(data);
     mutate(data);
   };
@@ -28,5 +34,6 @@ export const useFormSubmission = () => {
     isError,
     isSuccess,
     error,
+    data
   };
 };

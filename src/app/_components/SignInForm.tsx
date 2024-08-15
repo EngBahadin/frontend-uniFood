@@ -1,27 +1,24 @@
 "use client";
 import { Button, Input } from "@/app/_components";
-import { useState } from "react";
-import { createSchema, loginForm } from "./functions";
+import { loginForm } from "./functions";
 import { useFormValidation } from "./hooks/useFormValidation";
+import { useFormSubmission } from "./hooks/useFormSubmission";
+import Link from "next/link";
 export default function SignInForm() {
-  const { validate, isValid, errors, setErrors } = useFormValidation();
+  const { validate, errors, setErrors } = useFormValidation();
+  const { submit } = useFormSubmission(loginForm);
 
   const handleSubmit = (formData: FormData) => {
-    console.log("submitted");
-
-    validate(formData, { email: true, password: true });
-    if (isValid) {
-      loginForm(formData);
+    console.log("clicked");
+    if (validate(formData, { email: true, password: true })) {
+      console.log("submitted");
+      submit(formData);
     }
   };
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        handleSubmit(formData);
-      }}
+      action={handleSubmit}
       className="text-text-1-medium gap-1 flex flex-col w-[477px]"
     >
       <Input
@@ -41,7 +38,12 @@ export default function SignInForm() {
         errors={errors}
         setErrors={setErrors}
       />
-
+      <Link
+        className="text-text-2-medium hover:text-primary-lm"
+        href="/auth/forgot-password"
+      >
+        Forget my password
+      </Link>
       <Button
         className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%]"
         type="submit"

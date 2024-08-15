@@ -1,30 +1,52 @@
 "use client";
-import { useState } from "react";
-import { Button, Input, createSchema, signUpForm } from ".";
+import { useEffect } from "react";
+import { Button, Input, signUpForm } from ".";
 import { useFormSubmission } from "./hooks/useFormSubmission";
 import { useFormValidation } from "./hooks/useFormValidation";
+import ErrorPage from "./errorPage";
 
 const SignUpForm = () => {
-  const { validate, isValid, errors, setErrors } = useFormValidation();
+  const { validate, errors, setErrors } = useFormValidation();
+  const { submit, isError, error, data } = useFormSubmission(signUpForm);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("there is error ");
+
+      if (error && error.cause) {
+        const newErrors: { [key: string]: string | null } = {};
+
+        Object.entries(error.cause).forEach(([key, value]) => {
+          newErrors[key] =
+            Array.isArray(value) && value.length > 0 ? value[0] : null;
+        });
+        if (newErrors !== errors) setErrors(newErrors);
+      } else if (error?.message) {
+      const errorMessage = {
+        message: error.message
+      }
+      setErrors(errorMessage);
+      }
+    }
+  }, [error, isError]);
+   if(errors.message){
+    
+   }
 
   const handleSubmit = (formData: FormData) => {
     console.log("submitted");
 
-    validate(formData, {
-      username: true,
-      email: true,
-      password: true,
-      repeatPassword: true,
-    });
-    if (isValid) {
-      signUpForm(formData);
+    if (
+      validate(formData, {
+        username: true,
+        email: true,
+        password: true,
+        re_password: true,
+      })
+    ) {
+      submit(formData);
     }
-    if (errors.passwordMatch) {
-    console.log(true);  
-    }
-    console.log(false);
   };
-
   return (
     <form
       action={handleSubmit}
@@ -56,14 +78,13 @@ const SignUpForm = () => {
       />
       <Input
         type="password"
-        name="repeatPassword"
+        name="re_password"
         label="Re-enter password"
         IconType="password"
         errors={errors}
         setErrors={setErrors}
       />
-
-
+      <p className="mt-3 text-text-2-regular text-error-lm"></p>
       <Button
         className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%]"
         type="submit"

@@ -1,5 +1,18 @@
-import { Button, DynamicLayout, Input } from "@/app/_components";
+import { Button, DynamicLayout, Input, resetPassForm } from "@/app/_components";
+import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
+import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 function ResetPassword() {
+  const { validate, errors, setErrors } = useFormValidation();
+  const { submit } = useFormSubmission(resetPassForm);
+
+  const handleSubmit = (formData: FormData) => {
+    console.log("submitted");
+
+    if (validate(formData, { email: true, password: true })) {
+      submit(formData);
+    }
+  };
+
   return (
     <DynamicLayout
       title="Reset password"
@@ -9,16 +22,19 @@ function ResetPassword() {
         className="
       w-[478px] flex flex-col 
       "
+        action={handleSubmit}
       >
         <Input
           type="password"
           name="password"
           label="Password"
           IconType="password"
+          errors={errors}
+          setErrors={setErrors}
         />
         <Input
           type="password"
-          name="repeatPassword"
+          name="re-password"
           label="Re enter new password"
           IconType="password"
         />

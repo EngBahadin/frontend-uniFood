@@ -15,7 +15,7 @@ export default function AuthLayout({
         className="object-contain absolute left-0 top-0 ml-[40px] mt-[40px]"
       />
       <div className="m-auto relative">
-        <section className="absolute top-[-45px] right-[-50px] z-10">
+        <section className="absolute top-[-45px] right-[-50px] z-20">
           <Image
             src="/burger.png"
             width={118}

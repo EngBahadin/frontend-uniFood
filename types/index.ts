@@ -14,7 +14,19 @@ export type InputProps = {
   name: string;
   type: string;
   IconType?: IconType;
-  error?: boolean;
+  errors?: Errors;
+  setErrors?: React.Dispatch<React.SetStateAction<Errors>>|null;
+};
+
+export type FieldOptions = {
+  email?: boolean;
+  password?: boolean;
+  username?: boolean;
+  re_password?: boolean;
+};
+
+export type Errors = {
+  [key: string]: string | null; // This allows dynamic fields
 };
 
 export type DynamicLayoutProps = {
@@ -23,14 +35,18 @@ export type DynamicLayoutProps = {
   description: string;
 };
 
-export type FormState = {
-  [key: string]: any;
-};
-
-export type FormPayload = FormData | any;
-
 export type authHeaderProps = {
   title: string;
   description: string;
 };
-
+export type errorProp = {
+  status: number;
+  statusText: string;
+  message: string;
+  cause: {
+    email?: string[];
+    password?: string[];
+    username?: string[];
+    re_password?: string[];
+  };
+};
