@@ -1,25 +1,33 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { errorProp } from "../../../../types";
-
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 // Make the hook generic
 export const useFormSubmission = <TData, TVariables>(
   submitFunction: MutationFunction<TData, TVariables>
 ) => {
   const [formData, setFormData] = useState<TVariables | undefined>();
+  const router = useRouter();
 
-  const { isError, isSuccess, error, mutate, isPending, data } = useMutation<
+  const { isError, error, mutate, isPending, data } = useMutation<
     TData,
     errorProp,
     TVariables
   >({
     mutationFn: submitFunction,
     onSuccess: () => {
-      console.log("Form submitted successfully");
+      toast.success("submitted successfully");
     },
     onError: (error) => {
-      console.error("Error submitting form: "+ error);
+      console.error(error.message);
+      if (error.message === "Failed to fetch") {
+        router.push("/server-error/");
+      } else {
+        toast.error(error.message);
+      }
     },
   });
 
@@ -32,8 +40,7 @@ export const useFormSubmission = <TData, TVariables>(
     submit,
     isPending,
     isError,
-    isSuccess,
     error,
-    data
+    data,
   };
 };

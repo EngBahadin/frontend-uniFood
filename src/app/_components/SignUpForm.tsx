@@ -3,16 +3,14 @@ import { useEffect } from "react";
 import { Button, Input, signUpForm } from ".";
 import { useFormSubmission } from "./hooks/useFormSubmission";
 import { useFormValidation } from "./hooks/useFormValidation";
-import ErrorPage from "./errorPage";
+import { toast } from "sonner";
 
 const SignUpForm = () => {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, isError, error, data } = useFormSubmission(signUpForm);
+  const { submit, isError, error, isPending } = useFormSubmission(signUpForm);
 
   useEffect(() => {
     if (isError) {
-      console.log("there is error ");
-
       if (error && error.cause) {
         const newErrors: { [key: string]: string | null } = {};
 
@@ -21,17 +19,9 @@ const SignUpForm = () => {
             Array.isArray(value) && value.length > 0 ? value[0] : null;
         });
         if (newErrors !== errors) setErrors(newErrors);
-      } else if (error?.message) {
-      const errorMessage = {
-        message: error.message
-      }
-      setErrors(errorMessage);
       }
     }
   }, [error, isError]);
-   if(errors.message){
-    
-   }
 
   const handleSubmit = (formData: FormData) => {
     console.log("submitted");
@@ -86,8 +76,9 @@ const SignUpForm = () => {
       />
       <p className="mt-3 text-text-2-regular text-error-lm"></p>
       <Button
-        className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%]"
+        className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
         type="submit"
+        disabled={isPending ? true : false}
       >
         Continue
       </Button>

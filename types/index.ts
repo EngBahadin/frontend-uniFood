@@ -15,7 +15,7 @@ export type InputProps = {
   type: string;
   IconType?: IconType;
   errors?: Errors;
-  setErrors?: React.Dispatch<React.SetStateAction<Errors>>|null;
+  setErrors?: React.Dispatch<React.SetStateAction<Errors>> | null;
 };
 
 export type FieldOptions = {
@@ -43,6 +43,7 @@ export type errorProp = {
   status: number;
   statusText: string;
   message: string;
+  name: string;
   cause: {
     email?: string[];
     password?: string[];

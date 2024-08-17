@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FieldOptions } from "../../../types";
+import { redirect } from "next/navigation";
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   const response = await fetch("https://example.com/api/signup", {
@@ -20,8 +21,6 @@ export async function loginForm(formData: FormData) {
   return data;
 }
 
-
-
 export async function signUpForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
 
@@ -34,14 +33,28 @@ export async function signUpForm(formData: FormData) {
   });
   const data = await response.json();
 
-    console.log(data);
   if (!response.ok) {
-    const error = new Error(`An error Occurred : ${response.status}`);
+    const error = new Error(`${response.status}: invalid data`);
     error.cause = data;
     throw error;
   }
+  // redirect("");
+}
 
-  return data;
+export type verifyProps = {
+  uid: string;
+  token: string;
+};
+export async function verifyAcc(value: verifyProps) {
+  const response = await fetch("http:/d0/def/activation/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(value),
+  });
+  const data = await response.json();
+  console.log("response is " + data);
 }
 
 export async function resetPassForm(formData: FormData) {
