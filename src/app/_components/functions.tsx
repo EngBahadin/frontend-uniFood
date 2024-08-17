@@ -46,7 +46,7 @@ export type verifyProps = {
   token: string;
 };
 export async function verifyAcc(value: verifyProps) {
-  const response = await fetch("http:/d0/def/activation/", {
+  const response = await fetch("http://localhost:8000/auth/users/activation/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
