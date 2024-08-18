@@ -44,10 +44,12 @@ export type errorProp = {
   statusText: string;
   message: string;
   name: string;
-  cause: {
-    email?: string[];
-    password?: string[];
-    username?: string[];
-    re_password?: string[];
-  };
+  cause:
+    | string
+    | {
+        email?: string[];
+        password?: string[];
+        username?: string[];
+        re_password?: string[];
+      };
 };

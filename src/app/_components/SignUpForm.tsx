@@ -4,10 +4,12 @@ import { Button, Input, signUpForm } from ".";
 import { useFormSubmission } from "./hooks/useFormSubmission";
 import { useFormValidation } from "./hooks/useFormValidation";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const SignUpForm = () => {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, isError, error, isPending } = useFormSubmission(signUpForm);
+  const { submit, isSuccess, isError, error, isPending } =
+    useFormSubmission(signUpForm);
 
   useEffect(() => {
     if (isError) {
@@ -21,10 +23,13 @@ const SignUpForm = () => {
         if (newErrors !== errors) setErrors(newErrors);
       }
     }
-  }, [error, isError]);
+    if (isSuccess) {
+      toast.success("Submitted Successfully");
+      redirect("signup/check-email/");
+    }
+  }, [error, isError, isSuccess]);
 
   const handleSubmit = (formData: FormData) => {
-    console.log("submitted");
 
     if (
       validate(formData, {

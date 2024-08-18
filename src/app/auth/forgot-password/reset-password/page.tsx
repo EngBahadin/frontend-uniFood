@@ -1,3 +1,4 @@
+'use client'
 import { Button, DynamicLayout, Input, resetPassForm } from "@/app/_components";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";

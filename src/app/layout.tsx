@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "../../utils/Providers";
 import { Toaster } from "sonner";
+import Navbar from "./_components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-white">
+    <html lang="en" >
       <body className={`font-Poppins`}>
-        <Provider>{children}
-        <Toaster richColors position="top-right" />
+        <Provider>
+          <Navbar/>
+          {children}
+          <Toaster richColors position="top-right" />
         </Provider>
       </body>
     </html>
