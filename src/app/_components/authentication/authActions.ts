@@ -1,6 +1,7 @@
 import axios from "axios";
 import { apiAuth } from "@/lib/axios";
-import { paramsProps, validateProps } from "../../../../types";
+import { validateProps } from "../../../../types";
+
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   try {
@@ -77,7 +78,7 @@ export async function forgotPassForm(formData: FormData) {
       if (error.response.status >= 500 && error.response.status < 500) {
         errorMessage = "Failed to fetch";
       } else {
-        errorMessage = `${error.response.status}: ${error.response.data[0]}`;
+        errorMessage = error.response.data[0];
       }
     } else if (error.request) {
       errorMessage = "Network error: Backend server is unreachable";
@@ -88,9 +89,36 @@ export async function forgotPassForm(formData: FormData) {
   }
 }
 
-export async function resetPassForm(formData: FormData) {
-  const formObject = Object.fromEntries(formData.entries()); // Convert to object
-  console.log(formObject);
+export async function validateToken(value: validateProps) {
+  try {
+    await axios.post(
+      "http://localhost:8000/api/users/uid-token-validation/",
+      value,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error: any) {
+    console.error("Error validating token:", error);
+    throw new Error("Invalid Token");
+  }
+}
 
-  await apiAuth.post("/users/reset_password_confirm/", formObject);
+export async function resetPassForm(formData: FormData) {
+  const formObject = Object.fromEntries(formData.entries());
+  console.log(formObject);
+  try {
+    await apiAuth.post("/users/reset_password_confirm/", formObject);
+  } catch (error: any) {
+    let errorMessage: string;
+
+    if (error.response) {
+      errorMessage = error.response.data.new_password[0];
+    } else {
+      errorMessage = `Error: ${error.message}`;
+    }
+    throw new Error(errorMessage);
+  }
 }

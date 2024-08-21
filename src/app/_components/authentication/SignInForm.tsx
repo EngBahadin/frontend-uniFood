@@ -1,14 +1,16 @@
 "use client";
 import { Button, Input } from "@/app/_components";
-import { loginForm } from "./functions";
+import { loginForm } from "./authActions";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from "sonner";
+import { useEffect } from "react";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, data, isError, isSuccess, isPending } =
+  const { submit, data, isError, isSuccess, isPending, error } =
     useFormSubmission(loginForm);
   const { newTokens } = useAuth();
 
@@ -18,12 +20,15 @@ export default function SignInForm() {
     }
   };
 
-  if (isSuccess) {
-    console.log(data);
-
-    newTokens(data);
-    redirect("/");
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("logged in");
+      newTokens(data);
+      redirect("/");
+    } else if (isError && error) {
+      toast.error(error.message);
+    }
+  }, [isError,isSuccess,error]);
 
   return (
     <form
@@ -49,7 +54,8 @@ export default function SignInForm() {
       />
       {isError && (
         <p className="text-error-lm text-caption-1-regular">
-          No active account found with the given credentials
+          Incorrect credentials provided. Please check your email and password
+          and try again
         </p>
       )}
       <Link

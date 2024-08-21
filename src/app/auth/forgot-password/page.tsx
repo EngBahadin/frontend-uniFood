@@ -13,7 +13,8 @@ import { toast } from "sonner";
 
 export default function ForgotPassword() {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, isPending, isSuccess } = useFormSubmission(forgotPassForm);
+  const { submit, isPending, isSuccess, isError, error } =
+    useFormSubmission(forgotPassForm);
   const router = useRouter();
 
   const handleSubmit = (formData: FormData) => {
@@ -26,8 +27,12 @@ export default function ForgotPassword() {
     if (isSuccess) {
       toast.success("Submitted successfully");
       router.push("forgot-password/check-email");
+    } else if (isError && error) {
+      setErrors({
+        email: error.message,
+      });
     }
-  }, [isSuccess, router]);
+  }, [isSuccess, error, isError]);
 
   return (
     <DynamicLayout

@@ -21,8 +21,6 @@ export const useFormSubmission = <TData, TVariables>(
       console.error(error.message);
       if (error.message === "Failed to fetch") {
         router.push("/server-error/");
-      } else {
-        toast.error(error.message);
       }
     },
   });

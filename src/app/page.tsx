@@ -9,7 +9,7 @@ export default function Home() {
     orderNewAccessToken,
   } = useAuth();
 
-  const remove = () => {
+  const logOut = () => {
     removeTokens();
   };
   const newAccessToken = () => {
@@ -22,10 +22,10 @@ export default function Home() {
         {!isAuthenticated ? (
           <>
             <Link href="/auth/signup">sign up</Link>
-            <Link href="/auth/signin">sign in</Link>
+            <Link href="/auth/signin">log in</Link>
           </>
         ) : (
-          <button onClick={remove}>remove</button>
+          <button onClick={logOut}>log out</button>
         )}
 
         <button onClick={newAccessToken}>newAccessToken</button>

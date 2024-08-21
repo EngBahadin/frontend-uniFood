@@ -21,6 +21,8 @@ const SignUpForm = () => {
             Array.isArray(value) && value.length > 0 ? value[0] : null;
         });
         if (newErrors !== errors) setErrors(newErrors);
+      } else if (error) {
+        toast.error(error.message);
       }
     }
     if (isSuccess) {
@@ -84,7 +86,7 @@ const SignUpForm = () => {
         type="submit"
         disabled={isPending ? true : false}
       >
-        Continue
+        {isPending ? "submitting..." : "Continue"}
       </Button>
     </form>
   );
