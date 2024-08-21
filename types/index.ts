@@ -53,3 +53,10 @@ export type errorProp = {
         re_password?: string[];
       };
 };
+export type paramsProps = {
+  params: { uid: string; token: string };
+};
+export type validateProps = {
+  uid: string;
+  token: string;
+};

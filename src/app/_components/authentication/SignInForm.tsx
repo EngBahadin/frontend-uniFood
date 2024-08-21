@@ -1,21 +1,27 @@
 "use client";
 import { Button, Input } from "@/app/_components";
 import { loginForm } from "./functions";
-import { useFormValidation } from "./hooks/useFormValidation";
-import { useFormSubmission } from "./hooks/useFormSubmission";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { useFormSubmission } from "../hooks/useFormSubmission";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useAuth } from "../hooks/useAuth";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, isError, isSuccess, isPending } =
+  const { submit, data, isError, isSuccess, isPending } =
     useFormSubmission(loginForm);
+  const { newTokens } = useAuth();
 
   const handleSubmit = (formData: FormData) => {
     if (validate(formData, { email: true, password: true })) {
       submit(formData);
     }
   };
+
   if (isSuccess) {
+    console.log(data);
+
+    newTokens(data);
     redirect("/");
   }
 

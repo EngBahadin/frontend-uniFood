@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DynamicLayoutProps } from "../../../types";
+import { DynamicLayoutProps } from "../../../../types";
 import AuthHeader from "./AuthHeader";
 import Image from "next/image";
 

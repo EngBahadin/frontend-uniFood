@@ -1,5 +1,5 @@
-import DynamicLayout from "./dynamicLayout";
-import Input from "./Input";
+import DynamicLayout from "./authentication/dynamicLayout";
+import Input from "./authentication/Input";
 import InputOtp from "../../../_none-used-components/InputOtp";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +8,10 @@ import {
   loginForm,
   resetPassForm,
   forgotPassForm,
-  
-
-} from "@/app/_components/functions";
+} from "@/app/_components/authentication/functions";
 import { createSchema } from "../../../utils/schema";
-import SignUpForm from "./SignUpForm";
-import SignInForm from "./SignInForm";
+import SignUpForm from "./authentication/SignUpForm";
+import SignInForm from "./authentication/SignInForm";
 import { TfiArrowCircleLeft } from "react-icons/tfi";
 import { CiMail, CiUser } from "react-icons/ci";
 import { PiLockKeyThin } from "react-icons/pi";
@@ -22,7 +20,7 @@ export {
   createSchema,
   verifyAcc,
   IoEyeOutline,
-  IoEyeOffOutline,  
+  IoEyeOffOutline,
   CiMail,
   CiUser,
   PiLockKeyThin,

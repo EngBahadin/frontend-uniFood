@@ -1,16 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -34,20 +24,3 @@ export function Category() {
   );
 }
 
-// const [position, setPosition] = useState("bottom");
-
-//return (
-//   <DropdownMenu>
-//     <DropdownMenuTrigger asChild>
-//       <Button>Category</Button>
-//     </DropdownMenuTrigger>
-//     <DropdownMenuContent className="w-fit ">
-//       <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-//         <DropdownMenuRadioItem value="top">All</DropdownMenuRadioItem>
-//         <DropdownMenuRadioItem value="bottom">Fast food</DropdownMenuRadioItem>
-//         <DropdownMenuRadioItem value="right">Local food</DropdownMenuRadioItem>
-//         <DropdownMenuRadioItem value="right">Sweets</DropdownMenuRadioItem>
-//       </DropdownMenuRadioGroup>
-//     </DropdownMenuContent>
-//   </DropdownMenu>
-// );

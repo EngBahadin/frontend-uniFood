@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEvent, memo, useState } from "react";
-import { Errors, Icons, InputProps } from "../../../types";
-import { IoEyeOffOutline, IoEyeOutline } from ".";
+import { Errors, Icons, InputProps } from "../../../../types";
+import { IoEyeOffOutline, IoEyeOutline } from "..";
 
 const Input = memo(
   ({ label, name, type, IconType, errors, setErrors }: InputProps) => {

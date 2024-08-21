@@ -6,10 +6,9 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { paramsProps } from "../../../../../../types";
 
-type paramsProps = {
-  params: { uid: string; token: string };
-};
+
 const ActivatePage = ({ params }: paramsProps) => {
   const { uid, token } = params;
   const { submit, isError, isPending, isSuccess } =
@@ -50,7 +49,7 @@ const ActivatePage = ({ params }: paramsProps) => {
               height={400}
               className="object-contain"
             />
-            <p className="text-primary-lm text-body-1-medium text-center">
+            <p className="mt-14 text-primary-lm text-body-1-medium text-center">
               The link you entered is invalid <br /> please try a valid
               verification link
             </p>

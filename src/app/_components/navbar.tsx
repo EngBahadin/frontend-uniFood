@@ -10,7 +10,7 @@ import { Category } from "./Category";
 
 function Navbar() {
   const pathName = usePathname();
-  if (pathName.includes("auth")) {
+  if (pathName.startsWith("/auth") || pathName.startsWith("/server-error")) {
     return null;
   }
   return (
@@ -25,13 +25,13 @@ function Navbar() {
         />
         <Link href="/">Home</Link>
         <Link href="/about">About</Link>
-        <Category/>
+        <Category />
       </div>
       <div className="flex items-center gap-5">
         <SearchBar />
         <HiOutlineShoppingCart className="stroke-[0.7px] w-8 h-8" />
         <HiOutlineHeart className="stroke-[0.7px] w-8 h-8" />
-        <ProfilePic/>
+        <ProfilePic />
       </div>
     </div>
   );

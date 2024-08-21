@@ -17,7 +17,6 @@ export const useFormSubmission = <TData, TVariables>(
     TVariables
   >({
     mutationFn: submitFunction,
-
     onError: (error) => {
       console.error(error.message);
       if (error.message === "Failed to fetch") {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { authHeaderProps } from "../../../types";
-import { TfiArrowCircleLeft } from ".";
+import { authHeaderProps } from "../../../../types";
+import { TfiArrowCircleLeft } from "..";
 
 function AuthHeader({ title, description }: authHeaderProps) {
   return (

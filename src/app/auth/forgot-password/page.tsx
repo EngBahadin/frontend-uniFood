@@ -4,22 +4,30 @@ import {
   DynamicLayout,
   Input,
   forgotPassForm,
-  
 } from "@/app/_components";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function ForgotPassword() {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit } = useFormSubmission(forgotPassForm);
+  const { submit, isPending, isSuccess } = useFormSubmission(forgotPassForm);
+  const router = useRouter();
 
   const handleSubmit = (formData: FormData) => {
-    console.log("submitted");
-
     if (validate(formData, { email: true })) {
       submit(formData);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Submitted successfully");
+      router.push("forgot-password/check-email");
+    }
+  }, [isSuccess, router]);
 
   return (
     <DynamicLayout
@@ -27,10 +35,11 @@ export default function ForgotPassword() {
       description="Enter your email to reset your password"
     >
       <form
-        className="
-      w-[478px]
-      "
-        action={handleSubmit}
+        className="w-[478px]"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(new FormData(e.target as HTMLFormElement));
+        }}
       >
         <Input
           type="email"
@@ -41,8 +50,9 @@ export default function ForgotPassword() {
           setErrors={setErrors}
         />
         <Button
-          className={`" w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%]`}
+          className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
           type="submit"
+          disabled={isPending}
         >
           Continue
         </Button>

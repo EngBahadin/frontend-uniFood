@@ -1,8 +1,8 @@
 "use client";
 import { useEffect } from "react";
-import { Button, Input, signUpForm } from ".";
-import { useFormSubmission } from "./hooks/useFormSubmission";
-import { useFormValidation } from "./hooks/useFormValidation";
+import { Button, Input, signUpForm } from "..";
+import { useFormSubmission } from "../hooks/useFormSubmission";
+import { useFormValidation } from "../hooks/useFormValidation";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
@@ -30,7 +30,6 @@ const SignUpForm = () => {
   }, [error, isError, isSuccess]);
 
   const handleSubmit = (formData: FormData) => {
-
     if (
       validate(formData, {
         username: true,
