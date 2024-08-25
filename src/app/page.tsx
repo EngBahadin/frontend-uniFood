@@ -1,35 +1,9 @@
-"use client";
-import Link from "next/link";
-import { useAuth } from "./_components/hooks/useAuth";
+import Hero from "./_components/ui/Hero";
 
 export default function Home() {
-  const {
-    removeTokens,
-    accessToken: isAuthenticated,
-    orderNewAccessToken,
-  } = useAuth();
-
-  const logOut = () => {
-    removeTokens();
-  };
-  const newAccessToken = () => {
-    orderNewAccessToken();
-  };
-
   return (
     <main className="">
-      <article className="flex items-center justify-end gap-3 p-4">
-        {!isAuthenticated ? (
-          <>
-            <Link href="/auth/signup">sign up</Link>
-            <Link href="/auth/signin">log in</Link>
-          </>
-        ) : (
-          <button onClick={logOut}>log out</button>
-        )}
-
-        <button onClick={newAccessToken}>newAccessToken</button>
-      </article>
+      <Hero />
       <div className="flex justify-center">this is home page</div>
     </main>
   );

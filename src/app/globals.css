@@ -10,5 +10,5 @@ body {
 }
 html::-webkit-scrollbar {
   display: table-header-group;
+  width: 0px;
 }
-

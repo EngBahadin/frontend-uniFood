@@ -25,8 +25,8 @@ const config = {
       "error-dm": "#FF2A2A",
       "warning-dm": "#FFBB0B",
       "info-dm": "#3D98FF",
-      "red-bg":"#FDE1E1",
-      
+      "red-bg": "#FDE1E1",
+
       "gray": {
         100: "#908F8F",
         75: "#ACABAB",
@@ -137,8 +137,11 @@ const config = {
       },
     },
     extend: {
-      fontFamily:{
-        Poppins:"Poppins"
+      screens: {
+       mini_mobile:"400px"
+      },
+      fontFamily: {
+        Poppins: "Poppins",
       },
       keyframes: {
         "accordion-down": {

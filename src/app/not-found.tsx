@@ -22,7 +22,7 @@ function NotFound() {
 
         <Link
           className="text-primary-lm text-text-1-semiBold hover:bg-primary-lm hover:text-white p-1 rounded-md flex items-center justify-between"
-          href="../"
+          href="/"
         >
           <span>
             <TfiArrowLeft className="mr-2 w-4" />

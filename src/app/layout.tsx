@@ -18,10 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" >
-      <body className={`font-Poppins`}>
+    <html lang="en">
+      <body className={`font-Poppins bg-white`}>
         <Provider>
-          <Navbar/>
+          <Navbar />
           {children}
           <Toaster richColors position="top-right" />
         </Provider>
