@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 import SearchBar from "./SearchBar";
 import ProfilePic from "./ProfilePic";
 import { Category } from "./ui/Category";
@@ -12,7 +12,16 @@ import ShoppingCart from "./ui/shoppingCart";
 
 function Navbar() {
   const pathName = usePathname();
-  if (pathName === "/" || pathName === "/about" || pathName === "/category") {
+  const activeClasses =
+    "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
+
+  if (
+    pathName === "/" ||
+    pathName === "/about" ||
+    pathName === "/category" ||
+    pathName === "/favorites" ||
+    pathName === "/cart"
+  ) {
     return (
       <div className="lg:mt-0 md:mt-10 sm:mt-20 mt-16">
         <nav className="fixed z-50 top-0 w-full sm:h-20 h-16 flex items-center bg-pure-white border-b-[1px] border-gray-50 ">
@@ -26,14 +35,32 @@ function Navbar() {
                 height={50}
                 className="object-contain"
               />
-              <Link href="/">Home</Link>
-              <Link href="/about">About</Link>
+              <Link
+                className={`${pathName === "/" && activeClasses} hover:text-primary-lm`}
+                href="/"
+              >
+                Home
+              </Link>
+              <Link
+                className={`${pathName === "/about" && activeClasses} hover:text-primary-lm`}
+                href="/about"
+              >
+                About
+              </Link>
               <Category type="header" />
             </div>
             <div className="flex items-center pr-4 mini_mobile:pr-8 md:pr-0 gap-5">
               <SearchBar />
-             <ShoppingCart/>
-              <HiOutlineHeart className="hidden md:block stroke-[0.7px] w-8 h-8" />
+              <ShoppingCart />
+              <Link href="/favorites">
+                <span>
+                  {pathName === "/favorites" ? (
+                    <HiHeart className="hidden md:block stroke-[0.7px] w-8 h-8 text-primary-lm" />
+                  ) : (
+                    <HiOutlineHeart className="hidden md:block stroke-[0.7px] w-8 h-8 hover:text-primary-lm" />
+                  )}
+                </span>
+              </Link>
               <ProfilePic />
             </div>
           </div>

@@ -20,7 +20,7 @@ export function Category({
     <div>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center relative gap-x-1 group-hover:text-primary-lm mb-1"
+        className="flex items-center relative gap-x-1 group-hover:text-primary-lm hover:text-primary-lm mb-1"
         onBlur={() => {
           if (type === "header") setOpen(false);
         }}
