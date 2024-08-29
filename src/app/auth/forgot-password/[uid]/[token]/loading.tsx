@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Loading() {
   return (
     <p className="text-body-3-medium text-primary-lm text-center mt-[20%] animate-pulse">

@@ -1,10 +1,11 @@
 import Hero from "./_components/ui/Hero";
+import CategorySection from "./_components/ui/CategorySection";
 
 export default function Home() {
   return (
-    <main className="">
+    <main>
       <Hero />
-      <div className="flex justify-center">this is home page</div>
+      <CategorySection />
     </main>
   );
 }

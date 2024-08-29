@@ -8,7 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { HiBars3, HiOutlineHeart } from "react-icons/hi2";
 import { PiInfoLight } from "react-icons/pi";
 import { TbCategory, TbHomeFilled } from "react-icons/tb";
-import { Category } from "./ui/Category";
+import { Category } from "./ui/Categories";
 
 function SideBar() {
   const [openBar, setOpenBar] = useState(false);
@@ -63,7 +63,7 @@ function SideBar() {
           </Link>
 
           <div className="flex flex-row gap-x-3 group">
-            <TbCategory  className="sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary-lm" />
+            <TbCategory className="sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary-lm" />
             <Category setOpenBar={setOpenBar} type="slider" />
           </div>
 

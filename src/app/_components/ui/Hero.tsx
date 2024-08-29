@@ -34,7 +34,7 @@ function Hero() {
           order your favorite food in class and eat it without
           <br className="hidden sm:block" /> waiting to prepare when you arrive
         </p>
-        <button className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white lg:text-text-1-semiBold text-text-2-medium  grid place-items-center rounded-lg">
+        <button className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white sm:text-text-1-semiBold text-text-3-medium  grid place-items-center rounded-lg">
           Order now
         </button>
       </div>

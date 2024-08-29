@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 import SearchBar from "./SearchBar";
 import ProfilePic from "./ProfilePic";
-import { Category } from "./ui/Category";
+import { Category } from "./ui/Categories";
 import SideBar from "./SideBar";
 import ShoppingCart from "./ui/shoppingCart";
 
@@ -18,9 +18,12 @@ function Navbar() {
   if (
     pathName === "/" ||
     pathName === "/about" ||
-    pathName === "/category" ||
+    pathName === "/categories" ||
     pathName === "/favorites" ||
-    pathName === "/cart"
+    pathName === "/cart" ||
+    pathName === "/categories/1" ||
+    pathName === "/categories/2" ||
+    pathName === "/categories/3"
   ) {
     return (
       <div className="lg:mt-0 md:mt-10 sm:mt-20 mt-16">
