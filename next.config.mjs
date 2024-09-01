@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "8000",
-        pathname: "**", // Adjust path pattern to match specific paths
+        pathname: "**", 
       },
     ],
   },

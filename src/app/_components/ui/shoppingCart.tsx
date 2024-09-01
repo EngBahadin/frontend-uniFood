@@ -1,3 +1,4 @@
+"use client";
 import { usePathname, useRouter } from "next/navigation";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
 
@@ -18,7 +19,6 @@ function ShoppingCart() {
           onClick={handleNavigate}
         />
       )}
-      
 
       <span
         className={`absolute top-[-4px] right-[-4px]  rounded-full md:w-[18px] md:h-[18px]

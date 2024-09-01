@@ -4,11 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
-import SearchBar from "./SearchBar";
-import ProfilePic from "./ProfilePic";
-import { Category } from "./ui/Categories";
-import SideBar from "./SideBar";
-import ShoppingCart from "./ui/shoppingCart";
+import { Category, ProfilePic, SearchBar, ShoppingCart, SideBar } from ".";
+import FavoriteIcon from "./ui/FavoriteIcon";
 
 function Navbar() {
   const pathName = usePathname();
@@ -55,15 +52,7 @@ function Navbar() {
             <div className="flex items-center pr-4 mini_mobile:pr-8 md:pr-0 gap-5">
               <SearchBar />
               <ShoppingCart />
-              <Link href="/favorites">
-                <span>
-                  {pathName === "/favorites" ? (
-                    <HiHeart className="hidden md:block stroke-[0.7px] w-8 h-8 text-primary-lm" />
-                  ) : (
-                    <HiOutlineHeart className="hidden md:block stroke-[0.7px] w-8 h-8 hover:text-primary-lm" />
-                  )}
-                </span>
-              </Link>
+              <FavoriteIcon pathName={pathName} type='header'/>
               <ProfilePic />
             </div>
           </div>

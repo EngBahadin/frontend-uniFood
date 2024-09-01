@@ -1,10 +1,11 @@
 "use client";
 
-import { categoriesList } from "@/app/_components/actions";
+
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { categoriesList } from "..";
 
 export function Category({
   type,
@@ -18,6 +19,8 @@ export function Category({
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["category", "category-list"],
     queryFn: categoriesList,
+    retry: false,
+    refetchInterval: false,
   });
 
   const navigate = (category: string) => {

@@ -5,14 +5,13 @@ import { useFormValidation } from "../hooks/useFormValidation";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useAuth } from "../hooks/useAuth";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { newTokens } from "./Auth";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, data, isError, isSuccess, isPending, error } =
     useFormSubmission(loginForm);
-  const { newTokens } = useAuth();
 
   const handleSubmit = (formData: FormData) => {
     if (validate(formData, { email: true, password: true })) {
@@ -28,7 +27,7 @@ export default function SignInForm() {
     } else if (isError && error) {
       toast.error(error.message);
     }
-  }, [isError,isSuccess,error]);
+  }, [isError, isSuccess, error]);
 
   return (
     <form

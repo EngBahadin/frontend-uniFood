@@ -1,22 +1,6 @@
-"use client";
-import Link from "next/link";
-
-import { useAuth } from "../hooks/useAuth";
 import Image from "next/image";
 
 function Hero() {
-  const {
-    removeTokens,
-    accessToken: isAuthenticated,
-    orderNewAccessToken,
-  } = useAuth();
-
-  const logOut = () => {
-    removeTokens();
-  };
-  const newAccessToken = () => {
-    orderNewAccessToken();
-  };
   return (
     <article className="flex items-center bg-pure-white h-fit px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row md:py-36">
       <div className="flex flex-col md:items-start items-center gap-y-8 pt-14 md:text-left text-center">

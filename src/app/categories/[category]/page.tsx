@@ -1,12 +1,9 @@
 "use client";
 import Image from "next/image";
-import { HiOutlineHeart } from "react-icons/hi2";
 import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
-import CategoryItems from "@/app/_components/ui/CategoryItems";
-import { getCategory } from "@/app/_components/actions";
-import { useEffect, useState } from "react";
+import { Favorites, getCategory } from "@/app/_components";
 
 type categoryItemsProps = {
   params: {
@@ -18,27 +15,25 @@ function CategoryPage({ params }: categoryItemsProps) {
     queryKey: ["categories", params.category],
     queryFn: () => getCategory(params.category),
   });
-  const [categoryName, setCategoryName] = useState("");
 
   if (isError) {
     <p>an error occurred {error.message}</p>;
   }
-  useEffect(() => {
-    if (data && !isLoading) {
-      const item = data.find((item: any) => {
-        return item.category.id === parseInt(params.category);
-      });
-      setCategoryName(item.category.name);
-    }
-  }, [data]);
 
   return (
     <>
       {data && (
-        <section className="min-h-screen flex flex-col items-center justify-center px-2 py-10">
+        <section className="min-h-screen flex flex-col items-center  px-2 py-10">
           <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start sm:ml-8 ml-4 lg:my-28 md:my-16 sm:mb-16 mb-14  ">
-            {categoryName}
+            {data[0].category.name}
           </h1>
+          {data && data.length === 0 && (
+            <div className="absolute top-1/2  flex justify-center items-center ">
+              <p className="text-primary-lm text-text-2-medium">
+                Sorry, we don't have any items in this category at the moment.
+              </p>
+            </div>
+          )}
           <article className="grid  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2  md:gap-6 gap-8">
             {data.map((item: any) => (
               <div
@@ -48,7 +43,7 @@ function CategoryPage({ params }: categoryItemsProps) {
                 <div className="grid w-full h-1/2  place-items-center bg-primary-lm ">
                   <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] mini_mobile:h-[80px] mini_mobile:w-[100px] h-24 w-36">
                     <Image
-                      src={`${item.image}`}
+                      src={`${item.image || "/"}`}
                       width={132}
                       height={112}
                       alt="burger-cheese"
@@ -81,9 +76,7 @@ function CategoryPage({ params }: categoryItemsProps) {
                       3/5 (152 reviews)
                     </p>
                   </div>
-                  <span className="">
-                    <HiOutlineHeart className="sm:w-7 sm:h-7  w-5 h-5 stroke-[0.7px] sm:text-primary-lm" />
-                  </span>
+                  <Favorites isFavorite={false} food_item_id={item.id} />
                 </div>
               </div>
             ))}

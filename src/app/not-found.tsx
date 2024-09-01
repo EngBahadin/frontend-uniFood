@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { TfiArrowCircleLeft, TfiArrowLeft } from "react-icons/tfi";
+import { TfiArrowLeft } from "react-icons/tfi";
 
 function NotFound() {
   return (

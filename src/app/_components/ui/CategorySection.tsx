@@ -1,16 +1,19 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { categoriesList } from "@/app/_components/actions"; // Adjust the path as needed
-import CategoryItems from "./CategoryItems";
+
 import Image from "next/image";
+import { CategoryItems, categoriesList } from "..";
 
 export default function CategorySection() {
   const {
     data: categories,
     isLoading,
     isError,
-  } = useQuery({ queryKey: ["categoriesList"], queryFn: categoriesList });
+  } = useQuery({
+    queryKey: ["category", "category-list"],
+    queryFn: categoriesList,
+  });
 
   if (isLoading) {
     return (
@@ -32,6 +35,7 @@ export default function CategorySection() {
 
   return (
     <div className="min-h-screen min-w-full">
+      
       {categories.map((category: any) => (
         <CategoryItems
           key={category.id}

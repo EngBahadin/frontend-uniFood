@@ -5,10 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
-import { HiBars3, HiOutlineHeart } from "react-icons/hi2";
+import { HiBars3 } from "react-icons/hi2";
 import { PiInfoLight } from "react-icons/pi";
 import { TbCategory, TbHomeFilled } from "react-icons/tb";
-import { Category } from "./ui/Categories";
+import { Category } from ".";
+import FavoriteIcon from "./ui/FavoriteIcon";
 
 function SideBar() {
   const [openBar, setOpenBar] = useState(false);
@@ -67,16 +68,12 @@ function SideBar() {
             <Category setOpenBar={setOpenBar} type="slider" />
           </div>
 
-          <Link
-            href="/"
-            onClick={() => setOpenBar(false)}
-            className={`${pathName === "/favorites" && activeClasses} ${classes}`}
-          >
-            <span>
-              <HiOutlineHeart className="sm:w-6 sm:h-6 w-5 h-5" />
-            </span>
-            Favorites
-          </Link>
+          <FavoriteIcon
+            pathName={pathName}
+            activeClasses={activeClasses}
+            setOpenBar={setOpenBar}
+            type="sidebar"
+          />
         </div>
       </article>
     </nav>

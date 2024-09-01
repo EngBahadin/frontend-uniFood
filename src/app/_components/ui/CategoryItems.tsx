@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { HiOutlineHeart } from "react-icons/hi2";
 import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
-import { getCategory } from "../actions";
+
 import { useRef, useState } from "react";
+import { Favorites, getCategory } from "..";
 
 type categoryItemsProps = {
   categoryName: string;
@@ -17,7 +17,14 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["categories", categoryId],
+    queryFn: () => getCategory(categoryId),
+  });
 
+  if (isError) {
+    <p>an error occurred {error.message}</p>;
+  }
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDown(true);
     if (!scrollContainerRef.current) return;
@@ -29,18 +36,9 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
     if (!isDown || !scrollContainerRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const walk = x - startX;
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["categories", categoryId],
-    queryFn: () => getCategory(categoryId),
-  });
-
-  if (isError) {
-    <p>an error occurred {error.message}</p>;
-  }
 
   return (
     <>
@@ -66,7 +64,7 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
                 <div className="grid w-full h-1/2  place-items-center bg-primary-lm ">
                   <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] h-[80px] w-[100px]">
                     <Image
-                      src={`${item.image}`}
+                      src={`${item.image || "/"}`}
                       width={132}
                       height={112}
                       alt="burger-cheese"
@@ -95,9 +93,10 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
                       3/5 (152 reviews)
                     </p>
                   </div>
-                  <span>
-                    <HiOutlineHeart className="md:w-7 md:h-7 sm:w-6 sm:h-6 w-5 h-5 stroke-[0.7px] sm:text-primary-lm " />
-                  </span>
+                  <Favorites
+                    food_item_id={item.id}
+                    isFavorite={item.is_favorite}
+                  />
                 </div>
               </div>
             ))}
