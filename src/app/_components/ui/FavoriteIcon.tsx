@@ -6,7 +6,7 @@ export type FavoriteIconProps = {
   pathName: string;
   type: string;
   activeClasses?: string;
-  setOpenBar: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenBar?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 function FavoriteIcon({ type, pathName, activeClasses,setOpenBar }: FavoriteIconProps) {
   if (type === "header") {
@@ -22,7 +22,7 @@ function FavoriteIcon({ type, pathName, activeClasses,setOpenBar }: FavoriteIcon
       </Link>
     
     );
-  } else {
+  } else if(setOpenBar){
     return (
       <Link
         href="/favorites"

@@ -26,11 +26,14 @@ function Favorites({
     }
     try {
       await api.post("api/favorites/", { food_item_id });
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
     } catch (error: any) {
       if (error.response.status === 401) {
         // When refresh token is expired
-        queryClient.invalidateQueries({ queryKey: ["categories"] });
+        queryClient.invalidateQueries({
+          queryKey: ["product"],
+          exact: false,
+        });
         setIsModalOpen(true);
       }
     }
@@ -43,13 +46,12 @@ function Favorites({
     }
     try {
       await api.delete("api/favorites/", { data: { food_item_id } });
-      toast.success("removed");
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
     } catch (error: any) {
       toast.error(error);
       if (error.response.status === 401) {
         // When refresh token is expired
-        queryClient.invalidateQueries({ queryKey: ["favorites"] });
+        queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
         setIsModalOpen(true);
       }
     }

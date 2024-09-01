@@ -17,7 +17,7 @@ export function Category({
   const [dropdown, setDropdown] = useState(false);
   const router = useRouter();
   const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["category", "category-list"],
+    queryKey: ["categories", "category-list"],
     queryFn: categoriesList,
     retry: false,
     refetchInterval: false,

@@ -18,7 +18,7 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["categories", categoryId],
+    queryKey: ["product","categories", categoryId],
     queryFn: () => getCategory(categoryId),
   });
 

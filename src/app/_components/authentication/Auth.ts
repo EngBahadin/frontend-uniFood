@@ -11,10 +11,10 @@ export const newTokens = ({ access, refresh }: NewTokensProps) => {
   localStorage.setItem("refresh_token", refresh);
 };
 
-export const getAuth = ()=>{
+export const getAuth = () => {
   const token = localStorage.getItem("access_token");
   return token;
-}
+};
 
 // for log out
 export const removeTokens = () => {

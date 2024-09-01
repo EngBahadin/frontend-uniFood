@@ -20,7 +20,7 @@ function FavoritesPage() {
   };
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["favorites"],
+    queryKey: ["product","favorites"],
     queryFn: getFavorites,
     enabled: !!accessToken,
   });

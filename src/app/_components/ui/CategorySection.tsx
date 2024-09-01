@@ -11,7 +11,7 @@ export default function CategorySection() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["category", "category-list"],
+    queryKey: ["categories", "category-list"],
     queryFn: categoriesList,
   });
 
