@@ -1,8 +1,18 @@
+"use client";
 import Link from "next/link";
-import { getAuth, removeTokens } from "./authentication/Auth";
+
+import { useEffect, useState } from "react";
+import { getToken, removeTokens } from ".";
 
 function ProfilePic() {
-  const accessToken = getAuth();
+  const [accessToken, setAccessToken] = useState(false);
+
+  useEffect(() => {
+    const token = getToken();
+    setAccessToken(!!token);
+    return () => {};
+  }, []);
+
   const handleLogout = () => {
     removeTokens();
   };

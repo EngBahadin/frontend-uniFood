@@ -1,6 +1,4 @@
 import Image from "next/image";
-import React from "react";
-
 function CheckEmail() {
   return (
     <main className="py-[146px] bg-white flex flex-col">

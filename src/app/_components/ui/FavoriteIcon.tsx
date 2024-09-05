@@ -1,14 +1,13 @@
 import Link from "next/link";
-import React from "react";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
+import { FavoriteIconProps } from "../../../../types";
 
-export type FavoriteIconProps = {
-  pathName: string;
-  type: string;
-  activeClasses?: string;
-  setOpenBar?: React.Dispatch<React.SetStateAction<boolean>>;
-};
-function FavoriteIcon({ type, pathName, activeClasses,setOpenBar }: FavoriteIconProps) {
+function FavoriteIcon({
+  type,
+  pathName,
+  activeClasses,
+  setOpenBar,
+}: FavoriteIconProps) {
   if (type === "header") {
     return (
       <Link href="/favorites">
@@ -20,9 +19,8 @@ function FavoriteIcon({ type, pathName, activeClasses,setOpenBar }: FavoriteIcon
           )}
         </span>
       </Link>
-    
     );
-  } else if(setOpenBar){
+  } else if (setOpenBar) {
     return (
       <Link
         href="/favorites"

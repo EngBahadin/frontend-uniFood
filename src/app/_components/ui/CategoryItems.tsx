@@ -3,7 +3,6 @@ import Image from "next/image";
 import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
-
 import { useRef, useState } from "react";
 import { Favorites, getCategory } from "..";
 

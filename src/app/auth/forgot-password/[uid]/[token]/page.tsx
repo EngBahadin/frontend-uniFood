@@ -1,6 +1,5 @@
 "use client";
 import {
-  Button,
   DynamicLayout,
   Input,
   resetPassForm,
@@ -14,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Loading from "./loading";
 import { toast } from "sonner";
+import Button from "@/app/_components/ui/Button";
 
 export default function ResetPassword({ params }: paramsProps) {
   const { validate, errors, setErrors } = useFormValidation();
@@ -57,7 +57,6 @@ export default function ResetPassword({ params }: paramsProps) {
       submit(formData);
     }
   };
-
   if (isLoading) {
     return <Loading />;
   }
@@ -68,7 +67,7 @@ export default function ResetPassword({ params }: paramsProps) {
         title="Reset password"
         description="Please enter a new password"
       >
-        <form className="w-[478px] flex flex-col" action={handleSubmit}>
+        <form className="w-[80%] flex flex-col" action={handleSubmit}>
           <Input
             type="password"
             name="password"
@@ -76,6 +75,7 @@ export default function ResetPassword({ params }: paramsProps) {
             IconType="password"
             errors={errors}
             setErrors={setErrors}
+            placeholder="New Password"
           />
           <Input
             type="password"
@@ -84,14 +84,14 @@ export default function ResetPassword({ params }: paramsProps) {
             IconType="password"
             errors={errors}
             setErrors={setErrors}
+            placeholder="Re enter New Password"
           />
 
           <Button
-            className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
-            type="submit"
-            disabled={isPending}
+            position="absolute bottom-16  z-10 right-[10%] w-[80%]"
+            isPending={isPending}
           >
-            {isPending?'submitting...':'Change my password'}
+            Change my password
           </Button>
         </form>
       </DynamicLayout>

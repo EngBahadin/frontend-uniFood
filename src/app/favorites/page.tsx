@@ -4,12 +4,11 @@ import Image from "next/image";
 import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import api from "@/lib/axios";
-import { getAuth } from "../_components/authentication/Auth";
-import { Favorites } from "../_components";
+import { Favorites, getToken } from "../_components";
 import { toast } from "sonner";
 
 function FavoritesPage() {
-  const accessToken = getAuth();
+  const accessToken = getToken();
   const getFavorites = async () => {
     if (!accessToken) {
       toast.error("Please log in to add to favorites");
@@ -20,7 +19,7 @@ function FavoritesPage() {
   };
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["product","favorites"],
+    queryKey: ["product", "favorites"],
     queryFn: getFavorites,
     enabled: !!accessToken,
   });
@@ -57,7 +56,7 @@ function FavoritesPage() {
               </p>
             </div>
           )}
-          <article className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2 md:gap-6 gap-8">
+          <article className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2 md:gap-6 gap-4">
             {data.map((item: any) => (
               <div
                 key={item.food_item.id}
@@ -75,11 +74,11 @@ function FavoritesPage() {
                   </span>
                 </div>
                 <div className="flex justify-between m-2 sm:gap-x-3 gap-x-2">
-                  <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-36 w-40">
-                    <h3 className="truncate sm:text-text-1-medium mini_mobile:text-text-3-medium text-text-2-medium">
+                  <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-[130px] w-40">
+                    <h3 className="truncate sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium">
                       {item.food_item.name}
                     </h3>
-                    <p className="sm:text-text-1-medium mini_mobile:text-text-3-medium text-text-2-medium text-primary-lm">
+                    <p className="sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium text-primary-lm">
                       {item.food_item.price} IQD
                     </p>
                     <p className="text-gray-100 flex">

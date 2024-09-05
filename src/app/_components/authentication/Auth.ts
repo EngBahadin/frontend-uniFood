@@ -1,25 +1,25 @@
 import { apiAuth } from "@/lib/axios";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 type NewTokensProps = {
   access: string;
   refresh: string;
 };
 
-// for log in
-export const newTokens = ({ access, refresh }: NewTokensProps) => {
-  localStorage.setItem("access_token", access);
-  localStorage.setItem("refresh_token", refresh);
+export const newToken = ({ access, refresh }: NewTokensProps) => {
+  setCookie("access_token", access);
+  setCookie("refresh_token", refresh);
 };
 
-export const getAuth = () => {
-  const token = localStorage.getItem("access_token");
+export const getToken = () => {
+  const token = getCookie("access_token");
   return token;
 };
 
 // for log out
 export const removeTokens = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
+  deleteCookie("access_token");
+  deleteCookie("refresh_token");
 };
 // to order new access token using the refresh token
 export const orderNewAccessToken = async () => {
@@ -30,7 +30,7 @@ export const orderNewAccessToken = async () => {
       refresh: refreshToken,
     });
     const newAccessToken = response.data.access;
-    localStorage.setItem("access_token", newAccessToken);
+    setCookie("access_token", newAccessToken);
     return newAccessToken;
   } catch (error: any) {
     if (error.response?.status === 401) {

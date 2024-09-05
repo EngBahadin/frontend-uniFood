@@ -12,7 +12,7 @@ type categoryItemsProps = {
 };
 function CategoryPage({ params }: categoryItemsProps) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["categories", params.category],
+    queryKey: ["product", "categories", params.category],
     queryFn: () => getCategory(params.category),
   });
 
@@ -34,7 +34,7 @@ function CategoryPage({ params }: categoryItemsProps) {
               </p>
             </div>
           )}
-          <article className="grid  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2  md:gap-6 gap-8">
+          <article className="grid  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2   md:gap-6 gap-4">
             {data.map((item: any) => (
               <div
                 key={item.id}
@@ -52,13 +52,13 @@ function CategoryPage({ params }: categoryItemsProps) {
                   </span>
                 </div>
                 <div className="flex justify-between m-2 sm:gap-x-3 gap-x-2">
-                  <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-36 w-40 ">
-                    <h3 className="truncate sm:text-text-1-medium mini_mobile:text-text-3-medium text-text-2-medium">
+                  <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-[130px] w-40 ">
+                    <h3 className="truncate sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium">
                       {item.name}
                     </h3>
 
                     <p
-                      className="sm:text-text-1-medium  mini_mobile:text-text-3-medium 
+                      className="sm:text-text-1-medium  mini_mobile:text-caption-1-medium 
                     text-text-2-medium text-primary-lm"
                     >
                       {item.price} IQD
@@ -76,7 +76,10 @@ function CategoryPage({ params }: categoryItemsProps) {
                       3/5 (152 reviews)
                     </p>
                   </div>
-                  <Favorites isFavorite={false} food_item_id={item.id} />
+                  <Favorites
+                    food_item_id={item.id}
+                    isFavorite={item.is_favorite}
+                  />
                 </div>
               </div>
             ))}

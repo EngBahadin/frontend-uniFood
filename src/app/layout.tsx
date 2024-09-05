@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "../../utils/Providers";
 import { Toaster } from "sonner";
 import Navbar from "./_components/navbar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "UniFood",

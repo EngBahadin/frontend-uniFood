@@ -5,6 +5,7 @@ import { useFormSubmission } from "../hooks/useFormSubmission";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const SignUpForm = () => {
   const { validate, errors, setErrors } = useFormValidation();
@@ -46,7 +47,7 @@ const SignUpForm = () => {
   return (
     <form
       action={handleSubmit}
-      className="text-text-1-medium gap-1 flex flex-col w-[477px]"
+      className="text-text-1-medium gap-1 flex flex-col w-[80%]"
     >
       <Input
         name="username"
@@ -55,6 +56,7 @@ const SignUpForm = () => {
         IconType="user"
         errors={errors}
         setErrors={setErrors}
+        placeholder="eg. John Doe" 
       />
       <Input
         type="email"
@@ -63,6 +65,7 @@ const SignUpForm = () => {
         IconType="email"
         errors={errors}
         setErrors={setErrors}
+        placeholder="eg. johndoe@example.com"
       />
       <Input
         type="password"
@@ -71,6 +74,7 @@ const SignUpForm = () => {
         IconType="password"
         errors={errors}
         setErrors={setErrors}
+        placeholder="Password"
       />
       <Input
         type="password"
@@ -79,17 +83,28 @@ const SignUpForm = () => {
         IconType="password"
         errors={errors}
         setErrors={setErrors}
+        placeholder="Re-enter password"
       />
-      <p className="mt-3 text-text-2-regular text-error-lm"></p>
-      <Button
-        className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
-        type="submit"
-        disabled={isPending ? true : false}
-      >
-        {isPending ? "submitting..." : "Continue"}
-      </Button>
+      <div className=" absolute bottom-[5%] z-10 w-[80%] flex flex-col items-center justify-center">
+        <Button isPending={isPending}>Sign in</Button>
+
+        <article>
+          <p className="sm:text-text-2-regular text-text-3-regular inline">
+            Already have an account?{" "}
+          </p>
+          <Link
+            className="text-primary-lm text-text-2-semiBold underline"
+            href="/auth/signin"
+          >
+            Sign in
+          </Link>
+        </article>
+      </div>
     </form>
   );
 };
 
 export default SignUpForm;
+//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white sm:h-24 h-10  absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100
+//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white ms:h-24 h-9 absolute bottom-[6%] z-10 right-[10%] disabled:bg-gray-100
+//absolute bottom-[4%] z-10 w-[80%] flex flex-col items-center justify-center w-full text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white sm:h-14 h-10   disabled:bg-gray-100

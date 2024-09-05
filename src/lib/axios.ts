@@ -1,5 +1,6 @@
 import { orderNewAccessToken } from "@/app/_components/authentication/Auth";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 const api = axios.create({
   baseURL: "http://localhost:8000/", // Replace with your base URL
@@ -8,7 +9,7 @@ const api = axios.create({
 // Request interceptor to add Authorization header if token exists
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const token = getCookie("access_token");
     if (token) {
       config.headers["Authorization"] = `JWT ${token}`;
     }

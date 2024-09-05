@@ -138,7 +138,7 @@ const config = {
     },
     extend: {
       screens: {
-       mini_mobile:"400px"
+       mini_mobile:"360px"
       },
       fontFamily: {
         Poppins: "Poppins",

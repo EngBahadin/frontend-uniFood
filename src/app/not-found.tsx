@@ -1,8 +1,13 @@
+"use client";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { TfiArrowLeft } from "react-icons/tfi";
 
 function NotFound() {
+  const router = useRouter();
+  const handleGoBack = () => {
+    router.back();
+  };
   return (
     <div>
       <div className="flex flex-col items-center justify-center">
@@ -20,15 +25,15 @@ function NotFound() {
           className=""
         />
 
-        <Link
+        <button
           className="text-primary-lm text-text-1-semiBold hover:bg-primary-lm hover:text-white p-1 rounded-md flex items-center justify-between"
-          href="/"
+          onClick={handleGoBack}
         >
           <span>
             <TfiArrowLeft className="mr-2 w-4" />
           </span>
           Go back
-        </Link>
+        </button>
       </div>
     </div>
   );

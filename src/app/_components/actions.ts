@@ -1,6 +1,5 @@
 import api from "@/lib/axios";
 import axios from "axios";
-import { orderNewAccessToken } from "./authentication/Auth";
 
 export async function categoriesList() {
   try {

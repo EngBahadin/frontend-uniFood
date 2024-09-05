@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 import { Category, ProfilePic, SearchBar, ShoppingCart, SideBar } from ".";
 import FavoriteIcon from "./ui/FavoriteIcon";
 

@@ -12,6 +12,7 @@ export type IconType = keyof typeof Icons;
 export type InputProps = {
   label: string;
   name: string;
+  placeholder?:string;
   type: string;
   IconType?: IconType;
   errors?: Errors;
@@ -59,4 +60,10 @@ export type paramsProps = {
 export type validateProps = {
   uid: string;
   token: string;
+};
+export type FavoriteIconProps = {
+  pathName: string;
+  type: string;
+  activeClasses?: string;
+  setOpenBar?: React.Dispatch<React.SetStateAction<boolean>>;
 };

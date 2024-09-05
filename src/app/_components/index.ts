@@ -1,7 +1,7 @@
 import DynamicLayout from "./authentication/dynamicLayout";
 import Input from "./authentication/Input";
 import InputOtp from "../../../_none-used-components/InputOtp";
-import { Button } from "@/components/ui/button";
+
 import {
   signUpForm,
   verifyAcc,
@@ -26,7 +26,16 @@ import ProfilePic from "./ProfilePic";
 import { Category } from "./ui/Categories";
 import SideBar from "./SideBar";
 import ShoppingCart from "./ui/shoppingCart";
+import { getToken } from "./authentication/Auth";
+import { orderNewAccessToken } from "./authentication/Auth";
+import { removeTokens } from "./authentication/Auth";
+import Modal from "./ui/Modal";
+import Button from "./ui/Button";
 export {
+  Modal,
+  getToken,
+  orderNewAccessToken,
+  removeTokens,
   SearchBar,
   ProfilePic,
   Category,

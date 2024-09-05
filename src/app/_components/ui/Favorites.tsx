@@ -3,10 +3,10 @@ import { useState } from "react";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 import { toast } from "sonner";
 import api from "@/lib/axios";
-import Modal from "./Modal";
+
 import { useRouter } from "next/navigation";
-import { getAuth } from "../authentication/Auth";
 import { useQueryClient } from "@tanstack/react-query";
+import { getToken, Modal } from "..";
 
 function Favorites({
   food_item_id,
@@ -16,11 +16,11 @@ function Favorites({
   isFavorite: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const accessToken = getAuth();
+  const accessToken = getToken();
   const queryClient = useQueryClient();
   const addToFavorites = async () => {
     if (!accessToken) {
-      toast.error("Please log in to add to favorites");
+      toast.warning("Please log in to add to favorites");
       setIsModalOpen(true);
       return;
     }
@@ -40,18 +40,22 @@ function Favorites({
   };
   const removeToFavorites = async () => {
     if (!accessToken) {
-      toast.error("Please log in to add to favorites");
+      toast.warning("Please log in to add to favorites");
       setIsModalOpen(true);
       return;
     }
     try {
       await api.delete("api/favorites/", { data: { food_item_id } });
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["categories"], exact: false });
     } catch (error: any) {
       toast.error(error);
       if (error.response.status === 401) {
-        // When refresh token is expired
         queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
+        queryClient.invalidateQueries({
+          queryKey: ["categories"],
+          exact: false,
+        });
         setIsModalOpen(true);
       }
     }

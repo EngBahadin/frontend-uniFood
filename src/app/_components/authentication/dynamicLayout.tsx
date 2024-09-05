@@ -8,57 +8,29 @@ export default function DynamicLayout({
   description,
   title,
 }: DynamicLayoutProps) {
-  let [path, question, answer] = ["", "", ""];
-
-  switch (title) {
-    case "Sign in":
-      path = "/auth/signup";
-      question = "Don't have an account? ";
-      answer = "Create an account";
-      break;
-    case "Create my account":
-    case "Confirm your account":
-      path = "/auth/signin";
-      question = "Already have an account? ";
-      answer = "Sign in";
-      break;
-  }
-
   return (
-    <main className="py-[146px] flex flex-col">
+    <main className=" min-h-screen py-14 justify-center flex flex-col">
       <Image
         src="/unifood-logo.png"
         alt="uni food logo"
         width={95}
         height={88}
-        className="object-contain absolute left-0 top-0 ml-[40px] mt-[40px]"
+        className="object-contain lg:w-24 lg:h-24 md:w-20 md:h-16 sm:w-16  w-14 h-14 absolute left-0 top-0 ml-[40px] mt-[40px] drop-shadow-xl"
       />
-      <div className="m-auto relative">
-        <section className="absolute top-[-45px] right-[-50px] z-20">
+      <div className="m-auto relative ">
+        <section className="absolute top-[-45px] right-[-35px] z-20">
           <Image
             src="/burger.png"
             width={118}
             height={118}
             alt="burger image"
-            className="object-contain"
+            className="object-contain sm:w-28 sm:h-28  mini_mobile:h-20 mini_mobile:w-20 h-16 w-16"
           />
         </section>
-        <div className="w-[608px] h-[668px] bg-pure-white rounded-[32px] border-primary-lm border-[3px] relative">
-          <article>
-            <AuthHeader title={title} description={description} />
+        <div className="xl:w-[608px] xl:h-[668px] sm:w-[500px]  sm:h-[630px] w-full h-[510px]  rounded-[32px] border-primary-lm border-[3px] relative bg-pure-white shadow-xl">
+          <AuthHeader title={title} description={description} />
 
-            <div className="flex justify-center mt-8"> {children}</div>
-
-            <p className="absolute right-[30%] bottom-6 text-text-2-regular">
-              {question}
-              <Link
-                className="text-primary-lm text-text-2-semiBold underline"
-                href={path}
-              >
-                {answer}
-              </Link>
-            </p>
-          </article>
+          <div className="flex justify-center mt-4 "> {children}</div>
         </div>
       </div>
     </main>

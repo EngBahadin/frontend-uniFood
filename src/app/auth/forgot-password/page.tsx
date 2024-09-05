@@ -40,7 +40,7 @@ export default function ForgotPassword() {
       description="Enter your email to reset your password"
     >
       <form
-        className="w-[478px]"
+        className="w-[80%] mt-[5%]"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit(new FormData(e.target as HTMLFormElement));
@@ -53,11 +53,11 @@ export default function ForgotPassword() {
           IconType="email"
           errors={errors}
           setErrors={setErrors}
+          placeholder="eg. johndoe@example.com"
         />
         <Button
-          className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
-          type="submit"
-          disabled={isPending}
+          position="absolute bottom-16  z-10 right-[10%] w-[80%]"
+          isPending={isPending}
         >
           Continue
         </Button>

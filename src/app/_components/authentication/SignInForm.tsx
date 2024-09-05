@@ -1,5 +1,4 @@
 "use client";
-import { Button, Input } from "@/app/_components";
 import { loginForm } from "./authActions";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { useFormSubmission } from "../hooks/useFormSubmission";
@@ -7,10 +6,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { newTokens } from "./Auth";
+import { Button, Input } from "..";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
-  const { submit, data, isError, isSuccess, isPending, error } =
+  const { submit, isError, isSuccess, isPending, error } =
     useFormSubmission(loginForm);
 
   const handleSubmit = (formData: FormData) => {
@@ -22,7 +21,6 @@ export default function SignInForm() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("logged in");
-      newTokens(data);
       redirect("/");
     } else if (isError && error) {
       toast.error(error.message);
@@ -32,7 +30,7 @@ export default function SignInForm() {
   return (
     <form
       action={handleSubmit}
-      className="text-text-1-medium gap-1 flex flex-col w-[477px]"
+      className="w-[80%] text-text-1-medium gap-1 grid"
     >
       <Input
         type="email"
@@ -41,6 +39,7 @@ export default function SignInForm() {
         IconType="email"
         errors={errors}
         setErrors={setErrors}
+        placeholder="eg. johndoe@example.com"
       />
 
       <Input
@@ -50,6 +49,7 @@ export default function SignInForm() {
         IconType="password"
         errors={errors}
         setErrors={setErrors}
+        placeholder="Password"
       />
       {isError && (
         <p className="text-error-lm text-caption-1-regular">
@@ -58,18 +58,26 @@ export default function SignInForm() {
         </p>
       )}
       <Link
-        className="text-text-2-medium hover:text-primary-lm"
+        className="text-text-2-medium  hover:text-primary-lm"
         href="/auth/forgot-password"
       >
         Forget my password
       </Link>
-      <Button
-        className="w-[478px] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white h-[56px] absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100"
-        type="submit"
-        disabled={isPending ? true : false}
-      >
-        Sign in
-      </Button>
+      <div className="absolute bottom-[5%] z-10 w-[80%] flex flex-col items-center justify-center gap-y-3 right-[10%]">
+        <Button isPending={isPending}>Sign in</Button>
+
+        <article>
+          <p className="sm:text-text-2-regular text-text-3-regular inline">
+            Don't have an account?{" "}
+          </p>
+          <Link
+            className="text-primary-lm underline sm:text-text-2-medium text-text-3-medium"
+            href="/auth/signup"
+          >
+            Create an account
+          </Link>
+        </article>
+      </div>
     </form>
   );
 }

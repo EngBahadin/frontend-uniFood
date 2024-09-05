@@ -1,11 +1,16 @@
 import axios from "axios";
 import { apiAuth } from "@/lib/axios";
 import { validateProps } from "../../../../types";
+import { newToken } from "./Auth";
 
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   try {
     const response = await apiAuth.post("/jwt/create/", formObject);
+
+    const access = response.data.access;
+    const refresh = response.data.refresh;
+    newToken({ access, refresh });
     return response.data;
   } catch (error: any) {
     let errorMessage: string;
