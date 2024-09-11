@@ -1,7 +1,5 @@
 import DynamicLayout from "./authentication/dynamicLayout";
 import Input from "./authentication/Input";
-import InputOtp from "../../../_none-used-components/InputOtp";
-
 import {
   signUpForm,
   verifyAcc,
@@ -58,7 +56,7 @@ export {
   SignUpForm,
   DynamicLayout,
   Input,
-  InputOtp,
+
   Button,
   signUpForm,
   loginForm,

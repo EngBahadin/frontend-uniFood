@@ -33,7 +33,7 @@ const ActivatePage = ({ params }: paramsProps) => {
             height={100}
             className="object-contain sm:w-24 sm:h-24 w-20 h-20 mb-4 bg-pure-black"
           />
-          <p className="sm:text-body-3-medium text-text-1-medium text-primary-lm animate-pulse duration-3000">
+          <p className="sm:text-body-3-medium text-text-1-medium text-primary-lm animate-pulse duration-1000">
             verifying your account...
           </p>
         </>
