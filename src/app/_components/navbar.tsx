@@ -19,7 +19,8 @@ function Navbar() {
     pathName === "/cart" ||
     pathName === "/categories/1" ||
     pathName === "/categories/2" ||
-    pathName === "/categories/3"
+    pathName === "/categories/3" ||
+    pathName.startsWith("/product")
   ) {
     return (
       <div className="lg:mt-0 md:mt-10 sm:mt-20 mt-16">
@@ -51,7 +52,7 @@ function Navbar() {
             <div className="flex items-center pr-4 mini_mobile:pr-8 md:pr-0 gap-5">
               <SearchBar />
               <ShoppingCart />
-              <FavoriteIcon pathName={pathName} type='header'/>
+              <FavoriteIcon pathName={pathName} type="header" />
               <ProfilePic />
             </div>
           </div>

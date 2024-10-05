@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
-import { FavoriteIconProps } from "../../../../types";
+import { FavoriteIconProps } from "../../../types";
 
 function FavoriteIcon({
   type,

@@ -23,7 +23,7 @@ export const removeTokens = () => {
 };
 // to order new access token using the refresh token
 export const orderNewAccessToken = async () => {
-  const refreshToken = localStorage.getItem("refresh_token");
+  const refreshToken = getCookie("refresh_token");
   if (!refreshToken) return null;
   try {
     const response = await apiAuth.post("/jwt/refresh/", {
@@ -31,10 +31,14 @@ export const orderNewAccessToken = async () => {
     });
     const newAccessToken = response.data.access;
     setCookie("access_token", newAccessToken);
+    console.log(response.data);
+
     return newAccessToken;
   } catch (error: any) {
     if (error.response?.status === 401) {
-      removeTokens(); // refresh token is expired
+      console.log("remove tokens");
+
+      return removeTokens(); // refresh token is expired
     }
     return null;
   }

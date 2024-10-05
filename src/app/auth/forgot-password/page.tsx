@@ -56,7 +56,7 @@ export default function ForgotPassword() {
           placeholder="eg. johndoe@example.com"
         />
         <Button
-          position="absolute bottom-16  z-10 right-[10%] w-[80%]"
+          position="absolute bottom-16  z-10 right-[10%] w-[79%]"
           isPending={isPending}
         >
           Continue

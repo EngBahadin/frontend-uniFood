@@ -2,9 +2,11 @@ import ReactDOM from "react-dom";
 export type ModalProps = {
   onClose: () => void;
   onNavigate: () => void;
+  title: string;
+  description: string;
 };
 
-function Modal({ onClose, onNavigate }: ModalProps) {
+function Modal({ onClose, onNavigate,title,description }: ModalProps) {
   return ReactDOM.createPortal(
     <div
       onBlur={() => onClose()}
@@ -15,11 +17,10 @@ function Modal({ onClose, onNavigate }: ModalProps) {
           className="md:text-body-3-semiBold
          sm:text-text-2-semiBold text-caption-1-semiBold text-center text-primary-lm  "
         >
-          Sign In Required !
+          {title}
         </h2>
         <p className="text-black md:text-text-2-regular sm:text-text-3-regular text-caption-2-regular text-left ">
-          Please sign in to add items to your favorites. You can create an
-          account during the sign-in process if needed.
+          {description}
         </p>
         <div className="flex justify-end space-x-4">
           <button

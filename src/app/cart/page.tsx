@@ -1,5 +1,6 @@
 import { GoTrash } from "react-icons/go";
 import Image from "next/image";
+import Loading from "./loading";
 
 export default function Cart() {
   return (
@@ -13,7 +14,7 @@ export default function Cart() {
       <article className="flex md:justify-between flex-col md:gap-y-0 gap-y-20 md:flex-row">
         {/* Cart Items */}
         <div className="grid gap-y-4">
-          <div className="flex items-center justify-center h-fit">
+          <div className="flex items-center md:justify-between justify-center h-fit">
             <div className="flex items-center">
               {/* Item Image */}
               <div className="bg-primary-lm rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
@@ -27,7 +28,7 @@ export default function Cart() {
               </div>
               {/* Item Info */}
               <div className="sm:mx-5 mx-3">
-                <h3 className="text-primary-lm lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
+                <h3 className="text-primary-lm lg:text-body-3-medium md:text-text-1-medium text-text-3-medium truncate max-w-36">
                   Chicken cheeseburger
                 </h3>
                 <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
@@ -47,7 +48,7 @@ export default function Cart() {
               <GoTrash className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5" />
             </div>
           </div>
-          <div className="flex items-center justify-center h-fit">
+          <div className="flex items-center md:justify-between justify-center h-fit">
             <div className="flex items-center">
               {/* Item Image */}
               <div className="bg-primary-lm rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
@@ -61,7 +62,7 @@ export default function Cart() {
               </div>
               {/* Item Info */}
               <div className="sm:mx-5 mx-3">
-                <h3 className="text-primary-lm lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
+                <h3 className="text-primary-lm lg:text-body-3-medium md:text-text-1-medium text-text-3-medium truncate max-w-36">
                   Chicken cheeseburger
                 </h3>
                 <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
@@ -74,13 +75,14 @@ export default function Cart() {
               <span className="bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold">
                 -
               </span>
-              <p>8</p>
+              <p>10</p>
               <span className="bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold">
                 +
               </span>
               <GoTrash className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5" />
             </div>
           </div>
+          <Loading />
         </div>
 
         {/* Order Summary */}

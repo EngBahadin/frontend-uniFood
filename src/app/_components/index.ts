@@ -7,7 +7,7 @@ import {
   resetPassForm,
   forgotPassForm,
 } from "@/app/_components/authentication/authActions";
-import { createSchema } from "../../../utils/schema";
+import { createSchema } from "../../lib/schema";
 import SignUpForm from "./authentication/SignUpForm";
 import SignInForm from "./authentication/SignInForm";
 import { TfiArrowCircleLeft } from "react-icons/tfi";
@@ -56,7 +56,6 @@ export {
   SignUpForm,
   DynamicLayout,
   Input,
-
   Button,
   signUpForm,
   loginForm,

@@ -30,12 +30,15 @@ export default function CategorySection() {
   }
 
   if (isError) {
-    return <p>Error loading categories. Please try again later.</p>;
+    return (
+      <p className="grid place-content-center h-screen">
+        Failed to load categories. Please try again later.
+      </p>
+    );
   }
 
   return (
     <div className="min-h-screen min-w-full">
-      
       {categories.map((category: any) => (
         <CategoryItems
           key={category.id}

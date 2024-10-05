@@ -1,6 +1,6 @@
 import axios from "axios";
 import { apiAuth } from "@/lib/axios";
-import { validateProps } from "../../../../types";
+import { validateProps } from "../../../types";
 import { newToken } from "./Auth";
 
 export async function loginForm(formData: FormData) {
@@ -33,7 +33,10 @@ export async function signUpForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
 
   try {
-    await apiAuth.post("/users/", formObject);
+    const response = await apiAuth.post("/users/", formObject);
+    const access = response.data.jwt_tokens.access;
+    const refresh = response.data.jwt_tokens.refresh;
+    newToken({ access, refresh });
   } catch (error: any) {
     let errorMessage: string;
     if (error.response) {

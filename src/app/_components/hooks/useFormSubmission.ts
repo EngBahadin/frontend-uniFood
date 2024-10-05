@@ -1,6 +1,6 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { errorProp } from "../../../../types";
+import { errorProp } from "../../../types";
 import { useRouter } from "next/navigation";
 
 // Make the hook generic

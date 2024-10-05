@@ -86,11 +86,11 @@ const SignUpForm = () => {
         placeholder="Re-enter password"
       />
       <div className=" absolute bottom-[5%] z-10 w-[80%] flex flex-col items-center justify-center">
-        <Button isPending={isPending}>Sign in</Button>
+        <Button isPending={isPending}>Sign up</Button>
 
         <article>
           <p className="sm:text-text-2-regular text-text-3-regular inline">
-            Already have an account?{" "}
+            Already have an account?
           </p>
           <Link
             className="text-primary-lm text-text-2-semiBold underline"

@@ -32,6 +32,8 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        console.log("ordered new access token");
+
         const newToken = await orderNewAccessToken(); // Request a new access token
 
         if (newToken) {

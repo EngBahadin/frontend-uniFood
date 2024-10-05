@@ -16,8 +16,8 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["product","categories", categoryId],
+  const { data, isError, error } = useQuery({
+    queryKey: ["product", "categories", categoryId],
     queryFn: () => getCategory(categoryId),
   });
 
@@ -63,11 +63,11 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
                 <div className="grid w-full h-1/2  place-items-center bg-primary-lm ">
                   <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] h-[80px] w-[100px]">
                     <Image
-                      src={`${item.image || "/"}`}
+                      src={item.image || "/"}
                       width={132}
                       height={112}
                       alt="burger-cheese"
-                      className="object-contain  "
+                      className="object-contain"
                     />
                   </span>
                 </div>

@@ -7,7 +7,7 @@ import {
 } from "@/app/_components";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
-import { paramsProps } from "../../../../../../types";
+import { paramsProps } from "../../../../../types";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";

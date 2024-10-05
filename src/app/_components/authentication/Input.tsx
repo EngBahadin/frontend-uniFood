@@ -1,10 +1,18 @@
 "use client";
 import { ChangeEvent, memo, useState } from "react";
-import { Errors, Icons, InputProps } from "../../../../types";
+import { Errors, Icons, InputProps } from "../../../types";
 import { IoEyeOffOutline, IoEyeOutline } from "..";
 
 const Input = memo(
-  ({ label, name, type, IconType,placeholder, errors, setErrors }: InputProps) => {
+  ({
+    label,
+    name,
+    type,
+    IconType,
+    placeholder,
+    errors,
+    setErrors,
+  }: InputProps) => {
     const [passType, setPassType] = useState(type);
     const [isActive, setIsActive] = useState(false);
     const Icon = Icons[IconType || "email"];

@@ -3,7 +3,7 @@ import Image from "next/image";
 function Hero() {
   return (
     <article className="flex items-center bg-pure-white h-fit px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row md:py-36">
-      <div className="flex flex-col md:items-start items-center gap-y-8 pt-14 md:text-left text-center">
+      <div className="flex flex-col md:items-start items-center gap-y-8 md:pt-0 pt-14 md:text-left text-center ">
         <h1
           className="text-primary-lm lg:text-sub-heading-1-regular text-body-2-regular
         sm:text-body-1-regular
@@ -22,7 +22,7 @@ function Hero() {
           Order now
         </button>
       </div>
-      <div className="relative my-10 md:mt-0 mt-8  lg:w-72 lg:h-72 md:w-56 md:h-56 w-40 h-40 flex justify-center items-center xl:w-[375px] xl:h-[375px]">
+      <div className="relative my-10 md:mt-0 mt-8  lg:w-72 lg:h-72 md:w-56 md:h-56 w-40 h-40 flex justify-center items-center xl:w-[375px] xl:h-[375px] drop-shadow-2xl">
         <Image
           className="absolute xl:top-[12%] bottom-[12%] xl:w-[270px] xl:h-[270px] lg:w-60 lg:h-56 md:w-44 md:h-44 h-28 w-32"
           src="/Ellipse.png"

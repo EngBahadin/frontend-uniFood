@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FieldOptions } from "../../../../types";
+import { FieldOptions } from "../../../types";
 import { createSchema } from "..";
 
 export const useFormValidation = () => {
   const [errors, setErrors] = useState<{
-    [key: string]: string | null ;
+    [key: string]: string | null;
   }>({});
   const [functionName, setFunctionName] = useState();
 

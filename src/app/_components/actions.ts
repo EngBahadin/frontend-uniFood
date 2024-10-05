@@ -19,7 +19,6 @@ export async function getCategory(categoryId: string) {
       const response = await axios.get(
         `http://localhost:8000/api/categories/${categoryId}/food-items/`
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -28,7 +27,6 @@ export async function getCategory(categoryId: string) {
   } else {
     console.log("there is access token");
     const response = await api.get(`api/categories/${categoryId}/food-items/`);
-    console.log(response.data);
     return response.data;
   }
 }

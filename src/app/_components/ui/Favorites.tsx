@@ -46,6 +46,7 @@ function Favorites({
     }
     try {
       await api.delete("api/favorites/", { data: { food_item_id } });
+      9;
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
       queryClient.invalidateQueries({ queryKey: ["categories"], exact: false });
     } catch (error: any) {
@@ -83,7 +84,7 @@ function Favorites({
       )}
 
       {isModalOpen && (
-        <Modal onNavigate={handleNavigate} onClose={handleCloseModal} />
+        <Modal title='Sign in Required !' description="Please sign in to add items to your to your favorites. You can create an account during the sign-in process if needed" onNavigate={handleNavigate} onClose={handleCloseModal} />
       )}
     </>
   );

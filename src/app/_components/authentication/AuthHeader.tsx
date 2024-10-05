@@ -1,8 +1,7 @@
-'use client'
-import { authHeaderProps } from "../../../../types";
+"use client";
+import { authHeaderProps } from "../../../types";
 import { TfiArrowCircleLeft } from "..";
 import { useRouter } from "next/navigation";
-
 
 function AuthHeader({ title, description }: authHeaderProps) {
   const router = useRouter();

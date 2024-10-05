@@ -6,7 +6,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { paramsProps } from "../../../../../../types";
+import { paramsProps } from "../../../../../types";
 
 const ActivatePage = ({ params }: paramsProps) => {
   const { uid, token } = params;
@@ -18,13 +18,13 @@ const ActivatePage = ({ params }: paramsProps) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("verified successfully");
-      return redirect("/auth/signin");
+      return redirect("/");
     }
   }, [isSuccess]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      {!isPending && (
+      {isPending && (
         <>
           <Image
             src="/loading-spinner-2.svg"

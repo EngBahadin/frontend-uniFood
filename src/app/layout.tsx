@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Provider from "../../utils/Providers";
+import Provider from "../lib/Providers";
 import { Toaster } from "sonner";
 import Navbar from "./_components/navbar";
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 
 export const metadata: Metadata = {
   title: "UniFood",
@@ -18,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-Poppins bg-white`}>
         <Provider>
-          <Navbar />
-          {children}
-          <Toaster richColors position="top-right" />
+          <SkeletonTheme baseColor="#f0f0f0" highlightColor="#f5f5f5">
+            <Navbar />
+            {children}
+            <Toaster richColors position="top-right" />
+          </SkeletonTheme>
         </Provider>
       </body>
     </html>
