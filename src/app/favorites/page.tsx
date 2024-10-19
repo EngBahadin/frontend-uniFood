@@ -45,8 +45,8 @@ function FavoritesPage() {
   return (
     <>
       {data && (
-        <section className="min-h-screen flex flex-col items-center px-2 py-10">
-          <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start sm:ml-8 ml-4 lg:my-28 md:my-16 sm:mb-16 mb-14  ">
+        <section className="min-h-screen flex flex-col items-center px-2">
+          <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start sm:ml-8 ml-4 my-10">
             Favorites
           </h1>
           {data && data.length === 0 && (
@@ -69,7 +69,7 @@ function FavoritesPage() {
                       width={132}
                       height={112}
                       alt="burger-cheese"
-                      className="object-contain"
+                      className="object-contain "
                     />
                   </span>
                 </div>
@@ -79,7 +79,10 @@ function FavoritesPage() {
                       {item.food_item.name}
                     </h3>
                     <p className="sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium text-primary-lm">
-                      {item.food_item.price} IQD
+                      {item.price !== null
+                        ? item.food_item.price
+                        : item.food_item.size_price[0].price}{" "}
+                      IQD
                     </p>
                     <p className="text-gray-100 flex">
                       <PiClockLight className="sm:w-4 sm:h-4 mini_mobile:w-3 mini_mobile:h-3" />
@@ -91,7 +94,7 @@ function FavoritesPage() {
                       <span>
                         <BsStarFill className="sm:h-4 sm:w-4 mini_mobile:h-3 mini_mobile:w-3 w-4 h-4 mr-2 text-warning-lm" />
                       </span>
-                      3/5 (152 reviews)
+                      {item.food_item.review.avg_rating} ({item.food_item.review.count} reviews)
                     </p>
                   </div>
                   <Favorites

@@ -1,5 +1,6 @@
 import api from "@/lib/axios";
 import axios from "axios";
+import { getToken } from ".";
 
 export async function categoriesList() {
   try {
@@ -11,7 +12,7 @@ export async function categoriesList() {
   }
 }
 export async function getCategory(categoryId: string) {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = getToken();
   if (!accessToken) {
     console.log("no access token");
 
@@ -29,4 +30,15 @@ export async function getCategory(categoryId: string) {
     const response = await api.get(`api/categories/${categoryId}/food-items/`);
     return response.data;
   }
+}
+export async function getUserCartItems() {
+  try {
+    const response = await api.get("api/cart/items/");
+    return response.data;
+  } catch (error: any) {}
+}
+export async function updateQuantityItem(id: string, newQty: number) {
+  await api.patch(`api/cart/items/${id}/`, {
+    qty: newQty,
+  });
 }

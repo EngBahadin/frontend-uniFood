@@ -4,6 +4,7 @@ import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import { Favorites, getCategory } from "@/app/_components";
+import { useRouter } from "next/navigation";
 
 type categoryItemsProps = {
   params: {
@@ -11,10 +12,16 @@ type categoryItemsProps = {
   };
 };
 function CategoryPage({ params }: categoryItemsProps) {
-  const { data, isLoading, isError, error } = useQuery({
+  const router  = useRouter();
+  const { data, isError, error } = useQuery({
     queryKey: ["product", "categories", params.category],
     queryFn: () => getCategory(params.category),
   });
+
+   const handleProductDetail = (id: number) => {
+     router.push(`/product/${id}`);
+   };
+
 
   if (isError) {
     <p>an error occurred {error.message}</p>;
@@ -23,8 +30,8 @@ function CategoryPage({ params }: categoryItemsProps) {
   return (
     <>
       {data && (
-        <section className="min-h-screen flex flex-col items-center  px-2 py-10">
-          <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start sm:ml-8 ml-4 lg:my-28 md:my-16 sm:mb-16 mb-14  ">
+        <section className="min-h-screen flex flex-col items-center px-2">
+          <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start ml-4 sm:ml-8 my-10">
             {data[0].category.name}
           </h1>
           {data && data.length === 0 && (
@@ -40,14 +47,17 @@ function CategoryPage({ params }: categoryItemsProps) {
                 key={item.id}
                 className="md:h-[275px]  sm:h-[260px] mini_mobile:h-[200px] h-64 flex flex-col rounded-2xl overflow-hidden bg-pure-white drop-shadow-xl "
               >
-                <div className="grid w-full h-1/2  place-items-center bg-primary-lm ">
+                <div
+                  className="grid w-full h-1/2  place-items-center bg-primary-lm cursor-pointer"
+                  onClick={() => handleProductDetail(item.id)}
+                >
                   <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] mini_mobile:h-[80px] mini_mobile:w-[100px] h-24 w-36">
                     <Image
                       src={`${item.image || "/"}`}
                       width={132}
                       height={112}
                       alt="burger-cheese"
-                      className="object-contain  "
+                      className="object-contain  pointer-events-none"
                     />
                   </span>
                 </div>
@@ -61,7 +71,9 @@ function CategoryPage({ params }: categoryItemsProps) {
                       className="sm:text-text-1-medium  mini_mobile:text-caption-1-medium 
                     text-text-2-medium text-primary-lm"
                     >
-                      {item.price} IQD
+                      {item.price !== null
+                        ? item.price
+                        : item.size_price[0].price}{" "} IQD
                     </p>
                     <p className="text-gray-100 flex">
                       <PiClockLight className="sm:w-4 sm:h-4 mini_mobile:w-3 mini_mobile:h-3" />
@@ -73,7 +85,7 @@ function CategoryPage({ params }: categoryItemsProps) {
                       <span>
                         <BsStarFill className="sm:h-4 sm:w-4 mini_mobile:h-3 mini_mobile:w-3 w-4 h-4 mr-2 text-warning-lm" />
                       </span>
-                      3/5 (152 reviews)
+                      {item.review.avg_rating} ({item.review.count} reviews)
                     </p>
                   </div>
                   <Favorites

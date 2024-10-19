@@ -8,11 +8,14 @@ export const Icons = {
 };
 
 export type IconType = keyof typeof Icons;
-
+export type categoryItemsProps = {
+  categoryName: string;
+  categoryId: string;
+};
 export type InputProps = {
   label: string;
   name: string;
-  placeholder?:string;
+  placeholder?: string;
   type: string;
   IconType?: IconType;
   errors?: Errors;
@@ -67,3 +70,15 @@ export type FavoriteIconProps = {
   activeClasses?: string;
   setOpenBar?: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export interface FoodItem {
+  id: string;
+  food_item: {
+    name: string;
+    image: string;
+    price?: number; // Optional if it could be null
+    size_price: Array<{ price: number }>;
+  };
+  qty: number;
+  price: number;
+}

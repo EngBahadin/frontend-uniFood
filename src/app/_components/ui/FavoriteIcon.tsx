@@ -1,6 +1,6 @@
+import { FavoriteIconProps } from "@/types";
 import Link from "next/link";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
-import { FavoriteIconProps } from "../../../types";
 
 function FavoriteIcon({
   type,
@@ -10,12 +10,12 @@ function FavoriteIcon({
 }: FavoriteIconProps) {
   if (type === "header") {
     return (
-      <Link href="/favorites">
+      <Link href="/favorites" className="hidden md:block">
         <span>
           {pathName === "/favorites" ? (
-            <HiHeart className="hidden md:block stroke-[0.7px] w-8 h-8 text-primary-lm" />
+            <HiHeart className="stroke-[0.7px] w-8 h-8 text-primary-lm" />
           ) : (
-            <HiOutlineHeart className="hidden md:block stroke-[0.7px] w-8 h-8 hover:text-primary-lm" />
+            <HiOutlineHeart className="stroke-[0.7px] w-8 h-8 hover:text-primary-lm" />
           )}
         </span>
       </Link>

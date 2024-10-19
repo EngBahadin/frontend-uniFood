@@ -4,6 +4,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { GoTrash } from "react-icons/go"; // Importing trash icon
 
 function Loading() {
+  return(
+    <p>loading... </p>
+  )
   return (
     <div className="flex items-center md:justify-between justify-center h-fit w-full">
       <div className="flex items-center">

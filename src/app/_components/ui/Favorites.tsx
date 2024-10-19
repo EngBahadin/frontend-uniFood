@@ -15,52 +15,51 @@ function Favorites({
   food_item_id: number;
   isFavorite: boolean;
 }) {
+  
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const accessToken = getToken();
   const queryClient = useQueryClient();
-  const addToFavorites = async () => {
-    if (!accessToken) {
-      toast.warning("Please log in to add to favorites");
-      setIsModalOpen(true);
-      return;
-    }
-    try {
-      await api.post("api/favorites/", { food_item_id });
+const addToFavorites = async () => {
+  if (!accessToken) {
+    toast.warning("Please log in to add to favorites");
+    setIsModalOpen(true);
+    return;
+  }
+  try {
+    await api.post("api/favorites/", { food_item_id });
+    queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
+  } catch (error: any) {
+    if (error.response?.status === 401) {
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        // When refresh token is expired
-        queryClient.invalidateQueries({
-          queryKey: ["product"],
-          exact: false,
-        });
-        setIsModalOpen(true);
-      }
-    }
-  };
-  const removeToFavorites = async () => {
-    if (!accessToken) {
-      toast.warning("Please log in to add to favorites");
       setIsModalOpen(true);
-      return;
+    } else {
+      toast.error(error.response?.data?.message || "An error occurred");
     }
-    try {
-      await api.delete("api/favorites/", { data: { food_item_id } });
-      9;
+  }
+};
+
+const removeToFavorites = async () => {
+  if (!accessToken) {
+    toast.warning("Please log in to add to favorites");
+    setIsModalOpen(true);
+    return;
+  }
+  try {
+    await api.delete("api/favorites/", { data: { food_item_id } });
+    queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
+    queryClient.invalidateQueries({ queryKey: ["categories"], exact: false });
+  } catch (error: any) {
+    if (error.response?.status === 401) {
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
       queryClient.invalidateQueries({ queryKey: ["categories"], exact: false });
-    } catch (error: any) {
-      toast.error(error);
-      if (error.response.status === 401) {
-        queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
-        queryClient.invalidateQueries({
-          queryKey: ["categories"],
-          exact: false,
-        });
-        setIsModalOpen(true);
-      }
+      setIsModalOpen(true);
+    } else {
+      toast.error(error.response?.data?.message || "An error occurred");
     }
-  };
+  }
+};
+
 
   const router = useRouter();
 

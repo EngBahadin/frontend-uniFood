@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const About = () => {
   return (
-    <div className="md:pt-36 p-10 flex flex-col bg-pure-white min-h-screen gap-y-14 ">
+    <div className="p-10 flex flex-col bg-pure-white min-h-screen gap-y-14 ">
       <div >
         <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 mb-4">About</h1>
         <p className="md:text-body-3-regular text-text-1-regular text-black md:max-w-[70%]">

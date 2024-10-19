@@ -2,8 +2,8 @@ import Image from "next/image";
 
 function Hero() {
   return (
-    <article className="flex items-center bg-pure-white h-fit px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row md:py-36">
-      <div className="flex flex-col md:items-start items-center gap-y-8 md:pt-0 pt-14 md:text-left text-center ">
+    <article className="flex items-center justify-center bg-pure-white h-screen px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row ">
+      <div className="flex flex-col md:items-start items-center gap-y-8  md:text-left text-center ">
         <h1
           className="text-primary-lm lg:text-sub-heading-1-regular text-body-2-regular
         sm:text-body-1-regular
