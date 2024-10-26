@@ -4,7 +4,7 @@ import {
   Input,
   resetPassForm,
   validateToken,
-} from "@/app/_components";
+} from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { paramsProps } from "../../../../../types";
@@ -40,7 +40,7 @@ export default function ResetPassword({ params }: paramsProps) {
       });
     } else if (isSuccess) {
       toast.success("Password reset successfully");
-      router.push("/auth/signin");
+      router.push("/");
     }
   }, [error, isError, isSuccess]);
 
@@ -87,12 +87,9 @@ export default function ResetPassword({ params }: paramsProps) {
             placeholder="Re enter New Password"
           />
 
-          <Button
-            position="absolute bottom-16  z-10 right-[10%] w-[80%]"
-            isPending={isPending}
-          >
-            Change my password
-          </Button>
+          <div className="absolute bottom-16 z-10 w-[80%] flex flex-col items-center justify-center gap-y-3 right-[10%]">
+            <Button isPending={isPending}>Change my password</Button>
+          </div>
         </form>
       </DynamicLayout>
     );

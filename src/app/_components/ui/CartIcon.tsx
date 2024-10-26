@@ -2,7 +2,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
 
-function ShoppingCart() {
+function CartIcon() {
   const pathName = usePathname();
   const router = useRouter();
   const isCart = pathName === "/cart";
@@ -31,4 +31,4 @@ function ShoppingCart() {
   );
 }
 
-export default ShoppingCart;
+export default CartIcon;

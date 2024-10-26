@@ -1,4 +1,4 @@
-import { DynamicLayout ,SignInForm} from "@/app/_components";
+import { DynamicLayout, SignInForm } from "@/app/_components/funcs";
 export default function SignIn() {
   return (
     <DynamicLayout

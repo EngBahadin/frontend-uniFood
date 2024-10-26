@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Category, ProfilePic, SearchBar, ShoppingCart, SideBar } from ".";
+import {
+  Category,
+  ProfilePic,
+  SearchBar,
+  ShoppingCart,
+  SideBar,
+} from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
 
 function Navbar() {
@@ -20,13 +26,15 @@ function Navbar() {
         <div className="flex justify-between w-full gap-y-4 md:mx-10 lg:mx-20">
           <SideBar />
           <div className="hidden md:flex items-center gap-x-6 text-gray-100 lg:text-body-4-regular text-text-1-regular">
-            <Image
-              src="/unifood-logo.png"
-              alt="uni food logo"
-              width={55}
-              height={50}
-              className="object-contain"
-            />
+            <Link href={"/"}>
+              <Image
+                src="/unifood-logo.png"
+                alt="uni food logo"
+                width={55}
+                height={50}
+                className="object-contain cursor-pointer"
+              />
+            </Link>
             <Link
               className={`${pathName === "/" && activeClasses} hover:text-primary-lm`}
               href="/"

@@ -1,6 +1,6 @@
 "use client";
 import { authHeaderProps } from "../../../types";
-import { TfiArrowCircleLeft } from "..";
+import { TfiArrowCircleLeft } from "../funcs";
 import { useRouter } from "next/navigation";
 
 function AuthHeader({ title, description }: authHeaderProps) {

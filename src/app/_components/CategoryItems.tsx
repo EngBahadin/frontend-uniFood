@@ -4,7 +4,7 @@ import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { Favorites, getCategory } from "..";
+import { Favorites, getCategory } from "./funcs";
 import { useRouter } from "next/navigation";
 import { categoryItemsProps } from "@/types";
 
@@ -21,9 +21,9 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
 
   console.log(data);
 
-if (isError && error instanceof Error) {
-  return <p>An error occurred: {error.message}</p>;
-}
+  if (isError && error instanceof Error) {
+    return <p>An error occurred: {error.message}</p>;
+  }
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDown(true);
@@ -81,7 +81,10 @@ if (isError && error instanceof Error) {
                 </div>
                 <div className="flex justify-between m-2">
                   <div className="flex flex-col md:gap-y-2 gap-y-1 sm:w-48 mini_mobile:w-[130px] w-40">
-                    <h3 className="md:text-text-1-medium sm:text-text-2-medium text-text-3-medium truncate">
+                    <h3
+                      className="md:text-text-1-medium sm:text-text-2-medium text-text-3-medium truncate"
+                      onClick={() => handleProductDetail(item.id)}
+                    >
                       {item.name}
                     </h3>
                     <p className="md:text-text-1-medium sm:text-text-2-medium text-text-3-medium text-primary-lm">

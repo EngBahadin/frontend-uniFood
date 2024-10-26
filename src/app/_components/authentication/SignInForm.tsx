@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { Button, Input } from "..";
+import { Button, Input } from "../funcs";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isError, isSuccess, isPending, error } =
@@ -68,7 +68,7 @@ export default function SignInForm() {
 
         <article>
           <p className="sm:text-text-2-regular text-text-3-regular inline">
-            Don't have an account?{" "}
+            Do not have an account?{" "}
           </p>
           <Link
             className="text-primary-lm underline sm:text-text-2-medium text-text-3-medium"

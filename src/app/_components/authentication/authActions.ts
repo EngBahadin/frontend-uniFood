@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiAuth } from "@/lib/axios";
+import api, { apiAuth } from "@/lib/axios";
 import { validateProps } from "../../../types";
 import { newToken } from "./Auth";
 
@@ -124,6 +124,28 @@ export async function resetPassForm(formData: FormData) {
 
     if (error.response) {
       errorMessage = error.response.data.new_password[0];
+    } else {
+      errorMessage = `Error: ${error.message}`;
+    }
+    throw new Error(errorMessage);
+  }
+}
+export async function ChangePassForm(formData: FormData) {
+  const formObject = Object.fromEntries(formData.entries());
+  formObject.re_new_password = formObject.re_password;
+  formObject.new_password = formObject.password;
+  delete formObject.re_password;
+  delete formObject.password;
+  console.log(formObject);
+  try {
+    await api.post("auth/users/set_password/", formObject);
+  } catch (error: any) {
+    let errorMessage: string;
+
+    if (error.response) {
+      console.log(error.response);
+
+      errorMessage = error.response.data.current_password[0];
     } else {
       errorMessage = `Error: ${error.message}`;
     }

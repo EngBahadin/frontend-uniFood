@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import Image from "next/image";
-import { CategoryItems, categoriesList } from "..";
+import { CategoryItems, categoriesList } from "./funcs";
 
 export default function CategorySection() {
   const {
@@ -14,6 +14,7 @@ export default function CategorySection() {
     queryKey: ["categories", "category-list"],
     queryFn: categoriesList,
   });
+  console.log(categories);
 
   if (isLoading) {
     return (

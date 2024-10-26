@@ -21,6 +21,12 @@ export function createSchema(options: FieldOptions) {
       .trim()
       .min(8, { message: "Password should be at least 8 characters long" });
   }
+   if (options.current_password) {
+     schema.current_password = z
+       .string()
+       .trim()
+       .min(8, { message: "Password should be at least 8 characters long" });
+   }
 
   if (options.re_password) {
     // Define re_password without additional constraints

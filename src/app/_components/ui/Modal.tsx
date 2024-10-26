@@ -1,12 +1,8 @@
+import { ModalProps } from "@/types";
 import ReactDOM from "react-dom";
-export type ModalProps = {
-  onClose: () => void;
-  onNavigate: () => void;
-  title: string;
-  description: string;
-};
 
-function Modal({ onClose, onNavigate,title,description }: ModalProps) {
+
+function Modal({ onClose, onNavigate, title, description,notVerified }: ModalProps) {
   return ReactDOM.createPortal(
     <div
       onBlur={() => onClose()}
@@ -30,15 +26,17 @@ function Modal({ onClose, onNavigate,title,description }: ModalProps) {
           >
             Cancel
           </button>
-          <button
-            onClick={() => {
-              onNavigate();
-            }}
-            className="bg-primary-lm text-white md:px-4 px-3 py-2 h-fit rounded md:text-text-1-medium
+          {!notVerified && (
+            <button
+              onClick={() => {
+                onNavigate();
+              }}
+              className="bg-primary-lm text-white md:px-4 px-3 py-2 h-fit rounded md:text-text-1-medium
         sm:text-text-2-medium text-caption-2-medium"
-          >
-            Sign In
-          </button>
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </div>
     </div>,
@@ -47,3 +45,4 @@ function Modal({ onClose, onNavigate,title,description }: ModalProps) {
 }
 
 export default Modal;
+// resend verification link should be added !

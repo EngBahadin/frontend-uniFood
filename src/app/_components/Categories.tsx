@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { categoriesList } from "..";
+import { categoriesList } from "./funcs";
 
 export function Category({
   type,

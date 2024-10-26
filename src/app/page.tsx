@@ -1,5 +1,5 @@
-import Hero from "./_components/ui/Hero";
-import CategorySection from "./_components/ui/CategorySection";
+import Hero from "./_components/Hero";
+import CategorySection from "./_components/CategorySection";
 
 export default function Home() {
   return (

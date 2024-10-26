@@ -8,16 +8,22 @@ html,
 body {
   @apply m-0 p-0;
 }
-html::-webkit-scrollbar {
-  display: table-header-group;
-  width: 0px;
-  height: 0px;
+/* Hide scrollbar in WebKit-based browsers (e.g., Chrome, Edge, Brave) */
+html::-webkit-scrollbar, .scrolling::-webkit-scrollbar {
+  display: none;
 }
-.scrolling::-webkit-scrollbar {
-  display: table-header-group;
-  width: 0px;
-  height: 0px;
+
+/* Hide scrollbar in Firefox */
+html, .scrolling {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
+
+/* Ensure scrolling is still possible even though the scrollbar is hidden */
+html, .scrolling {
+  overflow: auto;
+}
+
 .cen{
   left:0%;
   top:50%;

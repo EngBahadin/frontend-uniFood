@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FieldOptions } from "../../../types";
-import { createSchema } from "..";
+import { createSchema } from "../funcs";
 
 export const useFormValidation = () => {
   const [errors, setErrors] = useState<{

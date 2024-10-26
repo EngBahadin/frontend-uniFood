@@ -37,7 +37,6 @@ export const orderNewAccessToken = async () => {
   } catch (error: any) {
     if (error.response?.status === 401) {
       console.log("remove tokens");
-
       return removeTokens(); // refresh token is expired
     }
     return null;

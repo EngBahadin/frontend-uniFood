@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEvent, memo, useState } from "react";
 import { Errors, Icons, InputProps } from "../../../types";
-import { IoEyeOffOutline, IoEyeOutline } from "..";
+import { IoEyeOffOutline, IoEyeOutline } from "../funcs";
 
 const Input = memo(
   ({
@@ -84,7 +84,7 @@ const Input = memo(
                 }`}
               />
             )}
-            {passType === "text" && name === "password" && (
+            {(passType === "text" && (name === "password"||name==="current_password")) && (
               <IoEyeOutline
                 onClick={togglePassType}
                 className={`absolute sm:h-6 sm:w-6 h-4 w-4 right-3 cursor-pointer ${

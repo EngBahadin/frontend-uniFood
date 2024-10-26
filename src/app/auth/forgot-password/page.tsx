@@ -4,7 +4,7 @@ import {
   DynamicLayout,
   Input,
   forgotPassForm,
-} from "@/app/_components";
+} from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { useRouter } from "next/navigation";
@@ -55,12 +55,9 @@ export default function ForgotPassword() {
           setErrors={setErrors}
           placeholder="eg. johndoe@example.com"
         />
-        <Button
-          position="absolute bottom-16  z-10 right-[10%] w-[79%]"
-          isPending={isPending}
-        >
-          Continue
-        </Button>
+        <div className="absolute bottom-16 z-10 w-[80%] flex flex-col items-center justify-center gap-y-3 right-[10%]">
+          <Button isPending={isPending}>Continue</Button>
+        </div>
       </form>
     </DynamicLayout>
   );

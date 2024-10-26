@@ -1,6 +1,6 @@
 "use client";
 
-import { verifyAcc } from "@/app/_components";
+import { verifyAcc } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import Image from "next/image";
 import { redirect } from "next/navigation";

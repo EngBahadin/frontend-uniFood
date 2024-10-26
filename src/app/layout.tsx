@@ -10,6 +10,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 export const metadata: Metadata = {
   title: "UniFood",
   description: "a way to order foods in your university without waiting for it",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

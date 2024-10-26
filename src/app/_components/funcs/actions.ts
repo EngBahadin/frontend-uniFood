@@ -27,8 +27,19 @@ export async function getCategory(categoryId: string) {
     }
   } else {
     console.log("there is access token");
-    const response = await api.get(`api/categories/${categoryId}/food-items/`);
-    return response.data;
+    try {
+      const response = await api.get(
+        `api/categories/${categoryId}/food-items/`
+      );
+      return response.data;
+    } catch (error: any) {
+      if(error.response.data.code==="user_inactive"){
+          const response = await axios.get(
+            `http://localhost:8000/api/categories/${categoryId}/food-items/`
+          );
+          return response.data;
+      }
+    }
   }
 }
 export async function getUserCartItems() {

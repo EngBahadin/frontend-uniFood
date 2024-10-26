@@ -1,4 +1,4 @@
-import { DynamicLayout, SignUpForm } from "@/app/_components";
+import { DynamicLayout, SignUpForm } from "@/app/_components/funcs";
 
 function SignUp() {
   return (

@@ -8,7 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { HiBars3 } from "react-icons/hi2";
 import { PiInfoLight } from "react-icons/pi";
 import { TbCategory, TbHomeFilled } from "react-icons/tb";
-import { Category } from ".";
+import { Category } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
 
 function SideBar() {
@@ -31,13 +31,15 @@ function SideBar() {
             className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary-lm"
           />
         )}
-        <Image
-          src="/unifood-logo.png"
-          alt="uni food logo"
-          width={45}
-          height={41}
-          className="overflow-hidden w-8 h-8"
-        />
+        <Link href={"/"}>
+          <Image
+            src="/unifood-logo.png"
+            alt="uni food logo"
+            width={55}
+            height={50}
+            className="object-contain cursor-pointer"
+          />
+        </Link>
       </menu>
 
       <article

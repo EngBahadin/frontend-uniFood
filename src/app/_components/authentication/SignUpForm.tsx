@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { Button, Input, signUpForm } from "..";
+import { Button, Input, signUpForm } from "../funcs";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import { useFormValidation } from "../hooks/useFormValidation";
 import { toast } from "sonner";
@@ -56,7 +56,7 @@ const SignUpForm = () => {
         IconType="user"
         errors={errors}
         setErrors={setErrors}
-        placeholder="eg. John Doe" 
+        placeholder="eg. John Doe"
       />
       <Input
         type="email"

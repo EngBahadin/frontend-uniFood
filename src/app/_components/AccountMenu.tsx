@@ -2,28 +2,23 @@
 import Link from "next/link";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { useEffect, useState } from "react";
-import { getToken, removeTokens } from ".";
+import { getToken, removeTokens } from "./funcs";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { TiUser } from "react-icons/ti";
-import { IoLogOut } from "react-icons/io5";
+import { IoLogIn, IoLogOut } from "react-icons/io5";
 
-function ProfilePic() {
+function AccountMenu() {
   const [accessToken, setAccessToken] = useState(false);
   const [openBar, setOpenBar] = useState(false);
-  const pathName = usePathname();
   const classes = "flex items-center gap-3 hover:text-primary-lm ";
-  const activeClasses =
-    "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
   useEffect(() => {
     const token = getToken();
     setAccessToken(!!token);
     return () => {};
   }, []);
 
-  const handleLogout = () => {
-    alert("logged out");
-    removeTokens();
+  const toggleAuth = () => {
+    if (accessToken) removeTokens();
   };
   return (
     <>
@@ -45,10 +40,7 @@ function ProfilePic() {
         className={`${openBar ? "p-6 " : "h-0 p-0"} overflow-hidden absolute rounded-bl-xl duration-300 ease-out bg-pure-white drop-shadow-md top-16 right-0`}
       >
         <header className="flex flex-row items-center gap-x-2">
-          <div
-            onClick={handleLogout}
-            className="border-gray-100 hover:border-2 bg-primary-lm  md:size-9 sm:size-7 size-6   rounded-full "
-          >
+          <div className="border-gray-100 hover:border-2 bg-primary-lm  md:size-9 sm:size-7 size-6   rounded-full ">
             <Image
               src="/man_pic.webp"
               alt="Profile Pic"
@@ -57,21 +49,21 @@ function ProfilePic() {
               className="rounded-full size-full"
             />
           </div>
-          <h4>blnd ismael</h4>
+          <h4 className="text-text-1-regular">blnd ismael</h4>
         </header>
-        <div className=" flex flex-col gap-y-4 text-gray-75 sm:text-text-1-regular text-text-3-regular mt-4">
+        <div className=" flex flex-col gap-y-4  sm:text-text-1-regular text-text-3-regular mt-4">
           <Link
             onClick={() => setOpenBar(false)}
             href="/profile"
-            className={`${pathName === "/" && activeClasses}  ${classes}`}
+            className={classes}
           >
             <TiUser className="sm:w-6 sm:h-6 w-5 h-5 " />
             Profile
           </Link>
           <Link
             onClick={() => setOpenBar(false)}
-            href="/order_history"
-            className={`${pathName === "/about" && activeClasses}  ${classes}`}
+            href="/order_history/preparing"
+            className={classes}
           >
             <span>
               <PiShoppingCartSimpleFill className="sm:w-6 sm:h-6 w-5 h-5" />
@@ -81,19 +73,23 @@ function ProfilePic() {
           <Link
             onClick={() => {
               setOpenBar(false);
-              handleLogout();
+              toggleAuth();
             }}
             href="/auth/signin"
-            className={`${pathName === "/about" && activeClasses}  ${classes}`}
+            className={classes}
           >
             <span>
-              <IoLogOut className="sm:w-6 sm:h-6 w-5 h-5" />
+              {accessToken ? (
+                <IoLogOut className="sm:w-6 sm:h-6 w-5 h-5" />
+              ) : (
+                <IoLogIn className="sm:w-6 sm:h-6 w-5 h-5" />
+              )}
             </span>
-            Sign out
+            {accessToken ? "Log out" : "Log in"}
           </Link>
         </div>
       </article>
     </>
   );
 }
-export default ProfilePic;
+export default AccountMenu;

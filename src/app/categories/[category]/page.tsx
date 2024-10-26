@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PiClockLight } from "react-icons/pi";
 import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
-import { Favorites, getCategory } from "@/app/_components";
+import { Favorites, getCategory } from "@/app/_components/funcs";
 import { useRouter } from "next/navigation";
 
 type categoryItemsProps = {
@@ -12,16 +12,15 @@ type categoryItemsProps = {
   };
 };
 function CategoryPage({ params }: categoryItemsProps) {
-  const router  = useRouter();
+  const router = useRouter();
   const { data, isError, error } = useQuery({
     queryKey: ["product", "categories", params.category],
     queryFn: () => getCategory(params.category),
   });
 
-   const handleProductDetail = (id: number) => {
-     router.push(`/product/${id}`);
-   };
-
+  const handleProductDetail = (id: number) => {
+    router.push(`/product/${id}`);
+  };
 
   if (isError) {
     <p>an error occurred {error.message}</p>;
@@ -37,7 +36,7 @@ function CategoryPage({ params }: categoryItemsProps) {
           {data && data.length === 0 && (
             <div className="absolute top-1/2  flex justify-center items-center ">
               <p className="text-primary-lm text-text-2-medium">
-                Sorry, we don't have any items in this category at the moment.
+                Sorry, we don not have any items in this category at the moment.
               </p>
             </div>
           )}
@@ -73,7 +72,8 @@ function CategoryPage({ params }: categoryItemsProps) {
                     >
                       {item.price !== null
                         ? item.price
-                        : item.size_price[0].price}{" "} IQD
+                        : item.size_price[0].price}{" "}
+                      IQD
                     </p>
                     <p className="text-gray-100 flex">
                       <PiClockLight className="sm:w-4 sm:h-4 mini_mobile:w-3 mini_mobile:h-3" />
