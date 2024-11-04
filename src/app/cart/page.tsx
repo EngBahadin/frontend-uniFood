@@ -2,13 +2,23 @@
 import { GoTrash } from "react-icons/go";
 import Image from "next/image";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUserCartItems, updateQuantityItem } from "../_components/actions";
 import { useEffect, useState } from "react";
 import { FoodItem } from "@/types";
+import {
+  getUserCartItems,
+  updateQuantityItem,
+} from "../_components/funcs/actions";
+import { toast } from "sonner";
+
+import api from "@/lib/axios";
+import ConfirmModal from "../_components/ui/ConfirmModal";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const queryClient = useQueryClient();
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
   const { data, isLoading } = useQuery<FoodItem[]>({
     queryKey: ["cart"],
     queryFn: getUserCartItems,
@@ -33,13 +43,57 @@ export default function Cart() {
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["quantity"],
+      });
     },
   });
 
+  const removeToCart = async (food_id: string) => {
+    try {
+      await api.delete(`api/cart/items/${food_id}/`);
+      queryClient.invalidateQueries({
+        queryKey: ["cart"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["quantity"],
+      });
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "An error occurred");
+    }
+  };
+
   const updateQuantity = (type: string, item: FoodItem) => {
     const newQty = type === "increment" ? item.qty + 1 : item.qty - 1;
-    if (newQty < 1 || newQty > 99) return;
+    if (newQty > 99) return;
     mutate({ id: item.id, newQty });
+  };
+
+  const handleNavigate = async () => {
+    if (data) {
+      try {
+        await Promise.all(
+          data.map((item) => api.delete(`api/cart/items/${item.id}/`))
+        );
+
+        queryClient.invalidateQueries({
+          queryKey: ["cart"],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["quantity"],
+        });
+
+        toast.success("Order is confirmed");
+
+        router.push("/");
+      } catch (error) {
+        toast.error("Failed to confirm order. Please try again.");
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -60,7 +114,11 @@ export default function Cart() {
   }
 
   if (data && data.length === 0) {
-    return <p>Your cart is empty.</p>; // Handle empty cart
+    return (
+      <p className="grid place-content-center mt-[40%] text-body-4-regular text-primary-lm ">
+        Your cart is empty :(
+      </p>
+    ); // Handle empty cart
   }
 
   return (
@@ -114,7 +172,10 @@ export default function Cart() {
                   >
                     +
                   </button>
-                  <GoTrash className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5" />
+                  <GoTrash
+                    className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer"
+                    onClick={() => removeToCart(item.id)}
+                  />
                 </div>
               </article>
             ))}
@@ -151,11 +212,17 @@ export default function Cart() {
               </span>
             </p>
           </div>
-          <button className="bg-primary-lm text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold">
+          <button
+            className="bg-primary-lm text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
+            onClick={() => setShowModal(true)}
+          >
             Confirm Order
           </button>
         </div>
       </div>
+      {showModal && (
+        <ConfirmModal onClose={handleClose} onNavigate={handleNavigate} />
+      )}
     </section>
   );
 }

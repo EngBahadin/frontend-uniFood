@@ -2,13 +2,10 @@
 import {
   DynamicLayout,
   Input,
-  resetPassForm,
-  validateToken,
 } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Button from "@/app/_components/ui/Button";

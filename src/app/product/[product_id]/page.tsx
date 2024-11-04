@@ -2,26 +2,15 @@
 import { getToken, Modal } from "@/app/_components/funcs";
 import { SlArrowLeft } from "react-icons/sl";
 import api from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GoTrash } from "react-icons/go";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { toast } from "sonner";
-
-const extras = [
-  { name: "Extra cheese", price: "+500 IQD" },
-  { name: "Extra sauce", price: "+300 IQD" },
-  { name: "Bacon", price: "+700 IQD" },
-];
-
-const drinks = [
-  { name: "Coca Cola", price: "+1000 IQD" },
-  { name: "Pepsi", price: "+1000 IQD" },
-  { name: "Sprite", price: "+900 IQD" },
-];
+import { drinks, extras } from "@/lib/utils";
+import { getProductDetail } from "@/app/_components/funcs/actions";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type paramsProps = {
   params: {
@@ -37,50 +26,37 @@ function ProductDetail({ params }: paramsProps) {
   const router = useRouter();
   const [notVerified, setNotVerified] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const queryClient = useQueryClient();
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  const handleBack = ()=>{
+  const handleBack = () => {
     router.back();
-  }
+  };
   const handleNavigate = () => {
     router.push("/auth/signin");
   };
-  const getProductDetail = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/food-items/${product_id}/`
-      );
 
-      return response.data;
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
   const { data, isSuccess } = useQuery({
     queryKey: ["product", product_id],
-    queryFn: getProductDetail,
+    queryFn: () => getProductDetail(product_id),
   });
 
-  useEffect(() => {
-    getProductDetail();
-  }, []);
-
   const addToCart = async (food_item: number) => {
-    // add to cart logic here
     if (!accessToken) {
       toast.warning("Please log in to add to cart");
       setIsModalOpen(true);
       return;
     }
     try {
-      const data = await api.post("api/cart/items/", {
+      await api.post("api/cart/items/", {
         food_item,
         qty: quantity,
       });
-      console.log(data);
-      alert("Item added to cart successfully!");
+      queryClient.invalidateQueries({
+        queryKey: ["quantity"],
+        exact: false,
+      });
       router.back();
     } catch (error: any) {
       if (error.response?.status === 401) {
@@ -119,7 +95,7 @@ function ProductDetail({ params }: paramsProps) {
           className="w-fit  rounded-2xl py-10 z-50"
           onClick={handleBack}
         >
-          <SlArrowLeft  className="cursor-pointer text-primary-lm size-5 md:size-7 sm:size-6 " />
+          <SlArrowLeft className="cursor-pointer text-primary-lm size-5 md:size-7 sm:size-6 " />
         </button>
         <section className="flex justify-center flex-col ">
           {/* right and left  */}
@@ -170,7 +146,10 @@ function ProductDetail({ params }: paramsProps) {
                 >
                   +
                 </span>
-                <GoTrash className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 bg-pure-white md:block hidden" />
+                <GoTrash
+                  className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 bg-pure-white md:block hidden"
+                  onClick={handleBack}
+                />
               </div>
               <button
                 className="lg:h-14 lg:w-72 h-12 w-52  lg:text-text-1-semiBold text-text-2-semiBold rounded-xl bg-primary-lm text-pure-white py-1"
@@ -235,14 +214,6 @@ function ProductDetail({ params }: paramsProps) {
         {isModalOpen && (
           <Modal
             notVerified={notVerified}
-            title={
-              notVerified ? "Email Verification Required!" : "Sign in Required!"
-            }
-            description={
-              notVerified
-                ? "Your account is not verified. Please check your email for the verification link to complete the process."
-                : "Please sign in to add items to your favorites. You can create an account during the sign-in process if needed."
-            }
             onNavigate={handleNavigate}
             onClose={handleCloseModal}
           />

@@ -6,7 +6,6 @@ import Navbar from "./_components/navbar";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
 export const metadata: Metadata = {
   title: "UniFood",
   description: "a way to order foods in your university without waiting for it",

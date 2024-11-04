@@ -33,11 +33,11 @@ export async function getCategory(categoryId: string) {
       );
       return response.data;
     } catch (error: any) {
-      if(error.response.data.code==="user_inactive"){
-          const response = await axios.get(
-            `http://localhost:8000/api/categories/${categoryId}/food-items/`
-          );
-          return response.data;
+      if (error.response.data.code === "user_inactive") {
+        const response = await axios.get(
+          `http://localhost:8000/api/categories/${categoryId}/food-items/`
+        );
+        return response.data;
       }
     }
   }
@@ -45,6 +45,7 @@ export async function getCategory(categoryId: string) {
 export async function getUserCartItems() {
   try {
     const response = await api.get("api/cart/items/");
+    console.log(response.data);
     return response.data;
   } catch (error: any) {}
 }
@@ -53,3 +54,14 @@ export async function updateQuantityItem(id: string, newQty: number) {
     qty: newQty,
   });
 }
+export const getProductDetail = async (product_id: string) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/food-items/${product_id}/`
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error(error);
+  }
+};

@@ -31,10 +31,10 @@ function Hero() {
           alt="Ellipse"
         />
         <Image
-          src="/burger-cheese.png"
+          src="/cheese-burger.png"
           width={341}
           height={341}
-          alt="burger-cheese"
+          alt="/cheese-burger.png"
           className="absolute top-0 right-4 xl:right-8 object-contain"
         />
       </div>

@@ -27,7 +27,7 @@ export type FieldOptions = {
   password?: boolean;
   username?: boolean;
   re_password?: boolean;
-  current_password?:boolean;
+  current_password?: boolean;
 };
 
 export type Errors = {
@@ -79,6 +79,7 @@ export interface FoodItem {
     image: string;
     price?: number; // Optional if it could be null
     size_price: Array<{ price: number }>;
+    id: number;
   };
   qty: number;
   price: number;
@@ -86,9 +87,9 @@ export interface FoodItem {
 export type ModalProps = {
   onClose: () => void;
   onNavigate: () => void;
-  title: string;
-  description: string;
-  notVerified: boolean;
+  notVerified?: boolean;
+  title?: string;
+  description?: string;
 };
 export type ButtonProps = {
   children: React.ReactNode;

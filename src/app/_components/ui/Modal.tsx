@@ -1,8 +1,15 @@
 import { ModalProps } from "@/types";
 import ReactDOM from "react-dom";
 
+function Modal({ onClose, onNavigate, notVerified }: ModalProps) {
+  const title = notVerified
+    ? "Email Verification Required!"
+    : "Sign in Required!";
 
-function Modal({ onClose, onNavigate, title, description,notVerified }: ModalProps) {
+  const description = notVerified
+    ? "Your account is not verified. Please check your email for the verification link to complete the process."
+    : "Please sign in to add items to your favorites. You can create an account during the sign-in process if needed.";
+
   return ReactDOM.createPortal(
     <div
       onBlur={() => onClose()}
