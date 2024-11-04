@@ -22,10 +22,10 @@ const OrderHistory = ({ children }: { children: ReactNode }) => {
           Preparing
         </Link>
         <Link
-          className={`${pathName === "/order_history/delivered" && activeClasses}  ${classes}`}
-          href={"delivered"}
+          className={`${pathName === "/order_history/prepared" && activeClasses}  ${classes}`}
+          href={"prepared"}
         >
-          Delivered
+          Prepared
         </Link>
       </nav>
       {children}

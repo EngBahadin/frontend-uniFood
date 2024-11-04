@@ -1,7 +1,7 @@
 import axios from "axios";
 import api, { apiAuth } from "@/lib/axios";
 import { validateProps } from "../../../types";
-import { newToken } from "./Auth";
+import { newToken, removeTokens } from "./Auth";
 
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
@@ -145,6 +145,25 @@ export async function ChangePassForm(formData: FormData) {
     if (error.response) {
       console.log(error.response);
 
+      errorMessage = error.response.data.current_password[0];
+    } else {
+      errorMessage = `Error: ${error.message}`;
+    }
+    throw new Error(errorMessage);
+  }
+}
+export async function deleteAccount(formData: FormData) {
+  const formObject = Object.fromEntries(formData.entries());
+  formObject.current_password = formObject.password;
+  delete formObject.password;
+  console.log(formObject);
+  try {
+    await api.delete("auth/users/me/", { data: formObject });
+    removeTokens();
+  } catch (error: any) {
+    let errorMessage: string;
+
+    if (error.response) {
       errorMessage = error.response.data.current_password[0];
     } else {
       errorMessage = `Error: ${error.message}`;

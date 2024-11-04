@@ -61,6 +61,7 @@ const Input = memo(
             )}
             <input
               onChange={handleChange}
+              required
               className={`h-full outline-none bg-gray-15 w-full pr-3 sm:pl-11 pl-9 placeholder:text-gray-75  ${
                 errors?.[name]
                   ? "text-error-lm"
@@ -84,14 +85,15 @@ const Input = memo(
                 }`}
               />
             )}
-            {(passType === "text" && (name === "password"||name==="current_password")) && (
-              <IoEyeOutline
-                onClick={togglePassType}
-                className={`absolute sm:h-6 sm:w-6 h-4 w-4 right-3 cursor-pointer ${
-                  errors?.[name] ? "text-error-lm" : "text-gray-75"
-                }`}
-              />
-            )}
+            {passType === "text" &&
+              (name === "password" || name === "current_password") && (
+                <IoEyeOutline
+                  onClick={togglePassType}
+                  className={`absolute sm:h-6 sm:w-6 h-4 w-4 right-3 cursor-pointer ${
+                    errors?.[name] ? "text-error-lm" : "text-gray-75"
+                  }`}
+                />
+              )}
           </div>
           {errors?.[name] && (
             <p

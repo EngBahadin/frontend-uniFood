@@ -17,7 +17,7 @@ preparationStatus?:string
 function OrderedFoodCart({cartType,preparationTime}:OrderHistoryCartProps) {
       const foods = [
         { id: 1, name: "Biryani", price: 5000, image: "/pizza.png" },
-        { id: 2, name: "Burger", price: 5000, image: "/burger.png" },
+        { id: 2, name: "Burger", price: 5000, image: "/cheese-burger.png" },
       ];
 
       
