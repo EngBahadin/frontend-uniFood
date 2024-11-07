@@ -7,7 +7,6 @@ import { useRef, useState } from "react";
 import { Favorites, getCategory } from "./funcs";
 import { useRouter } from "next/navigation";
 import { categoryItemsProps } from "@/types";
-
 function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDown, setIsDown] = useState(false);
@@ -71,7 +70,7 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
                 >
                   <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] h-[80px] w-[100px]">
                     <Image
-                      src={item.image || "/"}
+                      src={`${item.image}` || "/"}
                       width={132}
                       height={112}
                       alt="burger-cheese"

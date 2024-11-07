@@ -1,10 +1,13 @@
-import api from "@/lib/axios";
-import axios from "axios";
+import api, { apiClient, baseURL } from "@/lib/axios";
 import { getToken } from ".";
 
 export async function categoriesList() {
   try {
-    const response = await axios.get("http://localhost:8000/api/categories/");
+    const response = await apiClient.get(`${baseURL}/api/categories/`, {
+      headers: {
+        "User-Agent": ``,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -17,8 +20,8 @@ export async function getCategory(categoryId: string) {
     console.log("no access token");
 
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/categories/${categoryId}/food-items/`
+      const response = await apiClient.get(
+        `${baseURL}/api/categories/${categoryId}/food-items/`
       );
       return response.data;
     } catch (error) {
@@ -34,8 +37,8 @@ export async function getCategory(categoryId: string) {
       return response.data;
     } catch (error: any) {
       if (error.response.data.code === "user_inactive") {
-        const response = await axios.get(
-          `http://localhost:8000/api/categories/${categoryId}/food-items/`
+        const response = await apiClient.get(
+          `${baseURL}/api/categories/${categoryId}/food-items/`
         );
         return response.data;
       }
@@ -56,8 +59,8 @@ export async function updateQuantityItem(id: string, newQty: number) {
 }
 export const getProductDetail = async (product_id: string) => {
   try {
-    const response = await axios.get(
-      `http://localhost:8000/api/food-items/${product_id}/`
+    const response = await apiClient.get(
+      `${baseURL}/api/food-items/${product_id}/`
     );
 
     return response.data;

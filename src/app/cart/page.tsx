@@ -2,23 +2,24 @@
 import { GoTrash } from "react-icons/go";
 import Image from "next/image";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FoodItem } from "@/types";
 import {
   getUserCartItems,
   updateQuantityItem,
 } from "../_components/funcs/actions";
 import { toast } from "sonner";
-
 import api from "@/lib/axios";
 import ConfirmModal from "../_components/ui/ConfirmModal";
 import { useRouter } from "next/navigation";
+import { CartContext } from "@/context/CartContext";
 
 export default function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const { updateCartQuantity } = useContext(CartContext);
   const { data, isLoading } = useQuery<FoodItem[]>({
     queryKey: ["cart"],
     queryFn: getUserCartItems,
@@ -36,6 +37,7 @@ export default function Cart() {
           item.id === id ? { ...item, qty: newQty } : item
         );
         queryClient.setQueryData(["cart"], newCartItem);
+        updateCartQuantity();
       }
     },
     onSettled: () => {
@@ -43,9 +45,7 @@ export default function Cart() {
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-      queryClient.invalidateQueries({
-        queryKey: ["quantity"],
-      });
+      updateCartQuantity();
     },
   });
 
@@ -55,9 +55,7 @@ export default function Cart() {
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-      queryClient.invalidateQueries({
-        queryKey: ["quantity"],
-      });
+      updateCartQuantity();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "An error occurred");
     }
@@ -79,9 +77,7 @@ export default function Cart() {
         queryClient.invalidateQueries({
           queryKey: ["cart"],
         });
-        queryClient.invalidateQueries({
-          queryKey: ["quantity"],
-        });
+        updateCartQuantity();
 
         toast.success("Order is confirmed");
 
@@ -113,9 +109,9 @@ export default function Cart() {
     return <p>Loading...</p>;
   }
 
-  if (data && data.length === 0) {
+  if (!data || (data && data.length === 0)) {
     return (
-      <p className="grid place-content-center mt-[40%] text-body-4-regular text-primary-lm ">
+      <p className="grid place-content-center mt-[20%] text-body-4-regular text-primary-lm ">
         Your cart is empty :(
       </p>
     ); // Handle empty cart

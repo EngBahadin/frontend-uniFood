@@ -4,13 +4,14 @@ import { SlArrowLeft } from "react-icons/sl";
 import api from "@/lib/axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GoTrash } from "react-icons/go";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { toast } from "sonner";
 import { drinks, extras } from "@/lib/utils";
 import { getProductDetail } from "@/app/_components/funcs/actions";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { CartContext } from "@/context/CartContext";
 
 type paramsProps = {
   params: {
@@ -26,7 +27,8 @@ function ProductDetail({ params }: paramsProps) {
   const router = useRouter();
   const [notVerified, setNotVerified] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const { updateCartQuantity } = useContext(CartContext);
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -53,10 +55,7 @@ function ProductDetail({ params }: paramsProps) {
         food_item,
         qty: quantity,
       });
-      queryClient.invalidateQueries({
-        queryKey: ["quantity"],
-        exact: false,
-      });
+      updateCartQuantity();
       router.back();
     } catch (error: any) {
       if (error.response?.status === 401) {

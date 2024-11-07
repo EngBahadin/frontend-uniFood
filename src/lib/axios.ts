@@ -2,8 +2,20 @@ import { orderNewAccessToken } from "@/app/_components/authentication/Auth";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 
+export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+//ngrok-skip-browser-warning
 const api = axios.create({
-  baseURL: "http://localhost:8000/", // Replace with your base URL
+  baseURL: `${baseURL}/`, // Replace with your base URL
+  headers: {
+    "User-Agent": "",
+  },
+});
+
+export const apiClient = axios.create({
+  baseURL: `${baseURL}/`, 
+  headers: {
+    "User-Agent": "",
+  },
 });
 
 // Request interceptor to add Authorization header if token exists
@@ -57,7 +69,7 @@ api.interceptors.response.use(
 export default api;
 
 export const apiAuth = axios.create({
-  baseURL: "http://localhost:8000/auth",
+  baseURL: `${baseURL}/auth`,
   headers: {
     "Content-Type": "application/json",
   },

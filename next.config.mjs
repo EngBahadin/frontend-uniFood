@@ -1,16 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8000",
-        pathname: "**", 
-      },
-    ],
+    domains: ["0987-185-106-29-195.ngrok-free.app"], // Add the ngrok domain here
   },
 };
 
 export default nextConfig;
-// next.config.js

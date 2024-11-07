@@ -1,6 +1,13 @@
+'use client'
 import Image from "next/image";
 
 function Hero() {
+  const scrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight, 
+      behavior: "smooth", 
+    });
+  };
   return (
     <article className="flex items-center justify-center bg-pure-white h-screen px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row ">
       <div className="flex flex-col md:items-start items-center gap-y-8  md:text-left text-center ">
@@ -18,7 +25,10 @@ function Hero() {
           order your favorite food in class and eat it without
           <br className="hidden sm:block" /> waiting to prepare when you arrive
         </p>
-        <button className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white sm:text-text-1-semiBold text-text-3-medium  grid place-items-center rounded-lg">
+        <button
+          className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white sm:text-text-1-semiBold text-text-3-medium  grid place-items-center rounded-lg"
+          onClick={scrollDown}
+        >
           Order now
         </button>
       </div>

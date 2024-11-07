@@ -1,5 +1,5 @@
 import axios from "axios";
-import api, { apiAuth } from "@/lib/axios";
+import api, { apiAuth, apiClient, baseURL } from "@/lib/axios";
 import { validateProps } from "../../../types";
 import { newToken, removeTokens } from "./Auth";
 
@@ -98,9 +98,10 @@ export async function forgotPassForm(formData: FormData) {
 }
 
 export async function validateToken(value: validateProps) {
+
   try {
-    await axios.post(
-      "http://localhost:8000/api/users/uid-token-validation/",
+    await apiClient.post(
+      `${baseURL}/api/users/uid-token-validation/`,
       value,
       {
         headers: {
