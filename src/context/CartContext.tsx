@@ -6,6 +6,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 
 export const CartContext = createContext({
   cartItemQuantity: 0,
+  setCartItemQuantity:(prev:0)=>{},
   updateCartQuantity: () => {},
 });
 
@@ -28,7 +29,9 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     }
   }, [data]);
   return (
-    <CartContext.Provider value={{ cartItemQuantity, updateCartQuantity }}>
+    <CartContext.Provider
+      value={{ cartItemQuantity, updateCartQuantity, setCartItemQuantity }}
+    >
       {children}
     </CartContext.Provider>
   );

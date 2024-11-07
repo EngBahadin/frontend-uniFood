@@ -19,7 +19,7 @@ export default function Cart() {
   const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const { updateCartQuantity } = useContext(CartContext);
+  const { updateCartQuantity, setCartItemQuantity } = useContext(CartContext);
   const { data, isLoading } = useQuery<FoodItem[]>({
     queryKey: ["cart"],
     queryFn: getUserCartItems,
@@ -74,10 +74,12 @@ export default function Cart() {
           data.map((item) => api.delete(`api/cart/items/${item.id}/`))
         );
 
-        queryClient.invalidateQueries({
+        setCartItemQuantity(0);
+        await queryClient.invalidateQueries({
           queryKey: ["cart"],
         });
-        updateCartQuantity();
+
+        queryClient.setQueryData<FoodItem[]>(["cart"], []);
 
         toast.success("Order is confirmed");
 

@@ -1,24 +1,16 @@
 "use client";
-import { FoodItem } from "@/types";
-import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
-import { getUserCartItems } from "../funcs/actions";
 import { CartContext } from "@/context/CartContext";
-
-
-
 
 function CartIcon() {
   const pathName = usePathname();
   const router = useRouter();
   const isCart = pathName === "/cart";
-  const {cartItemQuantity}=useContext(CartContext);
+  const { cartItemQuantity } = useContext(CartContext);
 
   //const [totalItemCount, setTotalItemCount] = useState(0);
-
-
 
   const handleNavigate = () => {
     router.push("/cart");
