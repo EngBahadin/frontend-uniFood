@@ -6,16 +6,10 @@ export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 //ngrok-skip-browser-warning
 const api = axios.create({
   baseURL: `${baseURL}/`, // Replace with your base URL
-  headers: {
-    "User-Agent": "",
-  },
 });
 
 export const apiClient = axios.create({
-  baseURL: `${baseURL}/`, 
-  headers: {
-    "User-Agent": "",
-  },
+  baseURL: `${baseURL}/`,
 });
 
 // Request interceptor to add Authorization header if token exists

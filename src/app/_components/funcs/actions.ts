@@ -3,11 +3,7 @@ import { getToken } from ".";
 
 export async function categoriesList() {
   try {
-    const response = await apiClient.get(`${baseURL}/api/categories/`, {
-      headers: {
-        "User-Agent": ``,
-      },
-    });
+    const response = await apiClient.get(`${baseURL}/api/categories/`);
     return response.data;
   } catch (error) {
     console.error(error);
