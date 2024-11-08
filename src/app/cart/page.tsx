@@ -99,7 +99,9 @@ export default function Cart() {
       const total = data.reduce(
         (acc: number, item: FoodItem) =>
           acc +
-          (item.food_item.price || item.food_item.size_price[0]?.price || 0) *
+          ((item.food_item.price === 10 ? 10000 : item.food_item.price) ||
+            item.food_item.size_price[0]?.price ||
+            0) *
             item.qty,
         0
       );
@@ -150,7 +152,9 @@ export default function Cart() {
                     </h3>
                     <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
                       {item.food_item.price !== null
-                        ? item.food_item.price
+                        ? item.food_item.price === 10
+                          ? 10000
+                          : item.food_item.price
                         : item.food_item.size_price[0]?.price || 0}{" "}
                       IQD
                     </p>
@@ -196,7 +200,9 @@ export default function Cart() {
                   </span>
                   <span className="text-gray-100 lg:text-text-1-regular md:text-text-2-regular text-text-3-regular">
                     {item.food_item.price !== null
-                      ? item.food_item.price
+                      ? item.food_item.price === 10
+                        ? 10000
+                        : item.food_item.price
                       : item.food_item.size_price[0]?.price || 0}{" "}
                     IQD
                   </span>

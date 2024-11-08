@@ -14,7 +14,7 @@ interface OrderHistoryCartProps {
   preparationStatus?: string;
 }
 const foods = [
-  { id: 1, name: "pizza", price: 5000, image: "/pizza.png" },
+  { id: 1, name: "Mixed pizza", price: 10000, image: "/pizza.png" },
   {
     id: 2,
     name: "  Meat cheese burger",
@@ -86,7 +86,7 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
               </>
             )}
           </button>
-          <p className="text-text-2-medium text-gray-100">total: 9500 IQD</p>
+          <p className="text-text-2-medium text-gray-100">total: 14500 IQD</p>
         </span>
       </div>
 

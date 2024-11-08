@@ -89,9 +89,9 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
                       {item.name}
                     </h3>
                     <p className="md:text-text-1-medium sm:text-text-2-medium text-text-3-medium text-primary-lm">
-                      {item.price !== null
-                        ? item.price
-                        : item.size_price[0].price}{" "}
+                      {(item.price !== null
+                        ? item.price === 10 ?10000 :item.price
+                        : item.size_price[0].price)}{" "}
                       IQD
                     </p>
                     <p className="text-gray-100 flex">

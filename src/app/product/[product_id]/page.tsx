@@ -122,7 +122,7 @@ function ProductDetail({ params }: paramsProps) {
                   className="lg:text-body-3-semiBold md:text-body-4-semiBold sm:text-text-1-semiBold
             text-text-2-semiBold text-gray-100 w-fit"
                 >
-                  {data.price} IQD
+                  {data.price === 10 ? 10000 : data.price} IQD
                 </p>
                 <p className="lg:text-text-2-regular md:text-text-3-regular text-caption-1-regular text-black md:w-[80%]">
                   {data.description}
@@ -154,7 +154,8 @@ function ProductDetail({ params }: paramsProps) {
                 className="lg:h-14 lg:w-72 h-12 w-52  lg:text-text-1-semiBold text-text-2-semiBold rounded-xl bg-primary-lm text-pure-white py-1"
                 onClick={() => addToCart(data.id)}
               >
-                Add to cart ({data.price * quantity} IQD)
+                Add to cart (
+                {(data.price === 10 ? 10000 : data.price) * quantity} IQD)
               </button>
             </div>
           </article>

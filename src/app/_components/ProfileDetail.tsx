@@ -27,7 +27,7 @@ function ProfileDetail({
               <p className="text-body-4-regular text-gray-100">User Name</p>
             </label>
             <HiArrowLongRight
-              className="size-6"
+              className="size-6 cursor-pointer"
               onClick={() => onComponent("editProfile")}
             />
           </div>
@@ -61,7 +61,7 @@ function ProfileDetail({
               </p>
             </label>
             <HiArrowLongRight
-              className="size-6"
+              className="size-6 cursor-pointer"
               onClick={() => onComponent("changeEmail")}
             />
           </div>
@@ -71,7 +71,7 @@ function ProfileDetail({
               <p className="text-body-4-medium">Change password</p>
             </span>
             <Link href="/auth/change-password">
-              <HiArrowLongRight className="size-6" />
+              <HiArrowLongRight className="size-6 cursor-pointer" />
             </Link>
           </div>
         </section>

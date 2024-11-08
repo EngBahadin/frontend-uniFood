@@ -71,7 +71,9 @@ function CategoryPage({ params }: categoryItemsProps) {
                     text-text-2-medium text-primary-lm"
                     >
                       {item.price !== null
-                        ? item.price
+                        ? item.price === 10
+                          ? 10000
+                          : item.price
                         : item.size_price[0].price}{" "}
                       IQD
                     </p>
