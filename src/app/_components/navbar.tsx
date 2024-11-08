@@ -5,12 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Category,
-  ProfilePic,
   SearchBar,
   ShoppingCart,
   SideBar,
 } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
+import AccountMenu from "./AccountMenu";
 
 function Navbar() {
   const pathName = usePathname();
@@ -53,7 +53,7 @@ function Navbar() {
             <SearchBar />
             <ShoppingCart />
             <FavoriteIcon pathName={pathName} type="header" />
-            <ProfilePic />
+            <AccountMenu />
           </div>
         </div>
       </nav>

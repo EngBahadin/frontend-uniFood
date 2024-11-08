@@ -33,7 +33,7 @@ function EditProfile({
           <li>
             <div className="relative inline-block">
               <Image
-                src="/mypic.jpg"
+                src="/mypic.png"
                 width={200}
                 height={200}
                 alt="image"

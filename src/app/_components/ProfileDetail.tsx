@@ -24,7 +24,7 @@ function ProfileDetail({
                 <p className="text-body-4-medium">User profile</p>
               </span>
 
-              <p className="text-body-4-regular text-gray-100">Blnd Ismael</p>
+              <p className="text-body-4-regular text-gray-100">User Name</p>
             </label>
             <HiArrowLongRight
               className="size-6"
@@ -38,7 +38,7 @@ function ProfileDetail({
           </span>
           <span>
             <Image
-              src="/man_pic.webp"
+              src="/mypic.png"
               alt="Profile Pic"
               height={100}
               width={100}
