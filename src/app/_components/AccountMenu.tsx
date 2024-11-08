@@ -31,7 +31,7 @@ function AccountMenu() {
           className="border-gray-100 hover:border-2 bg-primary-lm  md:size-9 sm:size-8 size-7 rounded-full"
         >
           <Image
-            src="/man_pic.webp"
+            src="/mypic.png"
             alt="Profile Pic"
             width={50}
             height={32}
