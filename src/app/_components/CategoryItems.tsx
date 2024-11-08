@@ -46,9 +46,11 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   return (
     <>
       <section className="py-10">
-        <h2 className="text-text-1-medium text-black border-b-2 w-fit p-2 mb-10 ml-[40%]">
-          {categoryName}
-        </h2>
+        <div className="mb-10 grid place-content-center">
+          <h2 className="text-text-1-medium border-b-2 pb-2 w-fit text-black">
+            {categoryName}
+          </h2>
+        </div>
 
         <article
           ref={scrollContainerRef}

@@ -28,14 +28,14 @@ function AccountMenu() {
       <menu>
         <div
           onClick={showMenu}
-          className="border-gray-100 hover:border-2 bg-primary-lm  md:size-9 sm:size-8 size-7 rounded-full"
+          className="border-gray-100 border-[0.2px]  hover:border-2 bg-primary-lm  md:size-9 sm:size-8 size-7 rounded-full"
         >
           <Image
             src="/mypic.png"
             alt="Profile Pic"
             width={50}
             height={32}
-            className="rounded-full size-full"
+            className="rounded-full object-contain"
           />
         </div>
       </menu>
@@ -44,9 +44,9 @@ function AccountMenu() {
       >
         {accessToken && (
           <header className="flex flex-row items-center gap-x-2">
-            <div className="border-gray-100 hover:border-2 bg-primary-lm  md:size-9 sm:size-7 size-6   rounded-full ">
+            <div className="border-black border-[0.02px] hover:border-2 bg-primary-lm  md:size-9 sm:size-7 size-6 rounded-full ">
               <Image
-                src="/man_pic.webp"
+                src="/mypic.png"
                 alt="Profile Pic"
                 width={50}
                 height={32}

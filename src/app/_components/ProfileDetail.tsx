@@ -36,13 +36,13 @@ function ProfileDetail({
             <BsCameraFill className="size-6" />
             <p className="text-body-4-medium">Profile picture</p>
           </span>
-          <span>
+          <span className="size-16 bg-pure-white overflow-hidden rounded-full">
             <Image
               src="/mypic.png"
               alt="Profile Pic"
               height={100}
               width={100}
-              className="size-20 rounded-full border-2 border-gray-300 p-2"
+              className="size-full rounded-full border-2 border-gray-100 p-2"
             />
           </span>
         </section>
