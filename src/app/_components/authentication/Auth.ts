@@ -6,9 +6,16 @@ type NewTokensProps = {
   refresh: string;
 };
 
+// Cookie options for secure, cross-site requests
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: 'none' as const,
+  secure: true,
+};
+
 export const newToken = ({ access, refresh }: NewTokensProps) => {
-  setCookie("access_token", access);
-  setCookie("refresh_token", refresh);
+  setCookie("access_token", access, cookieOptions);
+  setCookie("refresh_token", refresh, cookieOptions);
 };
 
 export const getToken = () => {
@@ -16,28 +23,32 @@ export const getToken = () => {
   return token;
 };
 
-// for log out
+// Log out by removing tokens with secure options
 export const removeTokens = () => {
-  deleteCookie("access_token");
-  deleteCookie("refresh_token");
+  deleteCookie("access_token", cookieOptions);
+  deleteCookie("refresh_token", cookieOptions);
 };
-// to order new access token using the refresh token
+
+// Request a new access token using the refresh token
 export const orderNewAccessToken = async () => {
   const refreshToken = getCookie("refresh_token");
   if (!refreshToken) return null;
+
   try {
     const response = await apiAuth.post("/jwt/refresh/", {
       refresh: refreshToken,
     });
     const newAccessToken = response.data.access;
-    setCookie("access_token", newAccessToken);
+
+    // Update the access token cookie with new value and secure options
+    setCookie("access_token", newAccessToken, cookieOptions);
     console.log(response.data);
 
     return newAccessToken;
   } catch (error: any) {
     if (error.response?.status === 401) {
-      console.log("remove tokens");
-      return removeTokens(); // refresh token is expired
+      console.log("Removing tokens due to expiration or invalid token");
+      removeTokens(); // If refresh token is expired or invalid
     }
     return null;
   }

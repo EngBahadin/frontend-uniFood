@@ -9,7 +9,7 @@ function Hero() {
     });
   };
   return (
-    <article className="flex items-center justify-center bg-pure-white h-screen px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row ">
+    <article className="flex items-center justify-center bg-pure-white h-screen px-8 md:px-10 lg:px-20 md:justify-between flex-col md:flex-row md:-mt-10">
       <div className="flex flex-col md:items-start items-center gap-y-8  md:text-left text-center ">
         <h1
           className="text-primary-lm lg:text-sub-heading-1-regular text-body-2-regular

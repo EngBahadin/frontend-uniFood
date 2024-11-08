@@ -8,31 +8,31 @@ import { toast } from "sonner";
 function CheckEmail() {
   const router = useRouter();
 
-  useEffect(() => {
-    let url = `ws://${baseURL}/ws/socket-server/`;
+  // useEffect(() => {
+  //   let url = `ws://${baseURL}/ws/socket-server/`;
 
-    const socket = new WebSocket(url);
+  //   const socket = new WebSocket(url);
 
-    socket.onopen = function () {
-      socket.send(
-        JSON.stringify({
-          "refresh_token": getCookie("refresh_token"),
-        })
-      );
-    };
+  //   socket.onopen = function () {
+  //     socket.send(
+  //       JSON.stringify({
+  //         "refresh_token": getCookie("refresh_token"),
+  //       })
+  //     );
+  //   };
 
-    // to listen to events from server.
-    socket.onmessage = function (event) {
-      let data = JSON.parse(event.data);
-      if (data.type === "error") {
-        console.log("error: ", data);
-      }
-      if (data.type === "success") {
-        toast.success("account verified successfully");
-        router.push("/");
-      }
-    };
-  }, []);
+  //   // to listen to events from server.
+  //   socket.onmessage = function (event) {
+  //     let data = JSON.parse(event.data);
+  //     if (data.type === "error") {
+  //       console.log("error: ", data);
+  //     }
+  //     if (data.type === "success") {
+  //       toast.success("account verified successfully");
+  //       router.push("/");
+  //     }
+  //   };
+  // }, []);
 
   return (
     <main className="py-[146px] bg-white flex flex-col">

@@ -1,16 +1,18 @@
 "use client";
 import Link from "next/link";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getToken, removeTokens } from "./funcs";
 import Image from "next/image";
 import { TiUser } from "react-icons/ti";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
+import { CartContext } from "@/context/CartContext";
 
 function AccountMenu() {
   const [accessToken, setAccessToken] = useState(false);
   const [openBar, setOpenBar] = useState(false);
-  const classes = "flex items-center gap-3 hover:text-primary-lm ";
+  const classes = "flex items-center gap-3 hover:text-primary-lm";
+  const { setCartItemQuantity } = useContext(CartContext);
   useEffect(() => {
     const token = getToken();
     setAccessToken(!!token);
@@ -21,6 +23,7 @@ function AccountMenu() {
     setOpenBar((prev) => !prev);
   };
   const toggleAuth = () => {
+    setCartItemQuantity(0);
     if (accessToken) removeTokens();
   };
   return (
