@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-const wssBaseURL = process.env.WSS_BASE_URL;
+const wssBaseURL = process.env.NEXT_PUBLIC_WSS_BASE_URL;
 function CheckEmail() {
   const router = useRouter();
 
