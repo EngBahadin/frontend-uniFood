@@ -5,34 +5,39 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+
+const wssBaseURL = process.env.WSS_BASE_URL;
 function CheckEmail() {
   const router = useRouter();
 
-  // useEffect(() => {
-  //   let url = `ws://${baseURL}/ws/socket-server/`;
+  useEffect(() => {
+    let url = `${wssBaseURL}/ws/socket-server/`;
+    console.log(url);
 
-  //   const socket = new WebSocket(url);
+    const socket = new WebSocket(url);
 
-  //   socket.onopen = function () {
-  //     socket.send(
-  //       JSON.stringify({
-  //         "refresh_token": getCookie("refresh_token"),
-  //       })
-  //     );
-  //   };
+    socket.onopen = function () {
+      console.log("onopen");
+      socket.send(
+        JSON.stringify({
+          refresh_token: getCookie("refresh_token"),
+        })
+      );
+    };
 
-  //   // to listen to events from server.
-  //   socket.onmessage = function (event) {
-  //     let data = JSON.parse(event.data);
-  //     if (data.type === "error") {
-  //       console.log("error: ", data);
-  //     }
-  //     if (data.type === "success") {
-  //       toast.success("account verified successfully");
-  //       router.push("/");
-  //     }
-  //   };
-  // }, []);
+    // to listen to events from server.
+    socket.onmessage = function (event) {
+      console.log("onmessage");
+      let data = JSON.parse(event.data);
+      if (data.type === "error") {
+        console.log("error: ", data);
+      }
+      if (data.type === "success") {
+        toast.success("account verified successfully");
+        router.push("/");
+      }
+    };
+  }, []);
 
   return (
     <main className="py-[146px] bg-white flex flex-col">
