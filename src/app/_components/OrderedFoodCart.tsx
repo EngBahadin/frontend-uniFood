@@ -95,7 +95,7 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
               width={100}
               height={100}
               alt={currentFood.name}
-              className="object-cover size-28"
+              className="object-contain size-28"
             />
             <span className="text-white">
               <h4 className="text-body-4-semiBold">1x {currentFood.name}</h4>
