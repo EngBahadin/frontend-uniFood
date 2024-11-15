@@ -4,24 +4,21 @@ import { FoodItem } from "@/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-export const CartContext = createContext({
+export const CartContext = createContext<{
+  cartItemQuantity: number;
+  setCartItemQuantity: React.Dispatch<React.SetStateAction<number>>; // Correct typing
+}>({
   cartItemQuantity: 0,
-  setCartItemQuantity:(prev:0)=>{},
-  updateCartQuantity: () => {},
+  setCartItemQuantity: () => {}, // Default function to avoid undefined errors
 });
 
 export function CartContextProvider({ children }: { children: ReactNode }) {
-  const [cartItemQuantity, setCartItemQuantity] = useState(0);
+  const [cartItemQuantity, setCartItemQuantity] = useState<number>(0);
   const queryClient = useQueryClient();
   const { data } = useQuery<FoodItem[]>({
     queryKey: ["quantity"],
     queryFn: getUserCartItems,
   });
-  const updateCartQuantity = () => {
-    queryClient.invalidateQueries({
-      queryKey: ["quantity"],
-    });
-  };
   useEffect(() => {
     if (data) {
       const total = data.reduce((sum, item) => sum + item.qty, 0);
@@ -29,9 +26,7 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     }
   }, [data]);
   return (
-    <CartContext.Provider
-      value={{ cartItemQuantity, updateCartQuantity, setCartItemQuantity }}
-    >
+    <CartContext.Provider value={{ cartItemQuantity, setCartItemQuantity }}>
       {children}
     </CartContext.Provider>
   );

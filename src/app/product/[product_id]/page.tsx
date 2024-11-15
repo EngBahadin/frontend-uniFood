@@ -27,7 +27,7 @@ function ProductDetail({ params }: paramsProps) {
   const router = useRouter();
   const [notVerified, setNotVerified] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { updateCartQuantity } = useContext(CartContext);
+  const { setCartItemQuantity } = useContext(CartContext);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -55,7 +55,8 @@ function ProductDetail({ params }: paramsProps) {
         food_item,
         qty: quantity,
       });
-      updateCartQuantity();
+
+      setCartItemQuantity((prev) => prev + quantity);
       router.back();
     } catch (error: any) {
       if (error.response?.status === 401) {

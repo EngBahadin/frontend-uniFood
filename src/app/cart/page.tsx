@@ -19,7 +19,7 @@ export default function Cart() {
   const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const { updateCartQuantity, setCartItemQuantity } = useContext(CartContext);
+  const { setCartItemQuantity } = useContext(CartContext);
   const { data, isLoading } = useQuery<FoodItem[]>({
     queryKey: ["cart"],
     queryFn: getUserCartItems,
@@ -37,7 +37,6 @@ export default function Cart() {
           item.id === id ? { ...item, qty: newQty } : item
         );
         queryClient.setQueryData(["cart"], newCartItem);
-        updateCartQuantity();
       }
     },
     onSettled: () => {
@@ -45,25 +44,34 @@ export default function Cart() {
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-      updateCartQuantity();
     },
   });
 
-  const removeToCart = async (food_id: string) => {
+  const removeToCart = async (food_id: string, item_qty: number) => {
     try {
       await api.delete(`api/cart/items/${food_id}/`);
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-      updateCartQuantity();
+
+      setCartItemQuantity((prev: number) => prev - item_qty);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "An error occurred");
     }
   };
 
   const updateQuantity = (type: string, item: FoodItem) => {
-    const newQty = type === "increment" ? item.qty + 1 : item.qty - 1;
-    if (newQty > 99) return;
+    if (item.qty > 99) return;
+    if (item.qty === 1 && type === "decrement")
+      return removeToCart(item.id, item.qty);
+    let newQty = 0;
+    if (type === "increment") {
+      setCartItemQuantity((prev: number) => prev + 1);
+      newQty = item.qty + 1;
+    } else if (type === "decrement") {
+      setCartItemQuantity((prev: number) => prev - 1);
+      newQty = item.qty - 1;
+    }
     mutate({ id: item.id, newQty });
   };
 
@@ -176,7 +184,7 @@ export default function Cart() {
                   </button>
                   <GoTrash
                     className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer"
-                    onClick={() => removeToCart(item.id)}
+                    onClick={() => removeToCart(item.id, item.qty)}
                   />
                 </div>
               </article>

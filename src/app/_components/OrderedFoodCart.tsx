@@ -7,21 +7,14 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { PiAlarmThin } from "react-icons/pi";
 import { toast } from "sonner";
 import ConfirmModal from "./ui/ConfirmModal";
+import { foods } from "@/lib/utils";
 
 interface OrderHistoryCartProps {
   cartType: string;
   preparationTime?: string;
   preparationStatus?: string;
 }
-const foods = [
-  { id: 1, name: "Mixed pizza", price: 10000, image: "/pizza.png" },
-  {
-    id: 2,
-    name: "  Meat cheese burger",
-    price: 4500,
-    image: "/cheese-burger.png",
-  },
-];
+
 
 function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
   const [currentFoodIndex, setCurrentFoodIndex] = useState(0); // Tracks which food is displayed
@@ -86,7 +79,7 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
               </>
             )}
           </button>
-          <p className="text-text-2-medium text-gray-100">total: 14500 IQD</p>
+          <p className="text-text-2-medium text-gray-100">total: 19500 IQD</p>
         </span>
       </div>
 

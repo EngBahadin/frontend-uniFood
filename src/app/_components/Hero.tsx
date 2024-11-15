@@ -1,11 +1,22 @@
-'use client'
+"use client";
+import { foods } from "@/lib/utils";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 function Hero() {
+  const [imageIndex, setImageIndex] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setImageIndex((prevIndex) =>
+        prevIndex === foods.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, []);
   const scrollDown = () => {
     window.scrollBy({
-      top: window.innerHeight, 
-      behavior: "smooth", 
+      top: window.innerHeight,
+      behavior: "smooth",
     });
   };
   return (
@@ -41,11 +52,11 @@ function Hero() {
           alt="Ellipse"
         />
         <Image
-          src="/cheese-burger.png"
+          src={foods[imageIndex].image}
           width={341}
           height={341}
           alt="/cheese-burger.png"
-          className="absolute top-0 right-4 xl:right-8 object-contain"
+          className="absolute right-4 xl:right-8 object-contain"
         />
       </div>
     </article>
