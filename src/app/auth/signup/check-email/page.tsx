@@ -25,7 +25,7 @@ function CheckEmail() {
       );
     };
 
-    // to listen to events from server.
+    // to listen to events from server
     socket.onmessage = function (event) {
       console.log("onmessage");
       let data = JSON.parse(event.data);
