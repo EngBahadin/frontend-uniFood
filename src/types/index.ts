@@ -84,6 +84,20 @@ export interface FoodItem {
   qty: number;
   price: number;
 }
+export type FoodItemKeys = {
+  // its used in the home page and the category items page
+  id: number;
+  image: string | null;
+  name: string;
+  price: number | null;
+  size_price: { price: number }[]; // Assuming size_price is an array of objects with a `price` field
+  prep_time: number;
+  review: {
+    avg_rating: number;
+    count: number;
+  };
+  is_favorite: boolean;
+};
 export type ModalProps = {
   onClose: () => void;
   onNavigate: () => void;
@@ -95,4 +109,24 @@ export type ButtonProps = {
   children: React.ReactNode;
   isPending: boolean;
   position?: string;
+};
+export interface OrderHistoryCartProps {
+  cartType: string;
+  preparationTime?: string;
+  preparationStatus?: string;
+}
+export type categoryId = {
+  params: {
+    category: string;
+  };
+};
+
+export type productParams = {
+  params: {
+    product_id: string;
+  };
+};
+export type CategoryProps = {
+  id: string;
+  name: string;
 };

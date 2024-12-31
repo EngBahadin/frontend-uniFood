@@ -1,10 +1,5 @@
 export const config = {
   matcher: [
-    "/favorites",
-    "/profile",
-    "/cart",
-    "/order_history",
-    "/auth/change-password",
   ],
 };
 

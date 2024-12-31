@@ -37,7 +37,7 @@ function Hero() {
           <br className="hidden sm:block" /> waiting to prepare when you arrive
         </p>
         <button
-          className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white sm:text-text-1-semiBold text-text-3-medium  grid place-items-center rounded-lg"
+          className="sm:w-48 sm:h-14 w-32 h-9  bg-primary-lm text-pure-white sm:text-text-1-semiBold text-text-3-medium grid place-items-center rounded-lg active:scale-95"
           onClick={scrollDown}
         >
           Order now

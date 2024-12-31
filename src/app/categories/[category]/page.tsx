@@ -5,13 +5,10 @@ import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import { Favorites, getCategory } from "@/app/_components/funcs";
 import { useRouter } from "next/navigation";
+import { categoryId, FoodItemKeys } from "@/types";
+import FoodItem from "@/app/_components/FoodItem";
 
-type categoryItemsProps = {
-  params: {
-    category: string;
-  };
-};
-function CategoryPage({ params }: categoryItemsProps) {
+function CategoryPage({ params }: categoryId) {
   const router = useRouter();
   const { data, isError, error } = useQuery({
     queryKey: ["product", "categories", params.category],
@@ -41,61 +38,8 @@ function CategoryPage({ params }: categoryItemsProps) {
             </div>
           )}
           <article className="grid  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2   md:gap-6 gap-4">
-            {data.map((item: any) => (
-              <div
-                key={item.id}
-                className="md:h-[275px]  sm:h-[260px] mini_mobile:h-[200px] h-64 flex flex-col rounded-2xl overflow-hidden bg-pure-white drop-shadow-xl "
-              >
-                <div
-                  className="grid w-full h-1/2  place-items-center bg-primary-lm cursor-pointer"
-                  onClick={() => handleProductDetail(item.id)}
-                >
-                  <span className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] mini_mobile:h-[80px] mini_mobile:w-[100px] h-24 w-36">
-                    <Image
-                      src={`${item.image || "/"}`}
-                      width={132}
-                      height={112}
-                      alt="burger-cheese"
-                      className="object-contain  pointer-events-none"
-                    />
-                  </span>
-                </div>
-                <div className="flex justify-between m-2 sm:gap-x-3 gap-x-2">
-                  <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-[130px] w-40 ">
-                    <h3 className="truncate sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium">
-                      {item.name}
-                    </h3>
-
-                    <p
-                      className="sm:text-text-1-medium  mini_mobile:text-caption-1-medium 
-                    text-text-2-medium text-primary-lm"
-                    >
-                      {item.price !== null
-                        ? item.price === 10
-                          ? 10000
-                          : item.price
-                        : item.size_price[0].price}{" "}
-                      IQD
-                    </p>
-                    <p className="text-gray-100 flex">
-                      <PiClockLight className="sm:w-4 sm:h-4 mini_mobile:w-3 mini_mobile:h-3" />
-                      <span className="ml-2 sm:text-text-3-regular mini_mobile:text-caption-2-regular text-caption-1-regular">
-                        {item.prep_time} minutes
-                      </span>
-                    </p>
-                    <p className="sm:text-text-3-regular mini_mobile:text-caption-2-regular text-caption-1-regular text-gray-100 flex ">
-                      <span>
-                        <BsStarFill className="sm:h-4 sm:w-4 mini_mobile:h-3 mini_mobile:w-3 w-4 h-4 mr-2 text-warning-lm" />
-                      </span>
-                      {item.review.avg_rating} ({item.review.count} reviews)
-                    </p>
-                  </div>
-                  <Favorites
-                    food_item_id={item.id}
-                    isFavorite={item.is_favorite}
-                  />
-                </div>
-              </div>
+            {data.map((item: FoodItemKeys) => (
+              <FoodItem layout="grid" item={item} key={item.id} />
             ))}
           </article>
         </section>

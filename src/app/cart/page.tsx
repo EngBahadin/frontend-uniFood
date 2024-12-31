@@ -4,15 +4,15 @@ import Image from "next/image";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { FoodItem } from "@/types";
-import {
-  getUserCartItems,
-  updateQuantityItem,
-} from "../_components/funcs/actions";
 import { toast } from "sonner";
 import api from "@/lib/axios";
-import ConfirmModal from "../_components/ui/ConfirmModal";
 import { useRouter } from "next/navigation";
 import { CartContext } from "@/context/CartContext";
+import {
+  ConfirmModal,
+  getUserCartItems,
+  updateQuantityItem,
+} from "../_components/funcs";
 
 export default function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -137,14 +137,14 @@ export default function Cart() {
 
       <div className="flex md:justify-between flex-col md:gap-y-0 gap-y-20 md:flex-row">
         {/* Cart Items */}
-        <div className="grid gap-y-4">
+        <div className="grid gap-y-4 justify-center">
           {data &&
             data.map((item) => (
               <article
                 key={item.id}
-                className="flex items-center md:justify-between justify-center h-fit"
+                className="grid grid-flow-col grid-cols-3 items-center md:justify-between h-fit"
               >
-                <div className="flex items-center">
+                <div className="flex items-center col-span-2 ">
                   <div className="bg-primary-lm rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
                     <Image
                       src={item.food_item.image || "/"}
@@ -192,7 +192,7 @@ export default function Cart() {
         </div>
 
         {/* Order Summary */}
-        <div className="flex flex-col items-center md:items-stretch lg:gap-y-10 gap-y-8">
+        <div className="flex flex-col items-center md:items-stretch lg:gap-y-10 gap-y-8 px-3">
           <h3 className="text-primary-lm lg:text-body-2-medium md:text-body-3-medium text-text-1-medium mt-2">
             Order summary
           </h3>

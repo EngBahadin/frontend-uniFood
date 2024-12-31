@@ -10,6 +10,7 @@ const wssBaseURL = process.env.NEXT_PUBLIC_WSS_BASE_URL;
 function CheckEmail() {
   const router = useRouter();
 
+  // web socket 
   useEffect(() => {
     let url = `${wssBaseURL}/ws/socket-server/`;
     console.log(url);

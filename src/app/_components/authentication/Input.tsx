@@ -61,7 +61,6 @@ const Input = memo(
             )}
             <input
               onChange={handleChange}
-              required
               className={`h-full outline-none bg-gray-15 w-full pr-3 sm:pl-11 pl-9 placeholder:text-gray-75  ${
                 errors?.[name]
                   ? "text-error-lm"

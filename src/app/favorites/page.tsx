@@ -7,6 +7,7 @@ import api from "@/lib/axios";
 import { Favorites, getToken } from "../_components/funcs";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import FoodItem from "../_components/FoodItem";
 
 function FavoritesPage() {
   const router = useRouter();
@@ -14,7 +15,7 @@ function FavoritesPage() {
 
   const getFavorites = async () => {
     if (!accessToken) {
-      toast.error("Please log in to add to favorites");
+      toast.error("Please log in to see your favorites");
       throw new Error("Not logged in");
     }
     const response = await api.get("api/favorites/");
@@ -27,9 +28,6 @@ function FavoritesPage() {
     enabled: !!accessToken,
   });
 
-  const handleProductDetail = (id: number) => {
-    router.push(`/product/${id}`);
-  };
 
   if (isLoading) {
     return (
@@ -65,55 +63,25 @@ function FavoritesPage() {
           ) : (
             <article className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 mini_mobile:grid-cols-2 md:gap-6 gap-4">
               {data.map((item: any) => (
-                <div
-                  key={item.food_item.id}
-                  className="md:h-[275px] sm:h-[260px] mini_mobile:h-[200px] h-64 flex flex-col rounded-2xl overflow-hidden bg-pure-white drop-shadow-xl"
-                >
-                  <div className="grid w-full h-1/2 place-items-center bg-primary-lm">
-                    <span
-                      className="grid place-content-center md:w-[132px] md:h-[112px] sm:w-[112px] sm:h-[94px] mini_mobile:h-[80px] mini_mobile:w-[100px] h-24 w-36 cursor-pointer"
-                      onClick={() => handleProductDetail(item.food_item.id)}
-                    >
-                      <Image
-                        src={item.food_item.image || "/fallback-image.jpg"}
-                        width={132}
-                        height={112}
-                        alt="burger-cheese"
-                        className="object-contain"
-                      />
-                    </span>
-                  </div>
-                  <div className="flex justify-between m-2 sm:gap-x-3 gap-x-2">
-                    <div className="flex flex-col sm:gap-y-2 mini_mobile:gap-y-1 gap-y-[6px] sm:w-44 mini_mobile:w-[130px] w-40">
-                      <h3
-                        className="truncate sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium cursor-pointer"
-                        onClick={() => handleProductDetail(item.food_item.id)}
-                      >
-                        {item.food_item.name}
-                      </h3>
-                      <p className="sm:text-text-1-medium mini_mobile:text-caption-1-medium text-text-2-medium text-primary-lm">
-                        {item.food_item.price ||
-                          item.food_item.size_price[0]?.price}{" "}
-                        IQD
-                      </p>
-                      <p className="text-gray-100 flex">
-                        <PiClockLight className="sm:w-4 sm:h-4 mini_mobile:w-3 mini_mobile:h-3" />
-                        <span className="ml-2 sm:text-text-3-regular mini_mobile:text-caption-2-regular text-caption-1-regular">
-                          {item.food_item.prep_time} minutes
-                        </span>
-                      </p>
-                      <p className="sm:text-text-3-regular mini_mobile:text-caption-2-regular text-caption-1-regular text-gray-100 flex">
-                        <BsStarFill className="sm:h-4 sm:w-4 mini_mobile:h-3 mini_mobile:w-3 w-4 h-4 mr-2 text-warning-lm" />
-                        {item.food_item.review.avg_rating} (
-                        {item.food_item.review.count} reviews)
-                      </p>
-                    </div>
-                    <Favorites
-                      food_item_id={item.food_item.id}
-                      isFavorite={item.food_item.is_favorite}
-                    />
-                  </div>
-                </div>
+                <FoodItem
+                  layout="grid"
+                  item={
+                    (item = {
+                      prep_time: item.food_item.prep_time,
+                      id: item.food_item.id,
+                      name: item.food_item.name,
+                      price: item.food_item.price,
+                      image: item.food_item.image,
+                      review: {
+                        avg_rating: item.food_item.review.avg_rating,
+                        count: item.food_item.review.count,
+                      },
+                      size_price: item.food_item.size_price,
+                      is_favorite: item.food_item.is_favorite,
+                    })
+                  }
+                  key={item.id}
+                />
               ))}
             </article>
           )}

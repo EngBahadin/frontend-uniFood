@@ -1,4 +1,3 @@
-import axios from "axios";
 import api, { apiAuth, apiClient, baseURL } from "@/lib/axios";
 import { validateProps } from "../../../types";
 import { newToken, removeTokens } from "./Auth";
@@ -7,7 +6,6 @@ export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   try {
     const response = await apiAuth.post("/jwt/create/", formObject);
-
     const access = response.data.access;
     const refresh = response.data.refresh;
     newToken({ access, refresh });

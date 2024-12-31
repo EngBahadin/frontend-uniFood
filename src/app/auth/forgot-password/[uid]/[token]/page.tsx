@@ -4,6 +4,7 @@ import {
   Input,
   resetPassForm,
   validateToken,
+  Button,
 } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
@@ -13,7 +14,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Loading from "./loading";
 import { toast } from "sonner";
-import Button from "@/app/_components/ui/Button";
 
 export default function ResetPassword({ params }: paramsProps) {
   const { validate, errors, setErrors } = useFormValidation();

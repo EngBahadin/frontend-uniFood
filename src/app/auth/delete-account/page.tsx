@@ -1,6 +1,5 @@
 "use client";
-import { deleteAccount } from "@/app/_components/authentication/authActions";
-import { Button, DynamicLayout, Input } from "@/app/_components/funcs";
+import {deleteAccount, Button, DynamicLayout, Input } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { useRouter } from "next/navigation";

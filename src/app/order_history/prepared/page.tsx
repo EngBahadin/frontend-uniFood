@@ -1,8 +1,8 @@
 import OrderedFoodCart from "@/app/_components/OrderedFoodCart";
 
-function DeliveredPage() {
+function PreparedPage() {
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
       <OrderedFoodCart preparationStatus="Re-Order" cartType="delivered" />
       <OrderedFoodCart preparationStatus="Re-Order" cartType="delivered" />
       <OrderedFoodCart preparationStatus="Re-Order" cartType="delivered" />
@@ -10,4 +10,4 @@ function DeliveredPage() {
   );
 }
 
-export default DeliveredPage;
+export default PreparedPage;

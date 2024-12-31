@@ -2,14 +2,14 @@
 import {
   DynamicLayout,
   Input,
+  Button,
+  ChangePassForm,
 } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import Button from "@/app/_components/ui/Button";
-import { ChangePassForm } from "@/app/_components/authentication/authActions";
 import Link from "next/link";
 
 export default function ResetPassword() {
@@ -25,14 +25,14 @@ export default function ResetPassword() {
       });
     } else if (isSuccess) {
       toast.success("Password Changed successfully");
-     router.push("/profile");
+      router.push("/profile");
     }
   }, [error, isError, isSuccess]);
 
   const handleSubmit = (formData: FormData) => {
     if (
       validate(formData, {
-        current_password:true,
+        current_password: true,
         re_password: true,
         password: true,
       })

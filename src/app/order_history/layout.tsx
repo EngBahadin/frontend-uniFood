@@ -11,7 +11,7 @@ const OrderHistory = ({ children }: { children: ReactNode }) => {
   const activeClasses =
     "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
   return (
-    <div className="px-16  min-h-screen w-screen">
+    <div className="md:px-16 px-10  min-h-screen w-screen">
       <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 my-10 w-fit">
         Order History
       </h1>

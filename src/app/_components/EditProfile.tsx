@@ -1,10 +1,9 @@
 import { TiUser } from "react-icons/ti";
-import Input from "./authentication/Input";
-import Button from "./ui/Button";
 import { GoPencil } from "react-icons/go";
 import Image from "next/image";
 import { BsCameraFill } from "react-icons/bs";
 import { TfiArrowCircleLeft } from "react-icons/tfi";
+import { Button, Input } from "./funcs";
 
 function EditProfile({
   onComponent,
@@ -16,17 +15,20 @@ function EditProfile({
     <div className="rounded-2xl border-[2px] border-gray-50 p-5 grid w-fit gap-y-3  ">
       <header className="grid grid-flow-col grid-cols-3 ">
         <button type="button" className="w-fit cursor-pointer rounded-2xl ">
-          <TfiArrowCircleLeft className=" text-gray-100 sm:w-8 sm:h-10 h-7 w-5 " onClick={()=>onComponent('')} />
+          <TfiArrowCircleLeft
+            className=" text-gray-100 sm:w-8 sm:h-10 h-7 w-5 "
+            onClick={() => onComponent("")}
+          />
         </button>
-        <h3 className="place-content-center text-center text-primary-lm text-body-3-medium">
+        <h3 className="place-content-center text-center text-primary-lm md:text-body-3-medium sm:text-body-4-medium text-text-1-medium ">
           Personal information
         </h3>
       </header>
       <form action="">
-        <ul className="grid gap-y-3 text-body-4-medium">
+        <ul className="grid gap-y-3 md:body-4-medium sm:text-text-1-medium text-text-2-medium ">
           <li className="flex items-center gap-x-3 text-primary-lm ">
             <span>
-              <BsCameraFill />
+              <BsCameraFill className="md:size-6 sm:size-5 size-4" />
             </span>{" "}
             Profile picture{" "}
           </li>
@@ -37,14 +39,14 @@ function EditProfile({
                 width={200}
                 height={200}
                 alt="image"
-                className="size-24 rounded-full object-cover z-10"
+                className="md:size-24 sm:size-16 size-14  rounded-full object-cover z-10"
               />
 
               <label
                 htmlFor="profile_pic"
-                className="absolute bottom-2 right-2 bg-primary-lm size-7 rounded-full cursor-pointer z-20 flex items-center justify-center"
+                className="absolute bottom-0 right-0 bg-primary-lm md:size-7 sm:size-6 size-5 rounded-full cursor-pointer z-20 flex items-center justify-center"
               >
-                <GoPencil className="text-white" />
+                <GoPencil className="text-white md:size-5 sm:size-4 size-3" />
               </label>
 
               <input
@@ -62,15 +64,17 @@ function EditProfile({
               <TiUser />
               <span>Username</span>
             </span>{" "}
-            <p className="text-text-1-regular text-gray-100">JohnDoe</p>
+            <p className="md:text-text-1-regular sm:text-text-2-regular text-text-3-regular text-gray-100">
+              JohnDoe
+            </p>
           </li>
           <li>
             <hr className="text-gray-50 border-[1px]" />
           </li>
-          <li className="text-primary-lm text-body-4-semiBold">
+          <li className="text-primary-lm md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">
             Change your username
           </li>
-          <li className="flex">
+          <li className="my-1 mb-4">
             <Input
               name="user"
               type="text"
@@ -88,4 +92,4 @@ function EditProfile({
   );
 }
 
-export default EditProfile
+export default EditProfile;

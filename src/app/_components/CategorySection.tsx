@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { CategoryItems, categoriesList } from "./funcs";
+import { CategoryProps } from "@/types";
 
 export default function CategorySection() {
   const {
@@ -13,7 +14,6 @@ export default function CategorySection() {
     queryKey: ["categories", "category-list"],
     queryFn: categoriesList,
   });
-  console.log(categories); // Log to see if categories data is fetched
 
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ export default function CategorySection() {
 
   return (
     <div className="min-h-screen min-w-full">
-      {categories.map((category: any) => (
+      {categories.map((category: CategoryProps) => (
         <CategoryItems
           key={category.id}
           categoryId={category.id}
@@ -49,3 +49,4 @@ export default function CategorySection() {
     </div>
   );
 }
+

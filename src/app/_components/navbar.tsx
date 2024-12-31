@@ -4,23 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  AccountMenu,
   Category,
   SearchBar,
   ShoppingCart,
   SideBar,
 } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
-import AccountMenu from "./AccountMenu";
+import { useState } from "react";
 
 function Navbar() {
   const pathName = usePathname();
   const activeClasses =
     "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
+  const [searchFocused, setSearchFocused] = useState(false);
 
   // Hide the navbar only on error pages
-  const isErrorPage = pathName.startsWith("/auth");
+  const authPage = pathName.startsWith("/auth");
 
-  if (!isErrorPage) {
+  if (!authPage) {
     return (
       <nav className="sticky z-50 top-0 w-full sm:h-20 h-16 flex items-center bg-pure-white border-b-[1px] border-gray-50 ">
         <div className="flex justify-between w-full gap-y-4 md:mx-10 lg:mx-20">
@@ -50,8 +52,11 @@ function Navbar() {
             <Category type="header" />
           </div>
           <div className="flex items-center pr-4 mini_mobile:pr-8 md:pr-0 gap-5">
-            <SearchBar />
-            <ShoppingCart />
+            <SearchBar
+              setSearchFocused={setSearchFocused}
+              searchFocused={searchFocused}
+            />
+            {!searchFocused && <ShoppingCart />}
             <FavoriteIcon pathName={pathName} type="header" />
             <AccountMenu />
           </div>

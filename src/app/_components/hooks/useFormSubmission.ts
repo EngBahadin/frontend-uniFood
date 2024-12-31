@@ -3,11 +3,12 @@ import { useState } from "react";
 import { errorProp } from "../../../types";
 import { useRouter } from "next/navigation";
 
+
 // Make the hook generic
 export const useFormSubmission = <TData, TVariables>(
   submitFunction: MutationFunction<TData, TVariables>
 ) => {
-  const [formData, setFormData] = useState<TVariables | undefined>();
+  // const [formData, setFormData] = useState<TVariables | undefined>();
   const router = useRouter();
 
   const { isError, error, mutate, isPending, data, isSuccess } = useMutation<
@@ -25,7 +26,7 @@ export const useFormSubmission = <TData, TVariables>(
   });
 
   const submit = (data: TVariables) => {
-    setFormData(data);
+    // setFormData(data);
     mutate(data);
   };
 

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 import { toast } from "sonner";
 import api from "@/lib/axios";
-
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { getToken, Modal } from "./funcs";
@@ -73,12 +72,12 @@ function Favorites({
   return (
     <>
       {isFavorite ? (
-        <span onClick={removeToFavorites}>
-          <HiHeart className="md:w-7 md:h-7 sm:w-6 sm:h-6 w-5 h-5 stroke-[0.7px] cursor-pointer sm:text-primary-lm" />
+        <span onClick={removeToFavorites} className="h-fit">
+          <HiHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary-lm active:scale-90" />
         </span>
       ) : (
-        <span onClick={addToFavorites}>
-          <HiOutlineHeart className="md:w-7 md:h-7 sm:w-6 sm:h-6 w-5 h-5 stroke-[0.7px] cursor-pointer sm:text-primary-lm" />
+        <span onClick={addToFavorites} className="h-fit">
+          <HiOutlineHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary-lm active:scale-90" />
         </span>
       )}
 

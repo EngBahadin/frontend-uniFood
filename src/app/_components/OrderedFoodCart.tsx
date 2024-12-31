@@ -6,14 +6,9 @@ import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { PiAlarmThin } from "react-icons/pi";
 import { toast } from "sonner";
-import ConfirmModal from "./ui/ConfirmModal";
-import { foods } from "@/lib/utils";
+import { OrderHistoryCartProps } from "@/types";
+import { ConfirmModal, foods } from "./funcs";
 
-interface OrderHistoryCartProps {
-  cartType: string;
-  preparationTime?: string;
-  preparationStatus?: string;
-}
 
 
 function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
@@ -51,10 +46,10 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
       {/* Food Info */}
       <div className="flex justify-between gap-x-14 p-5 bg-pure-white">
         <span className="flex flex-col justify-between gap-y-2">
-          <h2 className="text-body-3-medium">
+          <h2 className="md:text-body-3-medium sm:text-body-4-medium text-text-1-medium">
             Food ID: #{Math.floor(Math.random() * 1000)}
           </h2>
-          <p className="text-text-2-regular text-gray-100">
+          <p className="md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-gray-100">
             {new Date().toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -66,44 +61,46 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
         <span className="flex flex-col items-end gap-y-2">
           <button
             onClick={() => cartType === "delivered" && setShowModal(true)}
-            className="bg-primary-lm text-pure-white text-text-2-regular py-1 px-3 rounded-lg "
+            className="bg-primary-lm text-pure-white md:text-text-2-regular text-text-3-regular py-1 px-3 rounded-lg "
           >
             {cartType === "delivered" ? (
               "Re-Order"
             ) : (
               <>
-                <span className="flex items-center gap-x-3 text-text-3-regular">
-                  <PiAlarmThin className="size-4" />
+                <span className="flex items-center gap-x-3 md:text-text-3-regular text-caption-1-regular">
+                  <PiAlarmThin className="md:size-4 size-3" />
                   <span>{preparationTime}</span>
                 </span>
               </>
             )}
           </button>
-          <p className="text-text-2-medium text-gray-100">total: 19500 IQD</p>
+          <p className="md:text-text-2-medium sm:text-text-3-medium text-caption-1-medium text-gray-100">
+            total: 19500 IQD
+          </p>
         </span>
       </div>
 
-      <div className="pt-4 bg-primary-lm p-5">
+      <div className="pt-4 bg-primary-lm md:p-4 p-2">
         <div className="flex items-center justify-between">
           <FaChevronLeft
-            className="text-white size-6"
+            className="text-white md:size-6 sm:size-5 size-4"
             onClick={handlePreviousFood}
           />
-          <div className="flex items-center  w-full justify-center gap-7">
+          <div className="flex items-center w-full justify-center sm:gap-0 gap-4">
             <Image
               src={currentFood.image}
               width={100}
               height={100}
               alt={currentFood.name}
-              className="object-contain size-28"
+              className="object-contain md:size-28 sm:size-24 size-20"
             />
             <span className="text-white">
-              <h4 className="text-body-4-semiBold">1x {currentFood.name}</h4>
-              <p className="text-text-2-regular">{currentFood.price} IQD</p>
+              <h4 className="md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">1x {currentFood.name}</h4>
+              <p className="md:text-text-2-regular text-text-3-regular">{currentFood.price} IQD</p>
             </span>
           </div>
           <FaChevronRight
-            className="text-white size-6"
+            className="text-white md:size-6 sm:size-5 size-4"
             onClick={handleNextFood}
           />
         </div>

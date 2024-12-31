@@ -29,7 +29,21 @@ import { orderNewAccessToken } from "../authentication/Auth";
 import { removeTokens } from "../authentication/Auth";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
+import ConfirmModal from "../ui/ConfirmModal";
+import AccountMenu from "../AccountMenu";
+import { foods } from "@/lib/utils";
+import { deleteAccount } from "@/app/_components/authentication/authActions";
+import { ChangePassForm } from "@/app/_components/authentication/authActions";
+import { getUserCartItems } from "./actions";
+import { updateQuantityItem } from "./actions";
 export {
+  getUserCartItems,
+  updateQuantityItem,
+  ChangePassForm,
+  deleteAccount,
+  foods,
+  AccountMenu,
+  ConfirmModal,
   Modal,
   getToken,
   orderNewAccessToken,

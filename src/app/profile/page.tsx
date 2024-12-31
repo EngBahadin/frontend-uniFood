@@ -11,7 +11,7 @@ function ProfilePage() {
     setCurrentComponent(component);
   };
   return (
-    <div className="px-16 min-h-screen w-screen">
+    <div className="md:px-16 sm:px-10 px-14 min-h-screen w-screen">
       <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 my-10 w-fit">
         Profile
       </h1>

@@ -1,5 +1,3 @@
-// pages/about.tsx
-
 import Image from "next/image";
 
 const About = () => {

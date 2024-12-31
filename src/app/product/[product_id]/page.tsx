@@ -12,15 +12,12 @@ import { drinks, extras } from "@/lib/utils";
 import { getProductDetail } from "@/app/_components/funcs/actions";
 import { useQuery } from "@tanstack/react-query";
 import { CartContext } from "@/context/CartContext";
+import { productParams } from "@/types";
 
-type paramsProps = {
-  params: {
-    product_id: string;
-  };
-};
 
-let MAX_COUNT = 99;
-function ProductDetail({ params }: paramsProps) {
+
+const MAX_COUNT = 99;
+function ProductDetail({ params }: productParams) {
   const { product_id } = params;
   const accessToken = getToken();
   const [quantity, setQuantity] = useState(1);

@@ -10,8 +10,6 @@ function CartIcon() {
   const isCart = pathName === "/cart";
   const { cartItemQuantity } = useContext(CartContext);
 
-  //const [totalItemCount, setTotalItemCount] = useState(0);
-
   const handleNavigate = () => {
     router.push("/cart");
   };
@@ -28,7 +26,10 @@ function CartIcon() {
       )}
 
       <span
-        className={`absolute top-[-4px] right-[-4px]  rounded-full md:size-[18px] size-4 outline outline-2 outline-pure-white flex items-center justify-center ${isCart ? "bg-primary-lm" : "bg-pure-black"} `}
+        className={`absolute top-[-4px] right-[-4px] rounded-full sm:size-[18px] size-[14px] sm:border-[2.4px] border-[1.6px] border-pure-white flex items-center justify-center ${
+          isCart ? "bg-primary-lm" : "bg-pure-black"
+        } overflow-hidden`}
+        
       >
         <p className="text-white  text-caption-2-medium">{cartItemQuantity}</p>
       </span>
