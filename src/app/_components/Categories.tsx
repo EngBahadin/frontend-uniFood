@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { categoriesList } from "./funcs";
+import { CategoryProps } from "@/types";
 
 export function Category({
   type,
@@ -35,7 +36,7 @@ export function Category({
 
     if (isError) {
       return (
-        <p className="text-error-lm lg:text-body-4-regular text-text-1-regular">
+        <p className="text-error lg:text-body-4-regular text-text-1-regular">
           {error instanceof Error ? error.message : "An error occurred"}
         </p>
       );
@@ -44,7 +45,7 @@ export function Category({
     if (data && data.length > 0) {
       return data.map((category: CategoryProps) => (
         <button
-          className={`hover:text-primary-lm cursor:pointer ${(pathName && pathName===(`/categories/${category.id}`)) && "text-primary-lm"}`}
+          className={`hover:text-primary cursor:pointer ${pathName && pathName === `/categories/${category.id}` && "text-primary"}`}
           key={category.id}
           onClick={() => {
             if (setOpenBar) {
@@ -65,7 +66,7 @@ export function Category({
     <div>
       <button
         onClick={() => setDropdown((prev) => !prev)}
-        className={`flex items-center relative gap-x-1 group-hover:text-primary-lm hover:text-primary-lm mb-1 ${pathName && pathName.startsWith("/categories") && "text-primary-lm"}`}
+        className={`flex items-center relative gap-x-1 group-hover:text-primary hover:text-primary mb-1 ${pathName && pathName.startsWith("/categories") && "text-primary"}`}
       >
         Categories
         <IoIosArrowDown className="stroke-1 w-6 h-5" />

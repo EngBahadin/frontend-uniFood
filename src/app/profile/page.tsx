@@ -2,27 +2,33 @@
 import ChangeEmail from "../_components/ChangeEmail";
 import EditProfile from "../_components/EditProfile";
 import ProfileDetail from "../_components/ProfileDetail";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "@/context/CartContext";
 
 function ProfilePage() {
   const [currentComponent, setCurrentComponent] = useState("");
+  const { userDetails } = useContext(CartContext);
 
   const handleComponent = (component: string) => {
     setCurrentComponent(component);
   };
   return (
     <div className="md:px-16 sm:px-10 px-14 min-h-screen w-screen">
-      <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 my-10 w-fit">
+      <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary border-l-8 p-2 my-10 w-fit">
         Profile
       </h1>
       {currentComponent === "" && (
-        <ProfileDetail onComponent={handleComponent} />
+        <ProfileDetail
+          email={userDetails.email}
+          username={userDetails.username}
+          onComponent={handleComponent}
+        />
       )}
       {currentComponent === "editProfile" && (
-        <EditProfile onComponent={handleComponent} />
+        <EditProfile username={userDetails.username} onComponent={handleComponent} />
       )}
       {currentComponent === "changeEmail" && (
-        <ChangeEmail onComponent={handleComponent} />
+        <ChangeEmail email={userDetails.email} onComponent={handleComponent} />
       )}
     </div>
   );

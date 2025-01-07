@@ -7,7 +7,9 @@ import { Button, Input } from "./funcs";
 
 function EditProfile({
   onComponent,
+  username,
 }: {
+  username: string;
   onComponent: (component: string) => void;
 }) {
   const isPending = false;
@@ -20,13 +22,13 @@ function EditProfile({
             onClick={() => onComponent("")}
           />
         </button>
-        <h3 className="place-content-center text-center text-primary-lm md:text-body-3-medium sm:text-body-4-medium text-text-1-medium ">
+        <h3 className="place-content-center text-center text-primary md:text-body-3-medium sm:text-body-4-medium text-text-1-medium ">
           Personal information
         </h3>
       </header>
       <form action="">
         <ul className="grid gap-y-3 md:body-4-medium sm:text-text-1-medium text-text-2-medium ">
-          <li className="flex items-center gap-x-3 text-primary-lm ">
+          <li className="flex items-center gap-x-3 text-primary ">
             <span>
               <BsCameraFill className="md:size-6 sm:size-5 size-4" />
             </span>{" "}
@@ -44,7 +46,7 @@ function EditProfile({
 
               <label
                 htmlFor="profile_pic"
-                className="absolute bottom-0 right-0 bg-primary-lm md:size-7 sm:size-6 size-5 rounded-full cursor-pointer z-20 flex items-center justify-center"
+                className="absolute bottom-0 right-0 bg-primary md:size-7 sm:size-6 size-5 rounded-full cursor-pointer z-20 flex items-center justify-center"
               >
                 <GoPencil className="text-white md:size-5 sm:size-4 size-3" />
               </label>
@@ -60,18 +62,18 @@ function EditProfile({
             </div>
           </li>
           <li className="grid gap-y-2">
-            <span className="flex items-center gap-x-3 text-primary-lm">
+            <span className="flex items-center gap-x-3 text-primary">
               <TiUser />
               <span>Username</span>
             </span>{" "}
             <p className="md:text-text-1-regular sm:text-text-2-regular text-text-3-regular text-gray-100">
-              JohnDoe
+              {username}
             </p>
           </li>
           <li>
             <hr className="text-gray-50 border-[1px]" />
           </li>
-          <li className="text-primary-lm md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">
+          <li className="text-primary md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">
             Change your username
           </li>
           <li className="my-1 mb-4">

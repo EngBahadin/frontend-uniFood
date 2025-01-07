@@ -75,7 +75,7 @@ export default function ResetPassword() {
           placeholder="Re enter New Password"
         />
         <Link
-          className="text-text-2-medium  hover:text-primary-lm"
+          className="text-text-2-medium text-black hover:text-primary"
           href="/auth/forgot-password"
         >
           Forget my password

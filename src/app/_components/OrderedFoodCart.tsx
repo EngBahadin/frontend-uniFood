@@ -9,8 +9,6 @@ import { toast } from "sonner";
 import { OrderHistoryCartProps } from "@/types";
 import { ConfirmModal, foods } from "./funcs";
 
-
-
 function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
   const [currentFoodIndex, setCurrentFoodIndex] = useState(0); // Tracks which food is displayed
   const router = useRouter();
@@ -42,11 +40,11 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
   // Get the current food from the array
   const currentFood = foods[currentFoodIndex];
   return (
-    <article className="rounded-xl shadow-lg overflow-hidden border-[1px] border-primary-lm ">
+    <article className="rounded-xl shadow-lg overflow-hidden border-[1px] border-primary ">
       {/* Food Info */}
       <div className="flex justify-between gap-x-14 p-5 bg-pure-white">
         <span className="flex flex-col justify-between gap-y-2">
-          <h2 className="md:text-body-3-medium sm:text-body-4-medium text-text-1-medium">
+          <h2 className="md:text-body-3-medium sm:text-body-4-medium text-text-1-medium text-black">
             Food ID: #{Math.floor(Math.random() * 1000)}
           </h2>
           <p className="md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-gray-100">
@@ -61,7 +59,7 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
         <span className="flex flex-col items-end gap-y-2">
           <button
             onClick={() => cartType === "delivered" && setShowModal(true)}
-            className="bg-primary-lm text-pure-white md:text-text-2-regular text-text-3-regular py-1 px-3 rounded-lg "
+            className="bg-primary text-pure-white md:text-text-2-regular text-text-3-regular py-1 px-3 rounded-lg "
           >
             {cartType === "delivered" ? (
               "Re-Order"
@@ -80,7 +78,7 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
         </span>
       </div>
 
-      <div className="pt-4 bg-primary-lm md:p-4 p-2">
+      <div className="pt-4 bg-primary md:p-4 p-2">
         <div className="flex items-center justify-between">
           <FaChevronLeft
             className="text-white md:size-6 sm:size-5 size-4"
@@ -95,8 +93,12 @@ function OrderedFoodCart({ cartType, preparationTime }: OrderHistoryCartProps) {
               className="object-contain md:size-28 sm:size-24 size-20"
             />
             <span className="text-white">
-              <h4 className="md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">1x {currentFood.name}</h4>
-              <p className="md:text-text-2-regular text-text-3-regular">{currentFood.price} IQD</p>
+              <h4 className="md:text-body-4-semiBold sm:text-text-1-semiBold text-text-2-semiBold">
+                1x {currentFood.name}
+              </h4>
+              <p className="md:text-text-2-regular text-text-3-regular">
+                {currentFood.price} IQD
+              </p>
             </span>
           </div>
           <FaChevronRight

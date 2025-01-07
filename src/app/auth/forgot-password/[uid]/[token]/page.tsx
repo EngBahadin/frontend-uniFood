@@ -11,7 +11,7 @@ import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { paramsProps } from "../../../../../types";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import Loading from "./loading";
 import { toast } from "sonner";
 
@@ -19,7 +19,7 @@ export default function ResetPassword({ params }: paramsProps) {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isPending, isError, error, isSuccess } =
     useFormSubmission(resetPassForm);
-  const { uid, token } = params;
+  const { uid, token } = use(params);
   const router = useRouter();
 
   const {

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
 import { CartContext } from "@/context/CartContext";
 
-function CartIcon() {
+function CartIcon({ searchFocus }: { searchFocus: boolean }) {
   const pathName = usePathname();
   const router = useRouter();
   const isCart = pathName === "/cart";
@@ -15,24 +15,27 @@ function CartIcon() {
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${searchFocus ? "hidden sm:block" : "block"}`}>
       {isCart ? (
-        <HiShoppingCart className="stroke-[0.01px] md:w-8 md:h-8 sm:w-7 sm:h-7 w-5 h-5 text-primary-lm" />
+        <HiShoppingCart className="stroke-[0.01px] md:w-8 md:h-8 sm:w-7 sm:h-7 w-5 h-5 text-primary" />
       ) : (
         <HiOutlineShoppingCart
-          className="stroke-[0.7px] md:w-8 md:h-8 w-7 h-7  hover:text-primary-lm cursor-pointer"
+          className="stroke-[0.7px] md:w-8 md:h-8 w-7 h-7  hover:text-primary cursor-pointer text-pure-black"
           onClick={handleNavigate}
         />
       )}
 
-      <span
-        className={`absolute top-[-4px] right-[-4px] rounded-full sm:size-[18px] size-[14px] sm:border-[2.4px] border-[1.6px] border-pure-white flex items-center justify-center ${
-          isCart ? "bg-primary-lm" : "bg-pure-black"
-        } overflow-hidden`}
-        
-      >
-        <p className="text-white  text-caption-2-medium">{cartItemQuantity}</p>
-      </span>
+      {cartItemQuantity !== 0 && (
+        <span
+          className={`absolute top-[-4px] right-[-4px] rounded-full sm:size-[18px] size-[14px] sm:border-[2.4px] border-[1.6px] border-pure-white flex items-center justify-center ${
+            isCart ? "bg-primary" : "bg-pure-black"
+          } overflow-hidden`}
+        >
+          <p className="text-white  text-caption-2-medium">
+            {cartItemQuantity}
+          </p>
+        </span>
+      )}
     </div>
   );
 }

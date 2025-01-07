@@ -1,4 +1,4 @@
-import api, { apiAuth, apiClient, baseURL } from "@/lib/axios";
+import api, { apiAuth, apiClient } from "@/lib/axios";
 import { validateProps } from "../../../types";
 import { newToken, removeTokens } from "./Auth";
 
@@ -99,7 +99,7 @@ export async function validateToken(value: validateProps) {
 
   try {
     await apiClient.post(
-      `${baseURL}/api/users/uid-token-validation/`,
+      `/api/users/uid-token-validation/`,
       value,
       {
         headers: {
@@ -169,4 +169,23 @@ export async function deleteAccount(formData: FormData) {
     }
     throw new Error(errorMessage);
   }
+}
+
+export async function ChangeEmailForm(formData: FormData){
+
+    const formObject = Object.fromEntries(formData.entries());
+    console.log(formObject);
+    try {
+      await api.post("auth/users/set_password/", formObject);
+    } catch (error: any) {
+      let errorMessage: string;
+      if (error.response) {
+        console.log(error.response);
+        errorMessage = error.response.data.current_password[0];
+      } else {
+        errorMessage = `Error: ${error.message}`;
+      }
+      throw new Error(errorMessage);
+    }
+
 }

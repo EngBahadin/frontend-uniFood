@@ -89,14 +89,14 @@ const SignUpForm = () => {
         <Button isPending={isPending}>Sign up</Button>
 
         <article>
-          <p className="sm:text-text-2-regular text-text-3-regular inline">
-            Already have an account?
+          <p className="sm:text-text-2-regular text-text-3-regular inline text-black">
+            Already have an account?{" "}
           </p>
           <Link
-            className="text-primary-lm text-text-2-semiBold underline"
+            className="text-primary text-text-2-semiBold underline"
             href="/auth/signin"
           >
-            Sign in
+             Sign in
           </Link>
         </article>
       </div>
@@ -105,6 +105,6 @@ const SignUpForm = () => {
 };
 
 export default SignUpForm;
-//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white sm:h-24 h-10  absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100
-//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white ms:h-24 h-9 absolute bottom-[6%] z-10 right-[10%] disabled:bg-gray-100
-//absolute bottom-[4%] z-10 w-[80%] flex flex-col items-center justify-center w-full text-text-1-semiBold rounded-[8px] bg-primary-lm text-pure-white sm:h-14 h-10   disabled:bg-gray-100
+//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary text-pure-white sm:h-24 h-10  absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100
+//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary text-pure-white ms:h-24 h-9 absolute bottom-[6%] z-10 right-[10%] disabled:bg-gray-100
+//absolute bottom-[4%] z-10 w-[80%] flex flex-col items-center justify-center w-full text-text-1-semiBold rounded-[8px] bg-primary text-pure-white sm:h-14 h-10   disabled:bg-gray-100

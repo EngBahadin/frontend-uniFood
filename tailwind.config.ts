@@ -11,20 +11,15 @@ const config = {
   prefix: "",
   theme: {
     colors: {
-      "white": "#F4F4F4",
-      "pure-white": "#FFFFFF",
-      "black": "#2A2A2A",
-      "pure-black": "#000000",
-      "primary-lm": "#8E5C11",
-      "success-lm": "#067F18",
-      "error-lm": "#C92424",
-      "warning-lm": "#DC9F04",
-      "info-lm": "#2582EE",
-      "primary-dm": "#F5A52E",
-      "success-dm": "#30B043",
-      "error-dm": "#FF2A2A",
-      "warning-dm": "#FFBB0B",
-      "info-dm": "#3D98FF",
+      "white": "var(--white)",
+      "pure-white": "var(--pure-white)",
+      "black": "var(--black)",
+      "pure-black": "var(--pure-black)",
+      "primary": "var(--primary)",
+      "success": "var(--success)",
+      "error": "var(--error)",
+      "warning": "var(--warning)",
+      "info": "var(--info)",
       "red-bg": "#FDE1E1",
 
       "gray": {
@@ -138,12 +133,17 @@ const config = {
     },
     extend: {
       screens: {
-       mini_mobile:"360px"
+        mini_mobile: "360px",
       },
       fontFamily: {
         Poppins: "Poppins",
       },
       keyframes: {
+        "gradient-pulse": {
+          "0%": { backgroundPosition: "100% 0%" },
+          "100%": { backgroundPosition: "0% 0%" },
+         
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -154,6 +154,7 @@ const config = {
         },
       },
       animation: {
+        "gradient-pulse": "gradient-pulse 3.5s ease-in-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },

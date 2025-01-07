@@ -1,13 +1,10 @@
 "use client";
-import Image from "next/image";
-import { PiClockLight } from "react-icons/pi";
-import { BsStarFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { Favorites, getCategory } from "./funcs";
-import { useRouter } from "next/navigation";
+import { getCategory } from "./funcs";
 import { categoryItemsProps, FoodItemKeys } from "@/types";
-import FoodItem from "./FoodItem";
+import FoodItem from "./ui/FoodItem";
+import FoodItemSkeleton from "./ui/FoodItemSkeleton";
 
 function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   // for scrolling right and left
@@ -16,8 +13,7 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const router = useRouter();
-  const { data, isError, error } = useQuery({
+  const { data, isError, error, isPending } = useQuery({
     queryKey: ["product", "categories", categoryId],
     queryFn: () => getCategory(categoryId),
   });
@@ -41,34 +37,32 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleProductDetail = (id: number) => {
-    router.push(`/product/${id}`);
-  };
-
   return (
-    <>
-      <section className="py-10">
-        <div className="mb-10 grid place-content-center">
-          <h2 className="text-text-1-medium border-b-2 pb-2 w-fit text-black">
-            {categoryName}
-          </h2>
-        </div>
+    <section className="py-10">
+      <div className="mb-2 grid place-content-center">
+        <h2 className="text-text-1-medium border-b-2 pb-2 w-fit text-black">
+          {categoryName}
+        </h2>
+      </div>
 
-        <article
-          ref={scrollContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseLeave={() => setIsDown(false)}
-          onMouseUp={() => setIsDown(false)}
-          onMouseMove={handleMouseMove}
-          className="grid grid-flow-col gap-6 px-10 overflow-x-auto scrolling"
-        >
-          {data &&
-            data.map((item: FoodItemKeys) => (
-              <FoodItem layout="scrollx" item={item} key={item.id} />
-            ))}
-        </article>
-      </section>
-    </>
+      <article
+        ref={scrollContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={() => setIsDown(false)}
+        onMouseUp={() => setIsDown(false)}
+        onMouseMove={handleMouseMove}
+        className="grid grid-flow-col gap-6 px-10 overflow-x-auto scrolling scroll-smooth md:py-8 sm:py-7 py-6"
+      >
+        {isPending &&
+          [...Array(5)].map((_, index) => (
+            <FoodItemSkeleton key={index} layout="scrolx" />
+          ))}
+        {data &&
+          data.map((item: FoodItemKeys) => (
+            <FoodItem layout="scrollx" item={item} key={item.id} />
+          ))}
+      </article>
+    </section>
   );
 }
 

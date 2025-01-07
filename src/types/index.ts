@@ -59,7 +59,7 @@ export type errorProp = {
       };
 };
 export type paramsProps = {
-  params: { uid: string; token: string };
+  params: Promise<{ uid: string; token: string }>;
 };
 export type validateProps = {
   uid: string;
@@ -116,15 +116,11 @@ export interface OrderHistoryCartProps {
   preparationStatus?: string;
 }
 export type categoryId = {
-  params: {
-    category: string;
-  };
+  params: Promise<{category:string}>
 };
 
 export type productParams = {
-  params: {
-    product_id: string;
-  };
+  params: Promise<{ product_id: string }>;
 };
 export type CategoryProps = {
   id: string;

@@ -1,16 +1,22 @@
+'use client'
+import { ThemeContext } from "@/lib/ThemeProvider";
 import { DynamicLayoutProps } from "../../../types";
 import AuthHeader from "./AuthHeader";
 import Image from "next/image";
+import { useContext } from "react";
 
 export default function DynamicLayout({
   children,
   description,
   title,
 }: DynamicLayoutProps) {
+  // Access the theme from cookies
+  const {theme} = useContext(ThemeContext);
+  alert
   return (
     <main className=" min-h-screen py-14 justify-center flex flex-col">
       <Image
-        src="/unifood-logo.png"
+        src={theme === "dark" ? "/unifood-logo-dm.png" : "/unifood-logo.png"}
         alt="uni food logo"
         width={95}
         height={88}
@@ -26,7 +32,7 @@ export default function DynamicLayout({
             className="object-contain sm:size-28  size-14"
           />
         </section>
-        <div className="xl:w-[608px] xl:h-[668px] sm:w-[500px]  sm:h-[630px] w-full h-[510px]  rounded-[32px] border-primary-lm border-[3px] relative bg-pure-white shadow-xl">
+        <div className="xl:w-[608px] xl:h-[668px] sm:w-[500px]  sm:h-[630px] w-full h-[510px]  rounded-[32px] border-primary border-[3px] relative bg-pure-white shadow-xl">
           <AuthHeader title={title} description={description} />
           <div className="flex justify-center mt-4 "> {children}</div>
         </div>

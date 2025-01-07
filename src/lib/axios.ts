@@ -29,10 +29,17 @@ api.interceptors.request.use(
 
 // Response interceptor to handle expired tokens and other errors
 api.interceptors.response.use(
-  (response) => response, // Pass through if response is successful
+  (response) => response,
+  // Pass through if response is successful
   async (error) => {
     const originalRequest = error.config; // it gets back the original config
-
+    if (
+      error.response?.status === 401 &&
+      error.response.data.code === "user_inactive"
+    ) {
+      console.log("user is not verified");
+      return Promise.reject(error);
+    }
     if (error.response?.status === 401 && !originalRequest._retry) {
       // to avoid infinite loop
       originalRequest._retry = true;
@@ -54,8 +61,7 @@ api.interceptors.response.use(
         // Optionally handle additional error logic here
       }
     }
-
-    console.error("An error occurred. Please try again.");
+    console.error("An error occurred. Please try again.", error.response);
     return Promise.reject(error);
   }
 );

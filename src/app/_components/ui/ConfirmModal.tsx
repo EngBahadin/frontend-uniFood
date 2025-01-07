@@ -1,44 +1,83 @@
+"use client";
 import { ModalProps } from "@/types";
 import ReactDOM from "react-dom";
+import { useEffect, useState } from "react";
 
 function ConfirmModal({ onClose, onNavigate }: ModalProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger the animation when the component is mounted
+    setIsVisible(true);
+    return () => setIsVisible(false);
+  }, []);
+
+  const handleBackgroundClick = (event: React.MouseEvent) => {
+    // Close modal only if the backdrop (not modal content) is clicked
+    if (event.target === event.currentTarget) {
+      console.log(event.target, event.currentTarget);
+
+      onClose();
+    }
+  };
 
   return ReactDOM.createPortal(
-    <div
-      onBlur={() => onClose()}
-      className="fixed  inset-0  bg-black bg-opacity-30 flex items-center justify-center z-50"
-    >
-      <div className="bg-white md:p-8 p-3 rounded-lg shadow-lg sm:max-w-md min-w-[230px] w-1/2 relative flex flex-col md:gap-y-8 sm:gap-y-6 gap-y-2">
-        <h2 className="text-body-4-regular text-center">
-          Estimated waiting time for your order :
-        </h2>
-        <p className="text-center text-primary-lm md:text-body-4-semiBold sm:text-text-3-regular text-caption-2-regular">
-          10:25 - 10:30
-        </p>
-        <div className="grid grid-flow-col grid-cols-2 justify-between gap-x-20">
-          <button
-            onClick={() => onClose()}
-            className="text-primary-lm border border-primary-lm px-4 py-2 rounded md:text-text-1-medium
-        sm:text-text-2-medium text-caption-1-regular"
-          >
-            Cancel Order
-          </button>
+    <>
+      <div
+        className="fixed inset-0 bg-opacity-50 z-10"
+        onClick={() => {
+          setIsVisible(false);
+          setTimeout(handleBackgroundClick, 300);
+        }}
+      />
+      <div
+        className={`fixed backdrop-blur-sm inset-0 flex items-center justify-center z-20 transition-opacity duration-300 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div
+          className={`bg-white md:p-10 p-6 rounded-xl shadow-2xl sm:max-w-lg w-[90%] flex flex-col items-center gap-y-6 relative transition-transform duration-300 ${
+            isVisible ? "translate-y-0" : "translate-y-10"
+          }`}
+        >
+          {/* Decorative Top Bar */}
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-green-400 via-yellow-400 to-orange-500 rounded-t-xl"></div>
 
-          <button
-            onClick={() => {
-              onNavigate();
-            }}
-            className="bg-success-lm text-white md:px-4 px-3 py-2 h-fit rounded md:text-text-1-medium
-        sm:text-text-2-medium text-caption-2-medium"
-          >
-            Confirm
-          </button>
+          {/* Title Section */}
+          <h2 className="text-center text-primary font-bold md:text-2xl text-xl leading-snug">
+            🎉 Woohoo! Your tasty meal is just one step away!
+          </h2>
+          <p className="text-gray-600 text-sm md:text-base text-center text-black">
+            Ready to confirm? We are excited to get started on your order!
+          </p>
+
+          {/* Buttons Section */}
+          <div className="grid grid-cols-2 gap-x-8 w-full">
+            <button
+              onClick={() => {
+                setIsVisible(false);
+                setTimeout(onClose, 300); // Delay close to allow animation
+              }}
+              className="text-primary border border-primary px-6 py-3 rounded-lg transition hover:bg-primary hover:text-white font-medium text-base"
+            >
+              Cancel Order
+            </button>
+
+            <button
+              onClick={() => {
+                setIsVisible(false);
+                setTimeout(onNavigate, 300); // Delay navigation to allow animation
+              }}
+              className="bg-success text-white px-6 py-3 rounded-lg shadow-lg transition hover:bg-green-700 font-medium text-base"
+            >
+              Confirm
+            </button>
+          </div>
         </div>
       </div>
-    </div>,
+    </>,
     document.body
   );
 }
 
 export default ConfirmModal;
-// resend verification link should be added !

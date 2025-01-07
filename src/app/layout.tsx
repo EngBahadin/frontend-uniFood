@@ -6,6 +6,7 @@ import Navbar from "./_components/navbar";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { CartContextProvider } from "@/context/CartContext";
+import { ThemeProvider } from "@/lib/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "UniFood",
@@ -24,12 +25,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-Poppins bg-white`}>
         <Provider>
-          <CartContextProvider >
-            <SkeletonTheme baseColor="#f0f0f0" highlightColor="#f5f5f5">
+          <CartContextProvider>
+            <ThemeProvider>
               <Navbar />
               {children}
               <Toaster richColors position="top-right" />
-            </SkeletonTheme>
+            </ThemeProvider>
           </CartContextProvider>
         </Provider>
       </body>

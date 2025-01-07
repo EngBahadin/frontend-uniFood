@@ -3,20 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { HiBars3 } from "react-icons/hi2";
 import { PiInfoLight } from "react-icons/pi";
 import { TbCategory, TbHomeFilled } from "react-icons/tb";
 import { Category } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
+import { ThemeContext } from "@/lib/ThemeProvider";
 
 function SideBar() {
   const [openBar, setOpenBar] = useState(false);
   const pathName = usePathname();
-  const classes = "flex items-center gap-3 hover:text-primary-lm ";
+  const { theme } = useContext(ThemeContext);
+  const classes = "flex items-center gap-3 hover:text-primary ";
   const activeClasses =
-    "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
+    "border-b-[3px] rounded-b-sm border-primary text-primary";
 
   return (
     <>
@@ -27,21 +29,23 @@ function SideBar() {
         ></div>
       )}
       <nav className="md:hidden bg-pure-white z-20">
-        <menu className="flex items-center ml-4 mini_mobile:ml-8 mini_mobile:gap-x-8 gap-x-4 ">
+        <menu className="flex items-center ml-4 sm:ml-8 mini_mobile:gap-x-8 gap-x-4 ">
           {openBar ? (
             <CgClose
               onClick={() => setOpenBar(false)}
-              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary-lm"
+              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary"
             />
           ) : (
             <HiBars3
               onClick={() => setOpenBar(true)}
-              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary-lm"
+              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary"
             />
           )}
           <Link href={"/"} className="">
             <Image
-              src="/unifood-logo.png"
+              src={
+                theme === "light" ? "/unifood-logo.png" : "/unifood-logo-dm.png"
+              }
               alt="uni food logo"
               width={55}
               height={50}
@@ -77,7 +81,7 @@ function SideBar() {
 
             <div className="flex flex-row gap-x-3 group">
               <TbCategory
-                className={`sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary-lm ${pathName.startsWith("/categories") && "text-primary-lm"}`}
+                className={`sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary ${pathName.startsWith("/categories") && "text-primary"}`}
               />
               <Category setOpenBar={setOpenBar} type="slider" />
             </div>

@@ -12,7 +12,7 @@ function NotFound() {
     <div>
       <div className="flex flex-col items-center justify-center">
         <h1
-          className="text-center text-primary-lm
+          className="text-center text-primary
        text-body-1-semiBold mt-8"
         >
           Page Not Found
@@ -26,7 +26,7 @@ function NotFound() {
         />
 
         <button
-          className="text-primary-lm text-text-1-semiBold hover:bg-primary-lm hover:text-white p-1 rounded-md flex items-center justify-between"
+          className="text-primary text-text-1-semiBold hover:bg-primary hover:text-white p-1 rounded-md flex items-center justify-between"
           onClick={handleGoBack}
         >
           <span>

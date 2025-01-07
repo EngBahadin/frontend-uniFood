@@ -11,52 +11,72 @@ import {
   SideBar,
 } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ThemeContext } from "@/lib/ThemeProvider";
+import { IoSunnyOutline } from "react-icons/io5";
+import { PiMoonFill } from "react-icons/pi";
 
 function Navbar() {
   const pathName = usePathname();
   const activeClasses =
-    "border-b-[3px] rounded-b-sm border-primary-lm text-primary-lm";
+    "border-b-[3px] rounded-b-sm border-primary text-primary";
   const [searchFocused, setSearchFocused] = useState(false);
-
+  const { toggleTheme, theme } = useContext(ThemeContext);
   // Hide the navbar only on error pages
   const authPage = pathName.startsWith("/auth");
 
   if (!authPage) {
     return (
       <nav className="sticky z-50 top-0 w-full sm:h-20 h-16 flex items-center bg-pure-white border-b-[1px] border-gray-50 ">
-        <div className="flex justify-between w-full gap-y-4 md:mx-10 lg:mx-20">
+        <div className="flex justify-between w-full gap-y-4 md:mx-10">
           <SideBar />
-          <div className="hidden md:flex items-center gap-x-6 text-gray-100 lg:text-body-4-regular text-text-1-regular">
+          <div className="hidden md:flex items-center gap-x-5 text-gray-100 lg:text-body-4-regular text-text-1-regular">
             <Link href={"/"}>
               <Image
-                src="/unifood-logo.png"
+                src={
+                  theme === "light"
+                    ? "/unifood-logo.png"
+                    : "/unifood-logo-dm.png"
+                }
                 alt="uni food logo"
                 width={55}
                 height={50}
-                className="object-contain cursor-pointer"
+                className="md:size-10 size-8 cursor-pointer "
               />
             </Link>
             <Link
-              className={`${pathName === "/" && activeClasses} hover:text-primary-lm`}
+              className={`${pathName === "/" && activeClasses} hover:text-primary`}
               href="/"
             >
               Home
             </Link>
             <Link
-              className={`${pathName === "/about" && activeClasses} hover:text-primary-lm`}
+              className={`${pathName === "/about" && activeClasses} hover:text-primary`}
               href="/about"
             >
               About
             </Link>
             <Category type="header" />
           </div>
-          <div className="flex items-center pr-4 mini_mobile:pr-8 md:pr-0 gap-5">
+          <div className="flex items-center pr-4 md:pr-0 sm:pr-8 gap-4">
             <SearchBar
               setSearchFocused={setSearchFocused}
               searchFocused={searchFocused}
             />
-            {!searchFocused && <ShoppingCart />}
+            {theme === "light" ? (
+              <PiMoonFill
+                className="md:size-7 size-6 hover:text-primary cursor-pointer
+                stroke-[0.3px]"
+                onClick={toggleTheme}
+              />
+            ) : (
+              <IoSunnyOutline
+                className="md:size-7 size-6 hover:text-primary cursor-pointer text-black"
+                onClick={toggleTheme}
+              />
+            )}
+
+            <ShoppingCart searchFocus={searchFocused} />
             <FavoriteIcon pathName={pathName} type="header" />
             <AccountMenu />
           </div>

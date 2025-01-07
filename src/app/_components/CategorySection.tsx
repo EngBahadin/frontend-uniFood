@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { CategoryItems, categoriesList } from "./funcs";
 import { CategoryProps } from "@/types";
+import Skeleton from "react-loading-skeleton";
 
 export default function CategorySection() {
   const {
@@ -15,20 +16,6 @@ export default function CategorySection() {
     queryFn: categoriesList,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Image
-          src="/loading-spinner-2.svg"
-          alt="Loading spinner"
-          width={100}
-          height={100}
-          className="object-contain "
-        />
-      </div>
-    );
-  }
-
   if (isError) {
     return (
       <p className="grid place-content-center h-screen">
@@ -39,14 +26,14 @@ export default function CategorySection() {
 
   return (
     <div className="min-h-screen min-w-full">
-      {categories.map((category: CategoryProps) => (
-        <CategoryItems
-          key={category.id}
-          categoryId={category.id}
-          categoryName={category.name}
-        />
-      ))}
+      {categories &&
+        categories.map((category: CategoryProps) => (
+          <CategoryItems
+            key={category.id}
+            categoryId={category.id}
+            categoryName={category.name}
+          />
+        ))}
     </div>
   );
 }
-

@@ -8,13 +8,17 @@ import { TiUser } from "react-icons/ti";
 
 function ProfileDetail({
   onComponent,
+  email,
+  username,
 }: {
+  email: string;
+  username: string;
   onComponent: (component: string) => void;
 }) {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4">
-        <section className="border rounded-2xl border-gray-50 p-8 text-primary-lm grid gap-y-3 h-full">
+        <section className="border rounded-2xl border-gray-50 p-8 text-primary grid gap-y-3 h-full">
           {/* Your Profile Content */}
           <h3 className="md:text-body-3-semiBold sm:text-body-4-semiBold text-text-1-semiBold">
             Public information
@@ -29,7 +33,7 @@ function ProfileDetail({
               </span>
 
               <p className="md:text-body-4-regular sm:text-text-1-regular text-text-2-regular text-gray-100">
-                User Name
+                {username}
               </p>
             </label>
             <HiArrowLongRight
@@ -55,7 +59,7 @@ function ProfileDetail({
           </span>
         </section>
 
-        <section className="border rounded-2xl border-gray-50 p-8 text-primary-lm flex flex-col gap-y-3  ">
+        <section className="border rounded-2xl border-gray-50 p-8 text-primary flex flex-col gap-y-3  ">
           <h3 className="md:text-body-3-semiBold sm:text-body-4-semiBold text-text-1-semiBold">
             Login information
           </h3>
@@ -69,7 +73,7 @@ function ProfileDetail({
               </span>
 
               <p className="md:text-body-4-regular sm:text-text-1-regular text-text-2-regular text-gray-100">
-                example@gmail.com
+                {email}
               </p>
             </label>
             <HiArrowLongRight
@@ -89,8 +93,11 @@ function ProfileDetail({
             </Link>
           </div>
         </section>
-        <Link href={"/auth/delete-account"} className="sm:justify-self-start justify-self-center">
-          <button className="md:px-12 sm:px-10 px-9 md:py-4 py-3 w-fit bg-error-lm text-pure-white md:text-text-1-semiBold sm:text-text-2-semiBold text-text-3-semiBold my-10  rounded-lg">
+        <Link
+          href={"/auth/delete-account"}
+          className="sm:justify-self-start justify-self-center"
+        >
+          <button className="md:px-12 sm:px-10 px-9 md:py-4 py-3 w-fit bg-error text-pure-white md:text-text-1-semiBold sm:text-text-2-semiBold text-text-3-semiBold my-10  rounded-lg">
             Delete account
           </button>
         </Link>

@@ -13,9 +13,9 @@ function FavoriteIcon({
       <Link href="/favorites" className="hidden md:block">
         <span>
           {pathName === "/favorites" ? (
-            <HiHeart className="stroke-[0.7px] w-8 h-8 text-primary-lm" />
+            <HiHeart className="stroke-[0.7px] w-8 h-8 text-primary" />
           ) : (
-            <HiOutlineHeart className="stroke-[0.7px] w-8 h-8 hover:text-primary-lm" />
+            <HiOutlineHeart className="text-pure-black stroke-[0.7px] w-8 h-8 hover:text-primary" />
           )}
         </span>
       </Link>
@@ -25,7 +25,7 @@ function FavoriteIcon({
       <Link
         href="/favorites"
         onClick={() => setOpenBar(false)}
-        className={`${pathName === "/favorites" && activeClasses} flex items-center gap-3 hover:text-primary-lm`}
+        className={`${pathName === "/favorites" && activeClasses} flex items-center gap-3 hover:text-primary`}
       >
         <span>
           <HiOutlineHeart className="sm:w-6 sm:h-6 w-5 h-5" />

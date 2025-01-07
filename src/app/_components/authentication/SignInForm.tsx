@@ -7,10 +7,12 @@ import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { Button, Input } from "../funcs";
+import { useQueryClient } from "@tanstack/react-query";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isError, isSuccess, isPending, error } =
     useFormSubmission(loginForm);
+  const queryClient = useQueryClient();
 
   const handleSubmit = (formData: FormData) => {
     if (validate(formData, { email: true, password: true })) {
@@ -21,7 +23,11 @@ export default function SignInForm() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("logged in");
-      redirect("/");
+      queryClient.refetchQueries({ queryKey: ["cartItemQuantity"] });
+      queryClient.refetchQueries({ queryKey: ["profileDetail"] });
+      
+        redirect("/"); // Now redirect after invalidation and refetch
+      
     } else if (isError && error) {
       toast.error(error.message);
     }
@@ -52,13 +58,13 @@ export default function SignInForm() {
         placeholder="Password"
       />
       {isError && (
-        <p className="text-error-lm text-caption-1-regular">
+        <p className="text-error text-caption-1-regular">
           Incorrect credentials provided. Please check your email and password
           and try again
         </p>
       )}
       <Link
-        className="text-text-2-medium  hover:text-primary-lm"
+        className="text-text-2-medium  hover:text-primary text-black"
         href="/auth/forgot-password"
       >
         Forget my password
@@ -67,11 +73,11 @@ export default function SignInForm() {
         <Button isPending={isPending}>Sign in</Button>
 
         <article>
-          <p className="sm:text-text-2-regular text-text-3-regular inline">
+          <p className="sm:text-text-2-regular text-text-3-regular inline text-black">
             Do not have an account?{" "}
           </p>
           <Link
-            className="text-primary-lm underline sm:text-text-2-medium text-text-3-medium"
+            className="text-primary underline sm:text-text-2-medium text-text-3-medium"
             href="/auth/signup"
           >
             Create an account

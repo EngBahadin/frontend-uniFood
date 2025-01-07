@@ -37,24 +37,24 @@ const Input = memo(
         <div className="mb-1 flex flex-col">
           <label
             htmlFor={name}
-            className="sm:text-text-1-medium text-text-2-medium"
+            className="sm:text-text-1-medium text-black text-text-2-medium"
           >
             {label}
           </label>
           <div
             className={`relative flex items-center sm:text-text-2-medium text-text-3-medium bg-gray-15 rounded-[8px] w-full sm:h-12 h-9 overflow-hidden  ${
               errors?.[name]
-                ? "border border-error-lm text-error-lm"
-                : `focus-within:border focus-within:border-primary-lm`
+                ? "border border-error text-error"
+                : `focus-within:border focus-within:border-primary`
             }`}
           >
             {IconType && (
               <Icon
                 className={`absolute sm:text-text-2-medium text-text-3-medium sm:h-6 sm:w-6 ml-3 h-4 w-4 ${
                   errors?.[name]
-                    ? "text-error-lm"
+                    ? "text-error"
                     : isActive
-                      ? "text-primary-lm"
+                      ? "text-primary"
                       : "text-gray-75"
                 }`}
               />
@@ -62,9 +62,7 @@ const Input = memo(
             <input
               onChange={handleChange}
               className={`h-full outline-none bg-gray-15 w-full pr-3 sm:pl-11 pl-9 placeholder:text-gray-75  ${
-                errors?.[name]
-                  ? "text-error-lm"
-                  : "focus-within:text-primary-lm "
+                errors?.[name] ? "text-error" : "focus-within:text-primary "
               }`}
               type={passType}
               placeholder={placeholder}
@@ -80,7 +78,7 @@ const Input = memo(
                 onClick={togglePassType}
                 aria-label={"Hide password"}
                 className={`absolute sm:h-6 sm:w-6 h-4 w-4 right-3 cursor-pointer ${
-                  errors?.[name] ? "text-error-lm" : "text-gray-75"
+                  errors?.[name] ? "text-error" : "text-gray-75"
                 }`}
               />
             )}
@@ -89,14 +87,14 @@ const Input = memo(
                 <IoEyeOutline
                   onClick={togglePassType}
                   className={`absolute sm:h-6 sm:w-6 h-4 w-4 right-3 cursor-pointer ${
-                    errors?.[name] ? "text-error-lm" : "text-gray-75"
+                    errors?.[name] ? "text-error" : "text-gray-75"
                   }`}
                 />
               )}
           </div>
           {errors?.[name] && (
             <p
-              className=" text-error-lm md:text-text-3-regular
+              className=" text-error md:text-text-3-regular
             sm:text-caption-1-regular text-caption-2-regular"
             >
               {errors[name]}

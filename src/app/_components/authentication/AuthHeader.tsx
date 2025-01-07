@@ -11,7 +11,7 @@ function AuthHeader({ title, description }: authHeaderProps) {
   return (
     <header className="flex flex-col mini_mobile:min-w-[330px] mini_mobile:px-0 px-4 ">
       <div className="flex flex-col justify-center">
-        <h2 className="sm:text-sub-heading-2-semiBold mini_mobile:text-body-3-semiBold text-text-1-semiBold text-primary-lm text-center relative top-8">
+        <h2 className="sm:text-sub-heading-2-semiBold mini_mobile:text-body-3-semiBold text-text-1-semiBold text-primary text-center relative top-8">
           {title}
         </h2>
         <button

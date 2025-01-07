@@ -29,7 +29,7 @@ function Favorites({
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
     } catch (error: any) {
       if (error.response?.status === 401) {
-        if (error.response?.data.code === "user_inactive") {
+        if (error.response?.data.code === "ctive") {
           queryClient.invalidateQueries({
             queryKey: ["product"],
             exact: false,
@@ -73,11 +73,11 @@ function Favorites({
     <>
       {isFavorite ? (
         <span onClick={removeToFavorites} className="h-fit">
-          <HiHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary-lm active:scale-90" />
+          <HiHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary active:scale-90" />
         </span>
       ) : (
         <span onClick={addToFavorites} className="h-fit">
-          <HiOutlineHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary-lm active:scale-90" />
+          <HiOutlineHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary active:scale-90" />
         </span>
       )}
 

@@ -78,10 +78,7 @@ export default function Cart() {
   const handleNavigate = async () => {
     if (data) {
       try {
-        await Promise.all(
-          data.map((item) => api.delete(`api/cart/items/${item.id}/`))
-        );
-
+        api.post("api/order/items/", data);
         setCartItemQuantity(0);
         await queryClient.invalidateQueries({
           queryKey: ["cart"],
@@ -107,9 +104,7 @@ export default function Cart() {
       const total = data.reduce(
         (acc: number, item: FoodItem) =>
           acc +
-          ((item.food_item.price === 10 ? 10000 : item.food_item.price) ||
-            item.food_item.size_price[0]?.price ||
-            0) *
+          (item.food_item.price || item.food_item.size_price[0]?.price || 0) *
             item.qty,
         0
       );
@@ -123,15 +118,15 @@ export default function Cart() {
 
   if (!data || (data && data.length === 0)) {
     return (
-      <p className="grid place-content-center mt-[20%] text-body-4-regular text-primary-lm ">
+      <p className="grid place-content-center mt-[20%] text-body-4-regular text-primary ">
         Your cart is empty :(
       </p>
     ); // Handle empty cart
   }
 
   return (
-    <section className="min-h-screen lg:px-20 md:px-6 px-3 bg-pure-white pt-10">
-      <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary-lm border-l-8 p-2 self-start mb-10">
+    <section className="min-h-screen lg:px-20 md:px-6 px-3 pt-10 ">
+      <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary border-l-8 p-2 self-start mb-10">
         Cart
       </h1>
 
@@ -145,7 +140,7 @@ export default function Cart() {
                 className="grid grid-flow-col grid-cols-3 items-center md:justify-between h-fit"
               >
                 <div className="flex items-center col-span-2 ">
-                  <div className="bg-primary-lm rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
+                  <div className="bg-primary rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
                     <Image
                       src={item.food_item.image || "/"}
                       alt={item.food_item.name}
@@ -155,20 +150,18 @@ export default function Cart() {
                     />
                   </div>
                   <div className="sm:mx-5 mx-3">
-                    <h3 className="text-primary-lm lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36">
+                    <h3 className="text-primary lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36 ">
                       {item.food_item.name}
                     </h3>
                     <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
                       {item.food_item.price !== null
-                        ? item.food_item.price === 10
-                          ? 10000
-                          : item.food_item.price
+                        ? item.food_item.price
                         : item.food_item.size_price[0]?.price || 0}{" "}
                       IQD
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center sm:gap-x-6 gap-x-3 px-3 text-primary-lm lg:text-text-1-medium sm:text-text-2-medium text-text-3-medium">
+                <div className="flex items-center sm:gap-x-6 gap-x-3 px-3 text-primary lg:text-text-1-medium sm:text-text-2-medium text-text-3-medium">
                   <button
                     className="bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
                     onClick={() => updateQuantity("decrement", item)}
@@ -193,7 +186,7 @@ export default function Cart() {
 
         {/* Order Summary */}
         <div className="flex flex-col items-center md:items-stretch lg:gap-y-10 gap-y-8 px-3">
-          <h3 className="text-primary-lm lg:text-body-2-medium md:text-body-3-medium text-text-1-medium mt-2">
+          <h3 className="text-primary lg:text-body-2-medium md:text-body-3-medium text-text-1-medium mt-2">
             Order summary
           </h3>
           <div className="grid gap-y-2">
@@ -201,17 +194,15 @@ export default function Cart() {
               data.map((item) => (
                 <p
                   key={item.id}
-                  className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20"
+                  className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20 text-black"
                 >
                   <span>
                     {item.qty}x {item.food_item.name}
                   </span>
                   <span className="text-gray-100 lg:text-text-1-regular md:text-text-2-regular text-text-3-regular">
                     {item.food_item.price !== null
-                      ? item.food_item.price === 10
-                        ? 10000
-                        : item.food_item.price
-                      : item.food_item.size_price[0]?.price || 0}{" "}
+                      ? item.food_item.price
+                      : item.food_item.size_price[0]?.price || 0}
                     IQD
                   </span>
                 </p>
@@ -219,13 +210,13 @@ export default function Cart() {
             <hr />
             <p className="flex justify-between">
               <span className="text-gray-100">Total</span>
-              <span className="text-primary-lm lg:text-text-1-semiBold md:text-text-2-semiBold text-text-3-semiBold">
+              <span className="text-primary lg:text-text-1-semiBold md:text-text-2-semiBold text-text-3-semiBold">
                 {totalPrice} IQD
               </span>
             </p>
           </div>
           <button
-            className="bg-primary-lm text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
+            className="bg-primary text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
             onClick={() => setShowModal(true)}
           >
             Confirm Order

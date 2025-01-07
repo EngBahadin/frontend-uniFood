@@ -9,23 +9,65 @@ body {
   @apply m-0 p-0;
 }
 /* Hide scrollbar in WebKit-based browsers (e.g., Chrome, Edge, Brave) */
-html::-webkit-scrollbar, .scrolling::-webkit-scrollbar {
+html::-webkit-scrollbar,
+.scrolling::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar in Firefox */
-html, .scrolling {
+html,
+.scrolling {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
 
 /* Ensure scrolling is still possible even though the scrollbar is hidden */
-html, .scrolling {
+html,
+.scrolling {
   overflow: auto;
 }
 
-.cen{
-  left:0%;
-  top:50%;
-  transform: translate(-50%,-50%);
+.cen {
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+/* globals.css */
+
+:root {
+  /* Light Mode Colors */
+  --primary: #8e5c11;
+  --success: #067f18;
+  --error: #c92424;
+  --warning: #dc9f04;
+  --info: #2582ee;
+  --pure-white: #ffffff;
+  --white: #f4f4f4;
+  --black: #2a2a2a;
+  --pure-black: #000000;
+  
+
+  /* Dark Mode Colors (overridden) */
+  --primary-dark: #f5a52e;
+  --success-dark: #30b043;
+  --error-dark: #ff2a2a;
+  --warning-dark: #ffbb0b;
+  --info-dark: #3d98ff;
+  --pure-white-dark: #000000;
+  --white-dark: #2a2a2a;
+  --black-dark: #f4f4f4;
+  --pure-black-dark: #ffffff;
+}
+
+/* Dark mode settings */
+html.dark {
+  --primary: var(--primary-dark);
+  --success: var(--success-dark);
+  --error: var(--error-dark);
+  --warning: var(--warning-dark);
+  --info: var(--info-dark);
+  --pure-white: var(--pure-white-dark);
+  --white: var(--white-dark);
+  --black: var(--black-dark);
+  --pure-black: var(--pure-black-dark);
 }
