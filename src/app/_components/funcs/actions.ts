@@ -78,7 +78,6 @@ export async function getUserDetails() {
   }
 }
 
-
 export async function updateQuantityItem(id: string, newQty: number) {
   await api.patch(`api/cart/items/${id}/`, {
     qty: newQty,
@@ -95,3 +94,23 @@ export const getProductDetail = async (product_id: string) => {
     console.error(error);
   }
 };
+export async function changeProfilePic(formData: FormData) {
+  
+  console.log(formData);
+
+  try {
+    await api.post("api/users/set-profile-pic/", formData);
+  } catch (error: any) {
+    console.error(error);
+  }
+}
+export async function changeUsername(formData: FormData) {
+  const username = formData.get("username");
+  try {
+    await api.patch(`api/users/change-username/`, {
+      new_username: username,
+    });
+  } catch (error: any) {
+    console.error(error);
+  }
+}

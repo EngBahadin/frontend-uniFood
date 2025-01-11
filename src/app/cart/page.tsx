@@ -78,16 +78,15 @@ export default function Cart() {
   const handleNavigate = async () => {
     if (data) {
       try {
-        api.post("api/order/items/", data);
+        const response = await api.post("api/order/items/", data);
         setCartItemQuantity(0);
         await queryClient.invalidateQueries({
           queryKey: ["cart"],
         });
-
         queryClient.setQueryData<FoodItem[]>(["cart"], []);
-
-        toast.success("Order is confirmed");
-
+        toast.success(
+          `Thank you for your order! 🎉 We’ll have it ready by ${response.data.order.estimated_time}. Enjoy!`
+        );
         router.push("/");
       } catch (error) {
         toast.error("Failed to confirm order. Please try again.");

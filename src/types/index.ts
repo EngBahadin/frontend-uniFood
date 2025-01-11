@@ -13,6 +13,7 @@ export type categoryItemsProps = {
   categoryId: string;
 };
 export type InputProps = {
+  initialValue?: string;
   label: string;
   name: string;
   placeholder?: string;
@@ -83,6 +84,7 @@ export interface FoodItem {
   };
   qty: number;
   price: number;
+  waiting_time?: number;
 }
 export type FoodItemKeys = {
   // its used in the home page and the category items page
@@ -116,7 +118,7 @@ export interface OrderHistoryCartProps {
   preparationStatus?: string;
 }
 export type categoryId = {
-  params: Promise<{category:string}>
+  params: Promise<{ category: string }>;
 };
 
 export type productParams = {

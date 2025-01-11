@@ -21,11 +21,17 @@ function ProfilePage() {
         <ProfileDetail
           email={userDetails.email}
           username={userDetails.username}
+          profile_pic={userDetails.profile_pic}
           onComponent={handleComponent}
         />
       )}
       {currentComponent === "editProfile" && (
-        <EditProfile username={userDetails.username} onComponent={handleComponent} />
+        <EditProfile
+          username={userDetails.username}
+          profile_pic={userDetails.profile_pic}
+          onComponent={handleComponent}
+          id={userDetails.id}
+        />
       )}
       {currentComponent === "changeEmail" && (
         <ChangeEmail email={userDetails.email} onComponent={handleComponent} />

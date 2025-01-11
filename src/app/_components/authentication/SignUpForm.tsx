@@ -96,7 +96,7 @@ const SignUpForm = () => {
             className="text-primary text-text-2-semiBold underline"
             href="/auth/signin"
           >
-             Sign in
+            Sign in
           </Link>
         </article>
       </div>

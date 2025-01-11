@@ -11,12 +11,12 @@ const Input = memo(
     IconType,
     placeholder,
     errors,
+    initialValue,
     setErrors,
   }: InputProps) => {
     const [passType, setPassType] = useState(type);
     const [isActive, setIsActive] = useState(false);
     const Icon = Icons[IconType || "email"];
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       if (setErrors && errors?.[name]) {
@@ -67,6 +67,7 @@ const Input = memo(
               type={passType}
               placeholder={placeholder}
               id={name}
+              defaultValue={initialValue && initialValue}
               name={name}
               onFocus={() => setIsActive(true)}
               onBlur={() => {

@@ -29,7 +29,7 @@ function Favorites({
       queryClient.invalidateQueries({ queryKey: ["product"], exact: false });
     } catch (error: any) {
       if (error.response?.status === 401) {
-        if (error.response?.data.code === "ctive") {
+        if (error.response?.data.code === "user_inactive") {
           queryClient.invalidateQueries({
             queryKey: ["product"],
             exact: false,

@@ -10,7 +10,9 @@ function ProfileDetail({
   onComponent,
   email,
   username,
+  profile_pic,
 }: {
+  profile_pic: string;
   email: string;
   username: string;
   onComponent: (component: string) => void;
@@ -37,7 +39,7 @@ function ProfileDetail({
               </p>
             </label>
             <HiArrowLongRight
-              className="md:size-6 sm:size-5 size-4 cursor-pointer"
+              className="md:size-6 sm:size-5 size-4 cursor-pointer hover:translate-x-1 hover:scale-125 transition-all hover:text-warning"
               onClick={() => onComponent("editProfile")}
             />
           </div>
@@ -50,11 +52,11 @@ function ProfileDetail({
           </span>
           <span className="md:size-16 sm:size-14 size-12 bg-pure-white overflow-hidden rounded-full">
             <Image
-              src="/mypic.png"
+              src={profile_pic || "/mypic.png"}
               alt="Profile Pic"
               height={100}
               width={100}
-              className="size-full rounded-full border-2 border-gray-100 p-2"
+              className="size-full rounded-full border-1 border-gray-100 p-1 object-cover"
             />
           </span>
         </section>
@@ -77,7 +79,7 @@ function ProfileDetail({
               </p>
             </label>
             <HiArrowLongRight
-              className="md:size-6 sm:size-5 size-4 cursor-pointer"
+              className="md:size-6 sm:size-5 size-4 cursor-pointer hover:translate-x-1 hover:scale-125 transition-all hover:text-warning"
               onClick={() => onComponent("changeEmail")}
             />
           </div>
@@ -89,7 +91,7 @@ function ProfileDetail({
               </p>
             </span>
             <Link href="/auth/change-password">
-              <HiArrowLongRight className="md:size-6 sm:size-5 size-4 cursor-pointer" />
+              <HiArrowLongRight className="md:size-6 sm:size-5 size-4 cursor-pointer hover:translate-x-1 hover:scale-125 transition-all hover:text-warning" />
             </Link>
           </div>
         </section>
@@ -97,7 +99,7 @@ function ProfileDetail({
           href={"/auth/delete-account"}
           className="sm:justify-self-start justify-self-center"
         >
-          <button className="md:px-12 sm:px-10 px-9 md:py-4 py-3 w-fit bg-error text-pure-white md:text-text-1-semiBold sm:text-text-2-semiBold text-text-3-semiBold my-10  rounded-lg">
+          <button className="md:px-12 sm:px-10 px-9 md:py-4 py-3 w-fit bg-error text-pure-white md:text-text-1-semiBold sm:text-text-2-semiBold text-text-3-semiBold my-10 rounded-lg hover:text-error hover:bg-red-bg transition-colors active:scale-90">
             Delete account
           </button>
         </Link>
