@@ -34,7 +34,7 @@ function AccountMenu() {
           className="border-gray-100 border-[0.2px]  hover:border-[1.5px] hover:border-primary transition-all duration-200 bg-primary md:size-9 sm:size-8 size-7 rounded-full"
         >
           <Image
-            src={userDetails.profile_pic || "/mypic.png"}
+            src={userDetails?.profile_pic || "/mypic.png"}
             alt="Profile Pic"
             width={50}
             height={32}
@@ -53,7 +53,7 @@ function AccountMenu() {
             <header className="flex flex-row items-center gap-x-2">
               <div className="border-black border-[0.02px] hover:border-2 bg-primary  md:size-9 sm:size-7 size-6 rounded-full ">
                 <Image
-                  src={userDetails.profile_pic || "/mypic.png"}
+                  src={userDetails ? userDetails?.profile_pic : "/mypic.png"}
                   alt="Profile Pic"
                   width={50}
                   height={32}

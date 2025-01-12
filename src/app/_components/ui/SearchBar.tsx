@@ -3,10 +3,11 @@
 import { apiClient } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { TfiArrowTopLeft } from "react-icons/tfi";
+import Skeleton from "react-loading-skeleton";
 
 function SearchBar({
   setSearchFocused,
@@ -16,9 +17,9 @@ function SearchBar({
   setSearchFocused: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [value, setValue] = useState(""); // Input value
-  const pathname = usePathname();
   const router = useRouter();
   const [debouncedValue, setDebouncedValue] = useState(value); // Debounced value
+  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for the input element
 
   // Debounce effect
   useEffect(() => {
@@ -30,6 +31,7 @@ function SearchBar({
     () => setSearchFocused(true),
     [setSearchFocused]
   );
+
   const handleBlur = useCallback(
     () =>
       setTimeout(() => {
@@ -39,7 +41,7 @@ function SearchBar({
   );
 
   // Fetch search results
-  const { data, isError, error, isLoading } = useQuery({
+  const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["search", debouncedValue],
     queryFn: async () => {
       const response = await apiClient.get(
@@ -58,14 +60,19 @@ function SearchBar({
   };
 
   // Handle suggestion click
-  const handleSubmit = () => {
-    router.push(`/search?searchedName=${value}`);
-    handleBlur();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    router.push(`/search?searchedName=${value}`); // Navigate to the search page
+    if (inputRef.current) {
+      inputRef.current.blur(); // Programmatically blur the input
+    }
+    setDebouncedValue(""); // Reset the debounced value
+    handleBlur(); // Trigger blur logic for UI updates
   };
 
   return (
     <form
-      action={handleSubmit}
+      onSubmit={handleSubmit}
       className="bg-white overflow-hidden rounded-[10px]"
     >
       <div className="relative overflow-hidden flex items-center">
@@ -78,6 +85,7 @@ function SearchBar({
         </span>
 
         <input
+          ref={inputRef} // Attach the ref to the input element
           value={value}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -90,19 +98,27 @@ function SearchBar({
           placeholder="Search menu items..."
         />
       </div>
-      {data && searchFocused && (
-        <div className="bg-white text-pure-black absolute mt-2 lg:w-[345px] md:w-[180px] w-[140px] flex flex-col rounded-b-md max-h-64 overflow-scroll py-1 gap-1 scrolling cursor-pointer">
-          {data.map((item: any, index: number) => (
-            <Link
-              href={`/search?searchedName=${item.name}`}
-              key={index}
-              onClick={() => setValue(item.name)}
-              className="flex justify-between items-center hover:bg-primary transition-colors duration-200 px-3 text-caption-2-regular md:text-text-3-regular lg:text-text-2-regular"
-            >
-              <p>{item.name}</p>
-              <TfiArrowTopLeft className="lg:size-4 md:size-3 size-3" />
-            </Link>
-          ))}
+      {(isSuccess || isLoading) && searchFocused && (
+        <div className="bg-white text-pure-black absolute mt-2 lg:w-[345px] md:w-[180px] w-[140px] flex flex-col rounded-b-md max-h-64 overflow-scroll py-0 gap-1 scrolling cursor-pointer transition-all">
+          {isLoading ? (
+            <div className="px-3">
+              <Skeleton className="h-3" count={3}></Skeleton>
+            </div>
+          ) : (
+            <div className=" y-1 transition-all">
+              {data.map((item: any, index: number) => (
+                <Link
+                  href={`/search?searchedName=${item.name}`}
+                  key={index}
+                  onClick={() => setValue(item.name)}
+                  className="flex justify-between items-center hover:bg-primary transition-all duration-200 text-caption-2-regular md:text-text-3-regular lg:text-text-2-regular px-3"
+                >
+                  <p>{item.name}</p>
+                  <TfiArrowTopLeft className="lg:size-4 md:size-3 size-3" />
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </form>

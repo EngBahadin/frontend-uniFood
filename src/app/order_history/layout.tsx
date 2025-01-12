@@ -10,7 +10,7 @@ const OrderHistory = ({ children }: { children: ReactNode }) => {
   const activeClasses =
     "border-b-[3px] rounded-b-sm border-primary text-primary";
   return (
-    <div className="md:px-16 px-10  min-h-screen w-screen">
+    <div className="md:px-16 px-10  min-h-screen w-screen pb-10">
       <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary border-l-8 p-2 my-10 w-fit">
         Order History
       </h1>

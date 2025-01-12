@@ -85,6 +85,12 @@ export interface FoodItem {
   qty: number;
   price: number;
   waiting_time?: number;
+  selected_size_price?: {
+    size: string;
+    price: number;
+    food_item: string;
+    id: number;
+  };
 }
 export type FoodItemKeys = {
   // its used in the home page and the category items page
