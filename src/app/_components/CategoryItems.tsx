@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { getCategory } from "./funcs";
 import { categoryItemsProps, FoodItemKeys } from "@/types";
 import FoodItem from "./ui/FoodItem";
-import FoodItemSkeleton from "./ui/FoodItemSkeleton";
+import FoodItemSkeleton from "./skeleton_loadings/FoodItemSkeleton";
 
 function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   // for scrolling right and left
@@ -16,6 +16,8 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
   const { data, isError, error, isPending } = useQuery({
     queryKey: ["product", "categories", categoryId],
     queryFn: () => getCategory(categoryId),
+    staleTime: 60 * 60 * 1000,
+    gcTime: 2 * 60 * 60 * 1000,
   });
 
   if (isError && error instanceof Error) {
@@ -51,11 +53,11 @@ function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
         onMouseLeave={() => setIsDown(false)}
         onMouseUp={() => setIsDown(false)}
         onMouseMove={handleMouseMove}
-        className="grid grid-flow-col gap-6 px-10 overflow-x-auto scrolling scroll-smooth md:py-8 sm:py-7 py-6"
+        className="grid grid-flow-col gap-6 sm:px-10 px-6 overflow-x-auto scrolling scroll-smooth md:py-8 sm:py-7 py-6"
       >
         {isPending &&
           [...Array(5)].map((_, index) => (
-            <FoodItemSkeleton key={index} layout="scrolx" />
+            <FoodItemSkeleton key={index} layout="scrollx" />
           ))}
         {data &&
           data.map((item: FoodItemKeys) => (

@@ -66,12 +66,12 @@ function Navbar() {
             {theme === "light" ? (
               <PiMoonFill
                 className="md:size-7 size-6 hover:text-primary cursor-pointer
-                stroke-[0.3px]"
+                stroke-[0.3px] hover:scale-105 active:scale-95 transition-all"
                 onClick={toggleTheme}
               />
             ) : (
               <IoSunnyOutline
-                className="md:size-7 size-6 hover:text-primary cursor-pointer text-black"
+                className="md:size-7 size-6 hover:text-primary cursor-pointer text-black hover:scale-105 active:scale-95 transition-all"
                 onClick={toggleTheme}
               />
             )}

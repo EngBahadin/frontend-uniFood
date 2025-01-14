@@ -1,7 +1,7 @@
 "use client";
 import { ModalProps } from "@/types";
 import ReactDOM from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { addMinutesToTime } from "@/lib/utils";
@@ -53,7 +53,7 @@ function ConfirmModal({ onClose, onNavigate }: ModalProps) {
                   setIsVisible(false);
                   setTimeout(onClose, 300); // Delay close to allow animation
                 }}
-                className="text-primary border border-primary px-6 py-3 rounded-lg transition hover:bg-primary hover:text-white font-medium text-base"
+                className="active:scale-90 hover:scale-95 text-primary border border-primary px-6 py-3 rounded-lg transition hover:bg-primary hover:text-white font-medium text-base"
               >
                 Cancel Order
               </button>
@@ -63,7 +63,7 @@ function ConfirmModal({ onClose, onNavigate }: ModalProps) {
                   setIsVisible(false);
                   setTimeout(onNavigate, 300); // Delay navigation to allow animation
                 }}
-                className="bg-success text-white px-6 py-3 rounded-lg shadow-lg transition hover:bg-green-700 font-medium text-base"
+                className="active:scale-90 hover:scale-95 duration-300 bg-success text-white px-6 py-3 rounded-lg shadow-lg transition hover:bg-green-700 font-medium text-base"
               >
                 Confirm
               </button>

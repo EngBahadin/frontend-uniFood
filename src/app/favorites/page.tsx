@@ -1,11 +1,10 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import api from "@/lib/axios";
 import { getToken } from "../_components/funcs";
 import { toast } from "sonner";
 import FoodItem from "../_components/ui/FoodItem";
-import FoodItemSkeleton from "../_components/ui/FoodItemSkeleton";
+import FoodItemSkeleton from "../_components/skeleton_loadings/FoodItemSkeleton";
 
 function FavoritesPage() {
   const accessToken = getToken();

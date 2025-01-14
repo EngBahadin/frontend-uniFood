@@ -24,7 +24,6 @@ const Input = memo(
           ...prev,
           [name]: value ? null : prev[name],
         }));
-        console.log("typed");
       }
     };
 

@@ -1,6 +1,6 @@
 "use client";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
 import { ThemeContext } from "@/lib/ThemeProvider";
-import { useQueryClient } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ const wssBaseURL = process.env.NEXT_PUBLIC_WSS_BASE_URL;
 function CheckEmail() {
   const router = useRouter();
   const { theme } = useContext(ThemeContext);
-  const queryClient = useQueryClient();
+  const { refetch } = useContext(UserDetailsContext);
   // web socket
   useEffect(() => {
     let url = `${wssBaseURL}/ws/socket-server/`;
@@ -37,7 +37,7 @@ function CheckEmail() {
       }
       if (data.type === "success") {
         toast.success("account verified successfully");
-        queryClient.refetchQueries({ queryKey: ["profileDetail"] });
+        refetch(); // to update the user details in context
         router.push("/");
       }
     };

@@ -13,6 +13,7 @@ import {
   getUserCartItems,
   updateQuantityItem,
 } from "../_components/funcs";
+import CartSkeleton from "../_components/skeleton_loadings/CartSkeleton";
 
 export default function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -112,7 +113,7 @@ export default function Cart() {
   }, [data]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <CartSkeleton />;
   }
 
   if (!data || (data && data.length === 0)) {
@@ -149,8 +150,13 @@ export default function Cart() {
                     />
                   </div>
                   <div className="sm:mx-5 mx-3">
-                    <h3 className="text-primary lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36 ">
+                    <h3 className="text-primary grid grid-flow-col items-center gap-x-2 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36 ">
                       {item.food_item.name}
+                      {!item.price && (
+                        <span className="text-primary lg:text-text-3-regular text-caption-1-regular">
+                          ({item.selected_size_price?.size})
+                        </span>
+                      )}
                     </h3>
                     <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
                       {item.food_item.price !== null
@@ -162,20 +168,20 @@ export default function Cart() {
                 </div>
                 <div className="flex items-center sm:gap-x-6 gap-x-3 px-3 text-primary lg:text-text-1-medium sm:text-text-2-medium text-text-3-medium">
                   <button
-                    className="bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
+                    className="active:scale-95  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
                     onClick={() => updateQuantity("decrement", item)}
                   >
                     -
                   </button>
                   <p>{item.qty}</p>
                   <button
-                    className="bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
+                    className="active:scale-90  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
                     onClick={() => updateQuantity("increment", item)}
                   >
                     +
                   </button>
                   <GoTrash
-                    className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer"
+                    className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer active:scale-90 transition-all duration-300"
                     onClick={() => removeToCart(item.id, item.qty)}
                   />
                 </div>
@@ -193,15 +199,13 @@ export default function Cart() {
               data.map((item) => (
                 <p
                   key={item.id}
-                  className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20 text-black"
+                  className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20 text-black lg:text-text-1-regular md:text-text-2-regular text-text-3-regular"
                 >
                   <span>
                     {item.qty}x {item.food_item.name}
                   </span>
                   <span className="text-gray-100 lg:text-text-1-regular md:text-text-2-regular text-text-3-regular">
-                    {item.food_item.price !== null
-                      ? item.food_item.price
-                      : item.selected_size_price?.price || 0}
+                    {item.price}
                     IQD
                   </span>
                 </p>
@@ -215,7 +219,7 @@ export default function Cart() {
             </p>
           </div>
           <button
-            className="bg-primary text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
+            className="active:scale-90 hover:scale-95 transition-all duration-300 bg-primary text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
             onClick={() => setShowModal(true)}
           >
             Confirm Order

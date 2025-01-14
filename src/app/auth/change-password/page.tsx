@@ -4,6 +4,7 @@ import {
   Input,
   Button,
   ChangePassForm,
+  removeTokens,
 } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
@@ -16,6 +17,7 @@ export default function ResetPassword() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isPending, isError, error, isSuccess } =
     useFormSubmission(ChangePassForm);
+    
   const router = useRouter();
 
   useEffect(() => {
@@ -28,6 +30,11 @@ export default function ResetPassword() {
       router.push("/profile");
     }
   }, [error, isError, isSuccess]);
+
+    const navigateToForgotPassword = () => {
+      removeTokens();
+      router.push("/auth/forgot-password");
+    };
 
   const handleSubmit = (formData: FormData) => {
     if (
@@ -45,7 +52,7 @@ export default function ResetPassword() {
       title="Change password"
       description="Please enter a new password"
     >
-      <form className="w-[80%] flex flex-col" action={handleSubmit}>
+      <form className="w-[80%] flex flex-col gap-y-2" action={handleSubmit}>
         <Input
           type="password"
           name="current_password"
@@ -74,12 +81,12 @@ export default function ResetPassword() {
           setErrors={setErrors}
           placeholder="Re enter New Password"
         />
-        <Link
-          className="text-text-2-medium text-black hover:text-primary"
-          href="/auth/forgot-password"
+        <button
+          onClick={navigateToForgotPassword}
+          className="text-text-2-medium text-black hover:text-primary w-fit transition-all"
         >
           Forget my password
-        </Link>
+        </button>
         <div className="absolute bottom-16 z-10 w-[80%] flex flex-col items-center justify-center gap-y-3 right-[10%]">
           <Button isPending={isPending}>Update password</Button>
         </div>

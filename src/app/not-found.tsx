@@ -22,7 +22,6 @@ function NotFound() {
           alt="404 Not Found"
           width={500}
           height={500}
-          className=""
         />
 
         <button

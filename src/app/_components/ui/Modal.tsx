@@ -14,8 +14,6 @@ function Modal({ onClose, onNavigate, notVerified }: ModalProps) {
   const handleBackgroundClick = (event: React.MouseEvent) => {
     // Close modal only if the backdrop (not modal content) is clicked
     if (event.target === event.currentTarget) {
-      console.log(event.target,event.currentTarget);
-      
       onClose();
     }
   };

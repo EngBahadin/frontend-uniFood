@@ -1,4 +1,5 @@
 "use client";
+
 import { TiUser } from "react-icons/ti";
 import { GoPencil } from "react-icons/go";
 import Image from "next/image";
@@ -7,47 +8,49 @@ import { TfiArrowCircleLeft } from "react-icons/tfi";
 import { Button, Input } from "./funcs";
 import { useContext, useRef, useState } from "react";
 import { useFormValidation } from "./hooks/useFormValidation";
-import { useFormSubmission } from "./hooks/useFormSubmission";
 import { changeProfilePic, changeUsername } from "./funcs/actions";
 import { toast } from "sonner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CartContext } from "@/context/CartContext";
+import { useMutation } from "@tanstack/react-query";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
 
 function EditProfile({
   onComponent,
   username,
   profile_pic,
-  id,
 }: {
   id: string;
   profile_pic: string;
   username: string;
   onComponent: (component: string) => void;
 }) {
-  const queryClient = useQueryClient();
-  const fileInputRef = useRef<HTMLInputElement>(null); // Correct ref type
-  const [newProfilePic, setNewProfilePic] = useState<string | null>(null); // Store base64 image data
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [newProfilePic, setNewProfilePic] = useState<string | null>(null);
   const { validate, errors, setErrors } = useFormValidation();
-  const {
-    mutate: updateUsername,
-    isPending,
-    isError,
-    error,
-  } = useMutation({
-    mutationFn: changeUsername,
-    onSuccess: () => {
-      toast.success("Username updated successfully");
-      // onComponent("profile");
-      queryClient.refetchQueries({ queryKey: ["profileDetail"] });
-    },
-  });
+  const { refetch } = useContext(UserDetailsContext);
+  type MutateParams = {
+    newUsername: string | null;
+    profilePicFormData: FormData | null;
+  };
 
-  const { mutate, isPending: isLoading } = useMutation({
-    mutationFn: changeProfilePic,
-    onSuccess: () => {
-      toast.success("Profile picture updated successfully");
-      //onComponent("profile");
-      queryClient.refetchQueries({ queryKey: ["profileDetail"] });
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({ newUsername, profilePicFormData }: MutateParams) => {
+      if (newUsername && newUsername !== username) {
+        console.log("Updating username...");
+        await changeUsername({ new_username: newUsername });
+      }
+      if (profilePicFormData && newProfilePic !== profile_pic) {
+        console.log("Updating profile picture...");
+        await changeProfilePic(profilePicFormData);
+        setNewProfilePic(null);
+      }
+    },
+    onSuccess: async () => {
+      toast.success("Profile updated successfully!");
+      refetch();
+      onComponent("");
+    },
+    onError: (error: any) => {
+      toast.error(error);
     },
   });
 
@@ -58,32 +61,26 @@ function EditProfile({
     }
   };
 
-  const handleSubmit = (formData: FormData) => {
-    const NewUserName = formData.get("username");
+  const handleSubmit = async (formData: FormData) => {
+    let newUsername: string | null = null;
+    if (validate(formData, { username: true })) {
+      newUsername = formData.get("username") as string | null;
+    }
     const file = fileInputRef.current?.files?.[0];
 
-    if (!newProfilePic && NewUserName === username) {
+    if (newProfilePic === profile_pic && newUsername === username) {
       toast.info("It seems like you didn’t make any changes this time.");
-    } else {
-      if (file && newProfilePic) {
-        const profilePicFormData = new FormData();
-        profilePicFormData.append("profile_pic", file);
-        mutate(profilePicFormData);
-      }
-
-      if (NewUserName !== username) {
-        if (validate(formData, { username: true })) {
-          console.log(NewUserName);
-          updateUsername(formData);
-        }
-      }
-      onComponent("");
+      return;
     }
-  };
+    let profilePicFormData = file ? new FormData() : null;
 
-  if (isError) {
-    console.log(error);
-  }
+    if (newProfilePic) {
+      if (profilePicFormData && file) {
+        profilePicFormData.append("profile_pic", file);
+      }
+    }
+    mutate({ newUsername, profilePicFormData });
+  };
 
   return (
     <div className="rounded-2xl border-[2px] border-gray-50 p-5 grid w-fit gap-y-3">
@@ -98,7 +95,13 @@ function EditProfile({
           Personal information
         </h3>
       </header>
-      <form action={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.currentTarget);
+          handleSubmit(formData);
+        }}
+      >
         <ul className="grid gap-y-3 md:body-4-medium sm:text-text-1-medium text-text-2-medium">
           <li className="flex items-center gap-x-3 text-primary">
             <span>
@@ -109,10 +112,10 @@ function EditProfile({
           <li>
             <div className="relative inline-block">
               <Image
-                src={newProfilePic || profile_pic || "/mypic.png"} // Show selected image or default
+                src={newProfilePic || profile_pic || "/mypic.png"}
                 width={200}
                 height={200}
-                alt="image"
+                alt="Profile"
                 className="md:size-24 sm:size-16 size-14 rounded-full object-cover z-10"
               />
 
@@ -129,10 +132,8 @@ function EditProfile({
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 id="profile_pic"
-                alt="profile image"
                 name="profile_pic"
                 className="hidden"
-                placeholder="null"
               />
             </div>
           </li>
@@ -158,21 +159,13 @@ function EditProfile({
               type="text"
               label="Username"
               IconType="user"
-              placeholder="eg. johnDoe"
+              placeholder="e.g., johnDoe"
               errors={errors}
               setErrors={setErrors}
             />
-            {isError && (
-              <p className="text-error text-caption-1-regular">
-                {error.message || ""}
-              </p>
-            )}
           </li>
         </ul>
-        <Button
-          isPending={isPending || isLoading}
-          position="w-[58%] ml-[21%] my-14 mb-8"
-        >
+        <Button isPending={isPending} position="w-[58%] ml-[21%] my-14 mb-8">
           Confirm Changes
         </Button>
       </form>

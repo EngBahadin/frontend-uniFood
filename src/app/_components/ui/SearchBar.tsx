@@ -8,6 +8,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { TfiArrowTopLeft } from "react-icons/tfi";
 import Skeleton from "react-loading-skeleton";
+import { toast } from "sonner";
 
 function SearchBar({
   setSearchFocused,
@@ -16,15 +17,15 @@ function SearchBar({
   searchFocused: boolean;
   setSearchFocused: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [value, setValue] = useState(""); // Input value
+  const [value, setValue] = useState("");
   const router = useRouter();
-  const [debouncedValue, setDebouncedValue] = useState(value); // Debounced value
-  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for the input element
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const searchBarRef = useRef<HTMLFormElement | null>(null);
 
-  // Debounce effect
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedValue(value), 500); // 500ms debounce
-    return () => clearTimeout(handler); // Cleanup on value change
+    return () => clearTimeout(handler);
   }, [value]);
 
   const handleFocus = useCallback(
@@ -40,7 +41,19 @@ function SearchBar({
     [setSearchFocused]
   );
 
-  // Fetch search results
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        searchBarRef.current &&
+        !searchBarRef.current.contains(e.target as Node)
+      ) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["search", debouncedValue],
     queryFn: async () => {
@@ -49,43 +62,49 @@ function SearchBar({
       );
       return response.data;
     },
-    refetchOnWindowFocus: false, // Disable refetching when the window regains focus
+    refetchOnWindowFocus: false,
     enabled: !!debouncedValue, // Only fetch when debouncedValue is non-empty
-    staleTime: 5 * 60 * 1000, // Cache results for 5 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
   });
 
-  // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  // Handle suggestion click
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    router.push(`/search?searchedName=${value}`); // Navigate to the search page
-    if (inputRef.current) {
-      inputRef.current.blur(); // Programmatically blur the input
+  const handleSubmit = () => {
+    if (!value.trim()) {
+      toast.info("Type something to search 😊!");
+      return;
     }
-    setDebouncedValue(""); // Reset the debounced value
-    handleBlur(); // Trigger blur logic for UI updates
+    router.push(`/search?searchedName=${value}`);
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+    setDebouncedValue("");
+    handleBlur();
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      action={handleSubmit}
       className="bg-white overflow-hidden rounded-[10px]"
+      ref={searchBarRef}
     >
       <div className="relative overflow-hidden flex items-center">
         <span
           tabIndex={0}
           onFocus={handleFocus}
           className="ml-2 absolute hover:cursor-pointer focus-within:text-gray-75"
+          onClick={() => {
+            if (value.trim()) handleSubmit();
+          }}
         >
-          <CiSearch className="hover:text-primary md:size-7 sm:size-6 size-5 stroke-[0.01px] text-black" />
+          <CiSearch className="hover:text-primary md:size-7 sm:size-5 size-4 stroke-[0.01px] text-black" />
         </span>
 
         <input
-          ref={inputRef} // Attach the ref to the input element
+          ref={inputRef}
           value={value}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -98,20 +117,21 @@ function SearchBar({
           placeholder="Search menu items..."
         />
       </div>
-      {(isSuccess || isLoading) && searchFocused && (
-        <div className="bg-white text-pure-black absolute mt-2 lg:w-[345px] md:w-[180px] w-[140px] flex flex-col rounded-b-md max-h-64 overflow-scroll py-0 gap-1 scrolling cursor-pointer transition-all">
+
+      {(isSuccess || isLoading) && searchFocused && value && (
+        <div className="bg-white text-pure-black absolute mt-2 lg:w-[345px] md:w-[180px] w-[140px] flex flex-col rounded-b-md max-h-64 overflow-scroll py-0 gap-1 cursor-pointer transition-all">
           {isLoading ? (
             <div className="px-3">
               <Skeleton className="h-3" count={3}></Skeleton>
             </div>
           ) : (
-            <div className=" y-1 transition-all">
+            <div className="y-1 transition-all">
               {data.map((item: any, index: number) => (
                 <Link
                   href={`/search?searchedName=${item.name}`}
                   key={index}
                   onClick={() => setValue(item.name)}
-                  className="flex justify-between items-center hover:bg-primary transition-all duration-200 text-caption-2-regular md:text-text-3-regular lg:text-text-2-regular px-3"
+                  className="flex justify-between items-center hover:bg-primary transition-all hover:text-white duration-200 text-caption-2-regular md:text-text-3-regular lg:text-text-2-regular px-3"
                 >
                   <p>{item.name}</p>
                   <TfiArrowTopLeft className="lg:size-4 md:size-3 size-3" />

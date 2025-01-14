@@ -26,16 +26,15 @@ const ActivatePage = ({ params }: paramsProps) => {
     <div className="flex flex-col items-center justify-center h-screen">
       {isPending && (
         <>
-          <Image
-            src="/loading-spinner-2.sr4vg"
-            alt="Loading spinner"
-            width={100}
-            height={100}
-            className="object-contain sm:w-24 sm:h-24 w-20 h-20 mb-4 bg-pure-black"
-          />
-          <p className="sm:text-body-3-medium text-text-1-medium text-primary animate-pulse duration-1000">
-            verifying your account...
+          <p className="md:text-body-3-medium sm:text-body-4-medium text-text-1-medium text-primary">
+            Verifying Your Account .
           </p>
+          <div className="lds-ellipsis text-primary">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </>
       )}
       {isError && (

@@ -5,15 +5,18 @@ import { useFormSubmission } from "../hooks/useFormSubmission";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Input } from "../funcs";
 import { useQueryClient } from "@tanstack/react-query";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
+import { CartContext } from "@/context/CartContext";
 export default function SignInForm() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isError, isSuccess, isPending, error } =
     useFormSubmission(loginForm);
   const queryClient = useQueryClient();
-
+  const { refetch } = useContext(UserDetailsContext);
+  const { refetch: refetching } = useContext(CartContext);
   const handleSubmit = (formData: FormData) => {
     if (validate(formData, { email: true, password: true })) {
       submit(formData);
@@ -24,10 +27,9 @@ export default function SignInForm() {
     if (isSuccess) {
       toast.success("logged in");
       queryClient.refetchQueries({ queryKey: ["cartItemQuantity"] });
-      queryClient.refetchQueries({ queryKey: ["profileDetail"] });
-      
-        redirect("/"); // Now redirect after invalidation and refetch
-      
+      refetch();
+      refetching(); 
+      redirect("/");
     } else if (isError && error) {
       toast.error(error.message);
     }

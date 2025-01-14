@@ -4,7 +4,7 @@ import { getCategory } from "@/app/_components/funcs";
 import { categoryId, FoodItemKeys } from "@/types";
 import FoodItem from "@/app/_components/ui/FoodItem";
 import { use } from "react";
-import FoodItemSkeleton from "@/app/_components/ui/FoodItemSkeleton";
+import FoodItemSkeleton from "@/app/_components/skeleton_loadings/FoodItemSkeleton";
 
 function CategoryPage({ params }: categoryId) {
   const { category } = use(params);

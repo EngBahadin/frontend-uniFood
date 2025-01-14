@@ -1,9 +1,10 @@
 "use client";
 import OrderedFoodCart from "@/app/_components/OrderedFoodCart";
-import OrderedFoodCartSkeleton from "@/app/_components/SkeletonOrders";
+import OrderedFoodCartSkeleton from "@/app/_components/skeleton_loadings/SkeletonOrders";
 import api from "@/lib/axios";
 import { FoodItem } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import { TbMoodEmpty } from "react-icons/tb";
 export type OrderedFoods = OrderedFood[];
 export type OrderedFood = {
   id: number;
@@ -24,9 +25,12 @@ function PreparingPage() {
   return (
     <>
       {data && data.length === 0 && (
-        <p className="text-center bg-white md:text-body-1-medium sm:text-body-2-medium text-body-3-medium text-primary grid items-center h-screen">
-          No Orders Yet!
-        </p>
+        <div className="grid place-content-center h-64 md:text-body-4-regular text-text-1-regular text-primary grid-flow-col items-center gap-3">
+          <span>
+            <TbMoodEmpty className="text-primary md:size-7 size-6" />
+          </span>
+          <p>No Orders Yet!</p>
+        </div>
       )}
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
         {data &&

@@ -1,10 +1,17 @@
 function Loading() {
   return (
-    <div className="flex flex-col h-screen  items-center justify-center">
-      <p className="text-sub-heading-1-bold text-primary animate-bounce ">.</p>
-      <p className=" sm:text-body-3-medium text-text-2-medium text-primary text-center animate-pulse duration-1000">
-        Just a moment, making sure everything is secure...
-      </p>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <>
+        <p className="md:text-body-3-medium sm:text-body-4-medium text-text-1-medium text-primary">
+          Just a moment, making sure everything is secure .
+        </p>
+        <div className="lds-ellipsis text-primary">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </>
     </div>
   );
 }

@@ -95,22 +95,16 @@ export const getProductDetail = async (product_id: string) => {
   }
 };
 export async function changeProfilePic(formData: FormData) {
-  
-  console.log(formData);
-
   try {
     await api.post("api/users/set-profile-pic/", formData);
   } catch (error: any) {
     console.error(error);
   }
 }
-export async function changeUsername(formData: FormData) {
-  const username = formData.get("username");
+export async function changeUsername(data: { new_username: string }) {
   try {
-    await api.patch(`api/users/change-username/`, {
-      new_username: username,
-    });
+    await api.patch(`api/users/change-username/`, data);
   } catch (error: any) {
-    console.error(error);
+    throw error.response.data.message;
   }
 }

@@ -26,7 +26,7 @@ export default function ForgotPassword() {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Submitted successfully");
-      router.push("forgot-password/check-email");
+      router.push("check-email");
     } else if (isError && error) {
       setErrors({
         email: error.message,

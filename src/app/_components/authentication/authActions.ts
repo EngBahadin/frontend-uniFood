@@ -96,17 +96,12 @@ export async function forgotPassForm(formData: FormData) {
 }
 
 export async function validateToken(value: validateProps) {
-
   try {
-    await apiClient.post(
-      `/api/users/uid-token-validation/`,
-      value,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    await apiClient.post(`/api/users/uid-token-validation/`, value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error: any) {
     console.error("Error validating token:", error);
     throw new Error("Invalid Token");
@@ -115,9 +110,15 @@ export async function validateToken(value: validateProps) {
 
 export async function resetPassForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
-  console.log(formObject);
   try {
-    await apiAuth.post("/users/reset_password_confirm/", formObject);
+    const response = await apiClient.post(
+      "/api/users/reset_password_confirm/",
+      formObject
+    );
+    const access = response.data.jwt_tokens.access;
+    const refresh = response.data.jwt_tokens.refresh;
+    newToken({ access, refresh });
+    return response.data;
   } catch (error: any) {
     let errorMessage: string;
 
@@ -135,7 +136,6 @@ export async function ChangePassForm(formData: FormData) {
   formObject.new_password = formObject.password;
   delete formObject.re_password;
   delete formObject.password;
-  console.log(formObject);
   try {
     await api.post("auth/users/set_password/", formObject);
   } catch (error: any) {
@@ -155,7 +155,6 @@ export async function deleteAccount(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   formObject.current_password = formObject.password;
   delete formObject.password;
-  console.log(formObject);
   try {
     await api.delete("auth/users/me/", { data: formObject });
     removeTokens();
@@ -171,21 +170,18 @@ export async function deleteAccount(formData: FormData) {
   }
 }
 
-export async function ChangeEmailForm(formData: FormData){
-
-    const formObject = Object.fromEntries(formData.entries());
-    console.log(formObject);
-    try {
-      await api.post("auth/users/set_password/", formObject);
-    } catch (error: any) {
-      let errorMessage: string;
-      if (error.response) {
-        console.log(error.response);
-        errorMessage = error.response.data.current_password[0];
-      } else {
-        errorMessage = `Error: ${error.message}`;
-      }
-      throw new Error(errorMessage);
+export async function ChangeEmailForm(formData: FormData) {
+  const formObject = Object.fromEntries(formData.entries());
+  try {
+    await api.post("auth/users/set_password/", formObject);
+  } catch (error: any) {
+    let errorMessage: string;
+    if (error.response) {
+      console.log(error.response);
+      errorMessage = error.response.data.current_password[0];
+    } else {
+      errorMessage = `Error: ${error.message}`;
     }
-
+    throw new Error(errorMessage);
+  }
 }

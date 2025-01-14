@@ -66,7 +66,7 @@ export function Category({
     <div>
       <button
         onClick={() => setDropdown((prev) => !prev)}
-        className={`flex items-center relative gap-x-1 group-hover:text-primary hover:text-primary mb-1 ${pathName && pathName.startsWith("/categories") && "text-primary"}`}
+        className={`flex items-center relative gap-x-1 group-hover:text-primary group-hover:scale-105 transition-all group-active:scale-95 hover:text-primary mb-1 ${pathName && pathName.startsWith("/categories") && "text-primary"}`}
       >
         Categories
         <IoIosArrowDown className="stroke-1 w-6 h-5" />

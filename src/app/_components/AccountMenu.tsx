@@ -7,12 +7,17 @@ import Image from "next/image";
 import { TiUser } from "react-icons/ti";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { CartContext } from "@/context/CartContext";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
 
 function AccountMenu() {
   const [accessToken, setAccessToken] = useState(false);
   const [openBar, setOpenBar] = useState(false);
-  const classes = "flex items-center gap-3 hover:text-primary text-black";
-  const { setCartItemQuantity, userDetails } = useContext(CartContext);
+  const classes = "flex items-center gap-3 hover:text-primary text-black hover:scale-95 active:scale-90 transition-all ";
+  const { setCartItemQuantity } = useContext(CartContext);
+
+  // Accessing the individual values from UserDetailsContext
+  const { username, profile_pic, isLoading } = useContext(UserDetailsContext);
+
   useEffect(() => {
     const token = getToken();
     setAccessToken(!!token);
@@ -22,19 +27,21 @@ function AccountMenu() {
   const toggleShowMenu = () => {
     setOpenBar((prev) => !prev);
   };
+
   const toggleAuth = () => {
     setCartItemQuantity(0);
     if (accessToken) removeTokens();
   };
+
   return (
     <>
       <menu>
         <div
           onClick={toggleShowMenu}
-          className="border-gray-100 border-[0.2px]  hover:border-[1.5px] hover:border-primary transition-all duration-200 bg-primary md:size-9 sm:size-8 size-7 rounded-full"
+          className="border-gray-100 border-[0.2px] hover:border-[1.5px] hover:border-primary transition-all duration-200 bg-primary md:size-9 sm:size-8 size-7 rounded-full"
         >
           <Image
-            src={userDetails?.profile_pic || "/mypic.png"}
+            src={profile_pic} // Using profile_pic directly from context
             alt="Profile Pic"
             width={50}
             height={32}
@@ -43,17 +50,17 @@ function AccountMenu() {
         </div>
       </menu>
       {openBar && (
-        <div className="inset-0 fixed  z-10" onClick={toggleShowMenu} />
+        <div className="inset-0 fixed z-10" onClick={toggleShowMenu} />
       )}
       <article
-        className={`${openBar ? "p-6 z-20" : "h-0 p-0"} overflow-hidden absolute rounded-bl-xl duration-300 ease-out bg-pure-white drop-shadow-md top-16 right-0`}
+        className={`${openBar ? "p-6 z-20" : "h-0 p-0"} overflow-hidden absolute rounded-bl-xl duration-300 ease-out bg-pure-white drop-shadow-md top-14 right-0`}
       >
-        {accessToken && userDetails ? (
+        {accessToken && !isLoading ? (
           <>
             <header className="flex flex-row items-center gap-x-2">
-              <div className="border-black border-[0.02px] hover:border-2 bg-primary  md:size-9 sm:size-7 size-6 rounded-full ">
+              <div className="border-black border-[0.02px] hover:border-2 bg-primary md:size-9 sm:size-7 size-6 rounded-full ">
                 <Image
-                  src={userDetails ? userDetails?.profile_pic : "/mypic.png"}
+                  src={profile_pic} // Using profile_pic from context
                   alt="Profile Pic"
                   width={50}
                   height={32}
@@ -61,11 +68,11 @@ function AccountMenu() {
                 />
               </div>
               <h4 className="text-text-1-regular text-black">
-                {userDetails.username}
+                {username} {/* Using username directly from context */}
               </h4>
             </header>
 
-            <div className=" flex flex-col gap-y-4  sm:text-text-1-regular text-text-3-regular mt-4">
+            <div className="flex flex-col gap-y-4 sm:text-text-1-regular text-text-3-regular mt-4">
               <Link
                 onClick={() => setOpenBar(false)}
                 href="/profile"

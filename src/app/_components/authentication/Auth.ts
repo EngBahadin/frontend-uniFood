@@ -31,7 +31,6 @@ export const orderNewAccessToken = async () => {
     });
     const newAccessToken = response.data.access;
     setCookie("access_token", newAccessToken);
-    console.log(response.data);
 
     return newAccessToken;
   } catch (error: any) {

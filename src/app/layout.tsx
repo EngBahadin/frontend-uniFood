@@ -25,13 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-Poppins bg-white`}>
         <Provider>
-          <CartContextProvider>
-            <ThemeProvider>
-              <Navbar />
-              {children}
-              <Toaster richColors position="top-right" />
-            </ThemeProvider>
-          </CartContextProvider>
+          <Navbar />
+          {children}
+          <Toaster richColors position="top-right" />
         </Provider>
       </body>
     </html>

@@ -20,7 +20,7 @@ export default function DynamicLayout({
         alt="uni food logo"
         width={95}
         height={88}
-        className="object-contain z-20 lg:w-24 lg:h-24 md:w-20 md:h-16 sm:w-16  w-14 h-14 absolute left-0 top-0 ml-[5%] mt-[5%] drop-shadow-xl "
+        className="object-contain z-20 lg:w-24 lg:h-24 md:w-20 md:h-16 sm:w-16 w-14 h-14 absolute left-0 top-0 ml-[4%] mt-[3%] drop-shadow-xl "
       />
       <div className="m-auto relative ">
         <section className="absolute sm:top-[-45px] sm:right-[-35px] top-[-20px] right-[-15px] z-20">

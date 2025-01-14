@@ -16,7 +16,8 @@ function SideBar() {
   const [openBar, setOpenBar] = useState(false);
   const pathName = usePathname();
   const { theme } = useContext(ThemeContext);
-  const classes = "flex items-center gap-3 hover:text-primary ";
+  const classes =
+    "flex items-center gap-3 hover:text-primary  hover:scale-105 active:scale-95 transition-all";
   const activeClasses =
     "border-b-[3px] rounded-b-sm border-primary text-primary";
 
@@ -33,15 +34,15 @@ function SideBar() {
           {openBar ? (
             <CgClose
               onClick={() => setOpenBar(false)}
-              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary"
+              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary hover:scale-105 active:scale-95 transition-all"
             />
           ) : (
             <HiBars3
               onClick={() => setOpenBar(true)}
-              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary"
+              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary hover:scale-105 active:scale-95 transition-all"
             />
           )}
-          <Link href={"/"} className="">
+          <Link href={"/"}>
             <Image
               src={
                 theme === "light" ? "/unifood-logo.png" : "/unifood-logo-dm.png"
@@ -81,7 +82,7 @@ function SideBar() {
 
             <div className="flex flex-row gap-x-3 group">
               <TbCategory
-                className={`sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary ${pathName.startsWith("/categories") && "text-primary"}`}
+                className={`sm:w-6 sm:h-6 w-5 h-5 group-hover:text-primary group-hover:scale-105 transition-all group-active:scale-95 ${pathName.startsWith("/categories") && "text-primary"}`}
               />
               <Category setOpenBar={setOpenBar} type="slider" />
             </div>

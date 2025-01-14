@@ -11,9 +11,11 @@ import { useFormValidation } from "@/app/_components/hooks/useFormValidation";
 import { paramsProps } from "../../../../../types";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { use, useEffect } from "react";
+import { use, useContext, useEffect } from "react";
 import Loading from "./loading";
 import { toast } from "sonner";
+import { CartContext } from "@/context/CartContext";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
 
 export default function ResetPassword({ params }: paramsProps) {
   const { validate, errors, setErrors } = useFormValidation();
@@ -21,7 +23,8 @@ export default function ResetPassword({ params }: paramsProps) {
     useFormSubmission(resetPassForm);
   const { uid, token } = use(params);
   const router = useRouter();
-
+  const { refetch: refetchCartQuantity } = useContext(CartContext);
+  const { refetch: refetchUserDetails } = useContext(UserDetailsContext);
   const {
     mutate,
     isSuccess: isTokenValid,
@@ -40,6 +43,8 @@ export default function ResetPassword({ params }: paramsProps) {
       });
     } else if (isSuccess) {
       toast.success("Password reset successfully");
+      refetchCartQuantity();
+      refetchUserDetails();
       router.push("/");
     }
   }, [error, isError, isSuccess]);
@@ -67,7 +72,7 @@ export default function ResetPassword({ params }: paramsProps) {
         title="Reset password"
         description="Please enter a new password"
       >
-        <form className="w-[80%] flex flex-col" action={handleSubmit}>
+        <form className="w-[80%] flex flex-col gap-y-3" action={handleSubmit}>
           <Input
             type="password"
             name="password"

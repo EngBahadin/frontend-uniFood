@@ -13,7 +13,7 @@ import { getProductDetail } from "@/app/_components/funcs/actions";
 import { useQuery } from "@tanstack/react-query";
 import { CartContext } from "@/context/CartContext";
 import { productParams } from "@/types";
-import SkeletonProductDetail from "@/app/_components/SkeletonProductDetail";
+import SkeletonProductDetail from "@/app/_components/skeleton_loadings/SkeletonProductDetail";
 
 const MAX_COUNT = 99;
 
@@ -42,6 +42,8 @@ function ProductDetail({ params }: productParams) {
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["product", product_id],
     queryFn: () => getProductDetail(product_id),
+    staleTime: 60 * 60 * 1000,
+    gcTime: 2 * 60 * 60 * 1000,
   });
 
   useEffect(() => {

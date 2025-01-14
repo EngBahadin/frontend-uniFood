@@ -17,10 +17,10 @@ function CartIcon({ searchFocus }: { searchFocus: boolean }) {
   return (
     <div className={`relative ${searchFocus ? "hidden sm:block" : "block"}`}>
       {isCart ? (
-        <HiShoppingCart className="stroke-[0.01px] md:w-8 md:h-8 sm:w-7 sm:h-7 w-5 h-5 text-primary" />
+        <HiShoppingCart className="stroke-[0.01px] md:w-8 md:h-8 sm:w-7 sm:h-7 w-5 h-5 text-primary hover:scale-105 active:scale-95 transition-all" />
       ) : (
         <HiOutlineShoppingCart
-          className="stroke-[0.7px] md:w-8 md:h-8 w-7 h-7  hover:text-primary cursor-pointer text-pure-black"
+          className="stroke-[0.7px] md:w-8 md:h-8 w-7 h-7  hover:text-primary cursor-pointer text-pure-black hover:scale-105 active:scale-95 transition-all"
           onClick={handleNavigate}
         />
       )}

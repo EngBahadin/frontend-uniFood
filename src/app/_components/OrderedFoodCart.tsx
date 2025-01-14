@@ -55,7 +55,7 @@ function OrderedFoodCart({ item }: OrderHistory) {
   const currentFood = foods[currentFoodIndex];
   if (item)
     return (
-      <article className="rounded-xl shadow-lg overflow-hidden border-[1px] border-primary ">
+      <article className="rounded-xl shadow-lg overflow-hidden border-[1px] border-primary transition-all duration-500 ">
         {/* Food Info */}
         <div className="flex justify-between p-5 bg-pure-white h-2/5 ">
           <span className="flex flex-col justify-between gap-y-2">
@@ -102,14 +102,14 @@ function OrderedFoodCart({ item }: OrderHistory) {
         <div className="pt-4 h-3/5 overflow-hidden bg-primary md:p-4 p-2">
           <div className="flex items-center justify-between">
             <FaChevronLeft
-              className="text-white md:size-6 sm:size-5 size-4"
+              className="hover:text-gray-75 dark:hover:text-gray-25 cursor-pointer transition-all text-white md:size-6 sm:size-5 size-4"
               onClick={handlePreviousFood}
             />
             <div className="flex items-center w-full justify-center sm:gap-0 gap-4">
               {currentFood && (
                 <>
                   <Image
-                    src={currentFood?.food_item?.image || ""}
+                    src={currentFood?.food_item?.image || "/"}
                     width={100}
                     height={100}
                     alt={currentFood?.food_item?.name}
@@ -129,7 +129,7 @@ function OrderedFoodCart({ item }: OrderHistory) {
               )}
             </div>
             <FaChevronRight
-              className="text-white md:size-6 sm:size-5 size-4"
+              className="hover:text-gray-75 dark:hover:text-gray-25 cursor-pointer transition-all text-white md:size-6 sm:size-5 size-4"
               onClick={handleNextFood}
             />
           </div>
@@ -137,7 +137,7 @@ function OrderedFoodCart({ item }: OrderHistory) {
             {foods.map((_, idx) => (
               <span
                 key={idx}
-                className={`block w-2 h-2 rounded-full ${
+                className={`block w-2 h-2 rounded-full transition-all duration-500 ${
                   currentFoodIndex === idx
                     ? "bg-pure-white"
                     : "bg-gray-75 dark:bg-gray-25"

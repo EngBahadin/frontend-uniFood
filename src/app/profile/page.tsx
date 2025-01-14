@@ -3,11 +3,11 @@ import ChangeEmail from "../_components/ChangeEmail";
 import EditProfile from "../_components/EditProfile";
 import ProfileDetail from "../_components/ProfileDetail";
 import { useContext, useState } from "react";
-import { CartContext } from "@/context/CartContext";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
 
 function ProfilePage() {
   const [currentComponent, setCurrentComponent] = useState("");
-  const { userDetails } = useContext(CartContext);
+  const { email,id,profile_pic,username } = useContext(UserDetailsContext);
 
   const handleComponent = (component: string) => {
     setCurrentComponent(component);
@@ -19,22 +19,22 @@ function ProfilePage() {
       </h1>
       {currentComponent === "" && (
         <ProfileDetail
-          email={userDetails.email}
-          username={userDetails.username}
-          profile_pic={userDetails.profile_pic}
+          email={email}
+          username={username}
+          profile_pic={profile_pic}
           onComponent={handleComponent}
         />
       )}
       {currentComponent === "editProfile" && (
         <EditProfile
-          username={userDetails.username}
-          profile_pic={userDetails.profile_pic}
+          username={username}
+          profile_pic={profile_pic}
           onComponent={handleComponent}
-          id={userDetails.id}
+          id={id}
         />
       )}
       {currentComponent === "changeEmail" && (
-        <ChangeEmail email={userDetails.email} onComponent={handleComponent} />
+        <ChangeEmail email={email} onComponent={handleComponent} />
       )}
     </div>
   );

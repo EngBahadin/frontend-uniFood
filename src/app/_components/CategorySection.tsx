@@ -1,19 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import { CategoryItems, categoriesList } from "./funcs";
 import { CategoryProps } from "@/types";
-import Skeleton from "react-loading-skeleton";
 
 export default function CategorySection() {
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: categories, isError } = useQuery({
     queryKey: ["categories", "category-list"],
     queryFn: categoriesList,
+    staleTime: 60 * 60 * 1000,
+    gcTime: 2 * 60 * 60 * 1000,
   });
 
   if (isError) {
