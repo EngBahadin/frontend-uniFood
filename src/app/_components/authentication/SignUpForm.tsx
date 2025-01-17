@@ -1,5 +1,6 @@
 "use client";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { Button, Input, signUpForm } from "../funcs";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import { useFormValidation } from "../hooks/useFormValidation";
@@ -12,6 +13,14 @@ const SignUpForm = () => {
   const { submit, isSuccess, isError, error, isPending } =
     useFormSubmission(signUpForm);
 
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    re_password: "",
+  });
+
   useEffect(() => {
     if (isError) {
       if (error && error.cause) {
@@ -21,16 +30,19 @@ const SignUpForm = () => {
           newErrors[key] =
             Array.isArray(value) && value.length > 0 ? value[0] : null;
         });
-        if (newErrors !== errors) setErrors(newErrors);
+        if (JSON.stringify(newErrors) !== JSON.stringify(errors)) {
+          setErrors(newErrors); // Avoid unnecessary re-renders
+        }
       } else if (error) {
-        toast.error(error.message);
+        toast.error(error.message || "An unexpected error occurred.");
       }
     }
+
     if (isSuccess) {
-      toast.success("Submitted Successfully");
-      redirect("signup/check-email/");
+      toast.success("Registration submitted successfully!");
+      redirect("/signup/check-email/");
     }
-  }, [error, isError, isSuccess]);
+  }, [error, isError, isSuccess, errors, setErrors]);
 
   const handleSubmit = (formData: FormData) => {
     if (
@@ -44,10 +56,19 @@ const SignUpForm = () => {
       submit(formData);
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <form
       action={handleSubmit}
-      className="text-text-1-medium gap-1 flex flex-col w-[80%]"
+      className={`flex flex-col ${!errors && "gap-4"} w-[80%] mx-auto mt-6 text-text-1-medium`}
     >
       <Input
         name="username"
@@ -56,7 +77,9 @@ const SignUpForm = () => {
         IconType="user"
         errors={errors}
         setErrors={setErrors}
-        placeholder="eg. John Doe"
+        placeholder="e.g., John Doe"
+        value={formData.username}
+        onChange={handleChange}
       />
       <Input
         type="email"
@@ -65,7 +88,9 @@ const SignUpForm = () => {
         IconType="email"
         errors={errors}
         setErrors={setErrors}
-        placeholder="eg. johndoe@example.com"
+        placeholder="e.g., johndoe@example.com"
+        value={formData.email}
+        onChange={handleChange}
       />
       <Input
         type="password"
@@ -74,37 +99,37 @@ const SignUpForm = () => {
         IconType="password"
         errors={errors}
         setErrors={setErrors}
-        placeholder="Password"
+        placeholder="Enter your password"
+        value={formData.password}
+        onChange={handleChange}
       />
       <Input
         type="password"
         name="re_password"
-        label="Re-enter password"
+        label="Confirm Password"
         IconType="password"
         errors={errors}
         setErrors={setErrors}
-        placeholder="Re-enter password"
+        placeholder="Re-enter your password"
+        value={formData.re_password}
+        onChange={handleChange}
       />
-      <div className=" absolute bottom-[5%] z-10 w-[80%] flex flex-col items-center justify-center">
-        <Button isPending={isPending}>Sign up</Button>
-
-        <article>
-          <p className="sm:text-text-2-regular text-text-3-regular inline text-black">
-            Already have an account?{" "}
-          </p>
+      <div className="mt-6 flex flex-col items-center">
+        <Button isPending={isPending}>
+          {isPending ? "Signing up..." : "Sign Up"}
+        </Button>
+        <p className="mt-4 md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-black">
+          Already have an account?{" "}
           <Link
-            className="text-primary text-text-2-semiBold underline"
+            className="text-primary md:text-text-2-semiBold sm:text-text-3-semiBold text-caption-1-semiBold underline"
             href="/auth/signin"
           >
             Sign in
           </Link>
-        </article>
+        </p>
       </div>
     </form>
   );
 };
 
 export default SignUpForm;
-//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary text-pure-white sm:h-24 h-10  absolute bottom-16 z-10 right-[10%] disabled:bg-gray-100
-//w-[80%] text-text-1-semiBold rounded-[8px] bg-primary text-pure-white ms:h-24 h-9 absolute bottom-[6%] z-10 right-[10%] disabled:bg-gray-100
-//absolute bottom-[4%] z-10 w-[80%] flex flex-col items-center justify-center w-full text-text-1-semiBold rounded-[8px] bg-primary text-pure-white sm:h-14 h-10   disabled:bg-gray-100

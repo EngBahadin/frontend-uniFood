@@ -13,6 +13,8 @@ export type categoryItemsProps = {
   categoryId: string;
 };
 export type InputProps = {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   initialValue?: string;
   label: string;
   name: string;

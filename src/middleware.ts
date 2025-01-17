@@ -1,45 +1,45 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Refined matcher for protected routes only, explicitly excluding the home page
 export const config = {
   matcher: [
-    "/favorites",
-    "/profile",
     "/cart",
-    "/order_history",
+    "/favorites",
+    "/order_history/:path*",
+    "/profile",
     "/auth/change-password",
     "/auth/delete-account",
-    "/auth/signup/check-email", // exclude other paths
     "/auth/signin",
     "/auth/signup",
-    "/auth/activate",
   ],
 };
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("access_token");
+  const { pathname } = req.nextUrl;
 
-  // If no token and trying to access a protected route, redirect to login
-  if (
-    !token &&
-    !req.nextUrl.pathname.startsWith("/auth/signin") &&
-    req.nextUrl.pathname !== "/"
-  ) {
+  // Check if the route is a protected route
+  const isProtectedRoute =
+    pathname.startsWith("/cart") ||
+    pathname.startsWith("/favorites") ||
+    pathname.startsWith("/order_history") ||
+    pathname.startsWith("/profile") ||
+    pathname.startsWith("/auth/change-password") ||
+    pathname.startsWith("/auth/delete-account");
+
+  // Redirect users without token trying to access protected routes
+  if (isProtectedRoute && !token) {
     return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
   }
 
-  // If logged in (token exists), redirect to home page if trying to access authentication routes
-  if (token) {
-    if (
-      req.nextUrl.pathname.startsWith("/auth/signin") ||
-      req.nextUrl.pathname.startsWith("/auth/signup") ||
-      req.nextUrl.pathname.startsWith("/auth/activate")
-    ) {
-      return NextResponse.redirect(new URL("/", req.nextUrl));
-    }
+  // Redirect logged-in users away from auth-related routes
+  const isAuthRoute =
+    pathname.startsWith("/auth/signin") || pathname.startsWith("/auth/signup");
+
+  if (token && isAuthRoute) {
+    return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
-  // Proceed with the request if no issues
+  // Allow the request to proceed for other cases
   return NextResponse.next();
 }

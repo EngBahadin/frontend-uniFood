@@ -4,9 +4,11 @@ import { verifyAcc } from "@/app/_components/funcs";
 import { useFormSubmission } from "@/app/_components/hooks/useFormSubmission";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { use, useEffect } from "react";
+import { use, useContext, useEffect } from "react";
 import { toast } from "sonner";
 import { paramsProps } from "../../../../../types";
+import { UserDetailsContext } from "@/context/UserDetailsContext";
+import { CartContext } from "@/context/CartContext";
 
 const ActivatePage = ({ params }: paramsProps) => {
   const { uid, token } = use(params);
@@ -15,9 +17,12 @@ const ActivatePage = ({ params }: paramsProps) => {
   useEffect(() => {
     submit({ uid, token });
   }, []);
+  const { refetch } = useContext(UserDetailsContext);
+
   useEffect(() => {
     if (isSuccess) {
       toast.success("verified successfully");
+      refetch();
       return redirect("/");
     }
   }, [isSuccess]);

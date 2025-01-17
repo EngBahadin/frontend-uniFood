@@ -72,6 +72,7 @@ function EditProfile({
       toast.info("It seems like you didn’t make any changes this time.");
       return;
     }
+
     let profilePicFormData = file ? new FormData() : null;
 
     if (newProfilePic) {
@@ -79,6 +80,7 @@ function EditProfile({
         profilePicFormData.append("profile_pic", file);
       }
     }
+    if ((!profilePicFormData && !newUsername)) return;
     mutate({ newUsername, profilePicFormData });
   };
 
