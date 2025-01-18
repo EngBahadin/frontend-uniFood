@@ -8,11 +8,7 @@ import { toast } from "sonner";
 import api from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { CartContext } from "@/context/CartContext";
-import {
-  ConfirmModal,
-  getUserCartItems,
-  updateQuantityItem,
-} from "../_components/funcs";
+import { ConfirmModal, updateQuantityItem } from "../_components/funcs";
 import CartSkeleton from "../_components/skeleton_loadings/CartSkeleton";
 
 export default function Cart() {
@@ -21,9 +17,25 @@ export default function Cart() {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const { setCartItemQuantity } = useContext(CartContext);
-  const { data, isLoading } = useQuery<FoodItem[]>({
+  const { data, isLoading, isSuccess } = useQuery<FoodItem[]>({
     queryKey: ["cart"],
-    queryFn: getUserCartItems,
+    queryFn: async () => {
+      try {
+        const response = await api.get("api/cart/items/");
+        return response.data;
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          if (error.response?.data.code === "user_inactive") {
+            router.push("/auth/signup/check-email/");
+          } else if (error.response?.data.code === "token_not_valid") {
+            toast.error(error.response?.data?.code || "An error occurred");
+            router.push("/auth/signin/");
+          }
+        } else {
+          toast.error(error.response?.data?.message || "An error occurred");
+        }
+      }
+    },
   });
 
   const { mutate } = useMutation({
@@ -77,21 +89,19 @@ export default function Cart() {
   };
 
   const handleNavigate = async () => {
-    if (data) {
-      try {
-        const response = await api.post("api/order/items/", data);
-        setCartItemQuantity(0);
-        await queryClient.invalidateQueries({
-          queryKey: ["cart"],
-        });
-        queryClient.setQueryData<FoodItem[]>(["cart"], []);
-        toast.success(
-          `Thank you for your order! 🎉 We’ll have it ready by ${response.data.order.estimated_time}. Enjoy!`
-        );
-        router.push("/");
-      } catch (error) {
-        toast.error("Failed to confirm order. Please try again.");
-      }
+    try {
+      const response = await api.post("api/order/items/", data);
+      setCartItemQuantity(0);
+      await queryClient.invalidateQueries({
+        queryKey: ["cart"],
+      });
+      queryClient.setQueryData<FoodItem[]>(["cart"], []);
+      toast.success(
+        `Thank you for your order! 🎉 We’ll have it ready by ${response.data.order.estimated_time}. Enjoy!`
+      );
+      router.push("/");
+    } catch (error: any) {
+      toast.error("Failed to confirm order. Please try again.");
     }
   };
 
@@ -116,119 +126,119 @@ export default function Cart() {
     return <CartSkeleton />;
   }
 
-  if (!data || (data && data.length === 0)) {
+  if (isSuccess && data.length === 0) {
     return (
       <p className="grid place-content-center mt-[20%] text-body-4-regular text-primary ">
         Your cart is empty :(
       </p>
     ); // Handle empty cart
   }
+  if (isSuccess)
+    return (
+      <section className="min-h-screen lg:px-20 md:px-6 px-3 pt-10 ">
+        <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary border-l-8 p-2 self-start mb-10">
+          Cart
+        </h1>
 
-  return (
-    <section className="min-h-screen lg:px-20 md:px-6 px-3 pt-10 ">
-      <h1 className="md:text-sub-heading-1-semiBold text-sub-heading-2-semiBold text-primary border-l-8 p-2 self-start mb-10">
-        Cart
-      </h1>
-
-      <div className="flex md:justify-between flex-col md:gap-y-0 gap-y-20 md:flex-row">
-        {/* Cart Items */}
-        <div className="grid gap-y-4 justify-center">
-          {data &&
-            data.map((item) => (
-              <article
-                key={item.id}
-                className="grid grid-flow-col grid-cols-3 items-center md:justify-between h-fit"
-              >
-                <div className="flex items-center col-span-2 ">
-                  <div className="bg-primary rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
-                    <Image
-                      src={item.food_item.image || "/"}
-                      alt={item.food_item.name}
-                      width={82}
-                      height={69}
-                      className="lg:w-20 lg:h-20 md:w-16 md:h-16 sm:w-14 sm:h-14 w-12 h-12"
-                    />
-                  </div>
-                  <div className="sm:mx-5 mx-3">
-                    <h3 className="text-primary grid grid-flow-col items-center gap-x-2 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36 ">
-                      {item.food_item.name}
-                      {!item.price && (
-                        <span className="text-primary lg:text-text-3-regular text-caption-1-regular">
-                          ({item.selected_size_price?.size})
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
-                      {item.food_item.price !== null
-                        ? item.food_item.price
-                        : item.selected_size_price?.price || 0}{" "}
-                      IQD
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center sm:gap-x-6 gap-x-3 px-3 text-primary lg:text-text-1-medium sm:text-text-2-medium text-text-3-medium">
-                  <button
-                    className="active:scale-95  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
-                    onClick={() => updateQuantity("decrement", item)}
-                  >
-                    -
-                  </button>
-                  <p>{item.qty}</p>
-                  <button
-                    className="active:scale-90  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
-                    onClick={() => updateQuantity("increment", item)}
-                  >
-                    +
-                  </button>
-                  <GoTrash
-                    className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer active:scale-90 transition-all duration-300"
-                    onClick={() => removeToCart(item.id, item.qty)}
-                  />
-                </div>
-              </article>
-            ))}
-        </div>
-
-        {/* Order Summary */}
-        <div className="flex flex-col items-center md:items-stretch lg:gap-y-10 gap-y-8 px-3">
-          <h3 className="text-primary lg:text-body-2-medium md:text-body-3-medium text-text-1-medium mt-2">
-            Order summary
-          </h3>
-          <div className="grid gap-y-2">
+        <div className="flex md:justify-between flex-col md:gap-y-0 gap-y-20 md:flex-row">
+          {/* Cart Items */}
+          <div className="grid gap-y-4 justify-center">
             {data &&
               data.map((item) => (
-                <p
+                <article
                   key={item.id}
-                  className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20 text-black lg:text-text-1-regular md:text-text-2-regular text-text-3-regular"
+                  className="grid grid-flow-col grid-cols-3 items-center md:justify-between h-fit"
                 >
-                  <span>
-                    {item.qty}x {item.food_item.name}
-                  </span>
-                  <span className="text-gray-100 lg:text-text-1-regular md:text-text-2-regular text-text-3-regular">
-                    {item.price}
-                    IQD
-                  </span>
-                </p>
+                  <div className="flex items-center col-span-2 ">
+                    <div className="bg-primary rounded-2xl grid place-content-center lg:w-24 lg:h-24 md:w-20 md:h-20 sm:w-16 sm:h-16 w-14 h-14">
+                      <Image
+                        src={item.food_item.image || "/"}
+                        alt={item.food_item.name}
+                        width={82}
+                        height={69}
+                        className="lg:w-20 lg:h-20 md:w-16 md:h-16 sm:w-14 sm:h-14 w-12 h-12"
+                      />
+                    </div>
+                    <div className="sm:mx-5 mx-3">
+                      <h3 className="text-primary grid grid-flow-col items-center gap-x-2 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium md:max-w-full max-w-36 ">
+                        {item.food_item.name}
+                        {!item.price && (
+                          <span className="text-primary lg:text-text-3-regular text-caption-1-regular">
+                            ({item.selected_size_price?.size})
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-gray-100 lg:text-body-3-medium md:text-text-1-medium text-text-3-medium">
+                        {item.food_item.price !== null
+                          ? item.food_item.price
+                          : item.selected_size_price?.price || 0}{" "}
+                        IQD
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center sm:gap-x-6 gap-x-3 px-3 text-primary lg:text-text-1-medium sm:text-text-2-medium text-text-3-medium">
+                    <button
+                      className="active:scale-95  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
+                      onClick={() => updateQuantity("decrement", item)}
+                    >
+                      -
+                    </button>
+                    <p>{item.qty}</p>
+                    <button
+                      className="active:scale-90  transition-all duration-300 bg-gray-15 rounded-lg text-center lg:w-9 lg:h-8 sm:w-8 sm:h-7 w-6 h-6 lg:text-body-1-semiBold sm:text-body-2-semiBold text-text-1-semiBold"
+                      onClick={() => updateQuantity("increment", item)}
+                    >
+                      +
+                    </button>
+                    <GoTrash
+                      className="lg:w-8 lg:h-8 sm:w-6 sm:h-6 w-5 h-5 cursor-pointer active:scale-90 transition-all duration-300"
+                      onClick={() => removeToCart(item.id, item.qty)}
+                    />
+                  </div>
+                </article>
               ))}
-            <hr />
-            <p className="flex justify-between">
-              <span className="text-gray-100">Total</span>
-              <span className="text-primary lg:text-text-1-semiBold md:text-text-2-semiBold text-text-3-semiBold">
-                {totalPrice} IQD
-              </span>
-            </p>
           </div>
-          <button
-            className="active:scale-90 hover:scale-95 transition-all duration-300 bg-primary text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
-            onClick={() => setShowModal(true)}
-          >
-            Confirm Order
-          </button>
+
+          {/* Order Summary */}
+          <div className="flex flex-col items-center md:items-stretch lg:gap-y-10 gap-y-8 px-3">
+            <h3 className="text-primary lg:text-body-2-medium md:text-body-3-medium text-text-1-medium mt-2">
+              Order summary
+            </h3>
+            <div className="grid gap-y-2">
+              {data &&
+                data.map((item) => (
+                  <p
+                    key={item.id}
+                    className="flex justify-between lg:gap-x-20 md:gap-x-10 gap-x-20 text-black lg:text-text-1-regular md:text-text-2-regular text-text-3-regular"
+                  >
+                    <span>
+                      {item.qty}x {item.food_item.name}
+                    </span>
+                    <span className="text-gray-100 lg:text-text-1-regular md:text-text-2-regular text-text-3-regular">
+                      {item.price}
+                      IQD
+                    </span>
+                  </p>
+                ))}
+              <hr />
+              <p className="flex justify-between">
+                <span className="text-gray-100">Total</span>
+                <span className="text-primary lg:text-text-1-semiBold md:text-text-2-semiBold text-text-3-semiBold">
+                  {totalPrice} IQD
+                </span>
+              </p>
+            </div>
+            <button
+              className="active:scale-90 hover:scale-95 transition-all duration-300 bg-primary text-pure-white rounded-lg md:w-full w-56 lg:h-14 h-10 lg:text-text-1-semiBold text-text-2-semiBold"
+              onClick={() => setShowModal(true)}
+            >
+              Confirm Order
+            </button>
+          </div>
         </div>
-      </div>
-      {showModal && (
-        <ConfirmModal onClose={handleClose} onNavigate={handleNavigate} />
-      )}
-    </section>
-  );
+        {showModal && (
+          <ConfirmModal onClose={handleClose} onNavigate={handleNavigate} />
+        )}
+      </section>
+    );
 }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { ModalProps } from "@/types";
 import ReactDOM from "react-dom";
 
@@ -22,7 +22,7 @@ function Modal({ onClose, onNavigate, notVerified }: ModalProps) {
     <>
       {/* Background overlay */}
       <div
-        className="fixed inset-0 bg-black/50 z-10 backdrop-blur-sm"
+        className="fixed inset-0 z-10 backdrop-blur-sm"
         onClick={handleBackgroundClick}
       />
       {/* Modal content */}
@@ -43,18 +43,20 @@ function Modal({ onClose, onNavigate, notVerified }: ModalProps) {
           <div className="flex justify-end space-x-4">
             <button
               onClick={onClose}
-              className="bg-gray-300 text-gray-800 px-4 py-2 rounded md:text-text-1-medium sm:text-text-2-medium text-caption-1-regular text-black"
+              className="
+              hover:scale-100 transition-all duration-300 active:scale-95
+              px-4 py-2 rounded hover:text-white hover:bg-black md:text-text-1-medium sm:text-text-2-medium text-caption-1-regular text-black"
             >
               Cancel
             </button>
-            {!notVerified && (
-              <button
-                onClick={onNavigate}
-                className="bg-primary text-white md:px-4 px-3 py-2 h-fit rounded md:text-text-1-medium sm:text-text-2-medium text-caption-2-medium"
-              >
-                Sign In
-              </button>
-            )}
+
+            <button
+              onClick={onNavigate}
+              className="hover:text-white hover:bg-primary transition-all duration-500 active:scale-95
+               text-primary md:px-4 px-3 py-2 h-fit rounded md:text-text-1-medium sm:text-text-2-medium text-caption-2-medium"
+            >
+              {!notVerified ? "Sign In" : "Resend Verification link"}
+            </button>
           </div>
         </div>
       </div>

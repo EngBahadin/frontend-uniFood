@@ -36,7 +36,7 @@ const Input = memo(
     };
 
     return (
-      <div className="mb-1 flex flex-col">
+      <div className={`${errors?.[name] ? "mb-0" : "mb-2"} flex flex-col`}>
         <label
           htmlFor={name}
           className="sm:text-text-1-medium text-black text-text-2-medium"

@@ -5,12 +5,28 @@ import api from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { OrderedFood } from "../preparing/page";
 import { TbMoodEmpty } from "react-icons/tb";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 function PreparedPage() {
+  const router = useRouter();
   const { data, isSuccess, isPending } = useQuery({
     queryKey: ["prepared_orders"],
     queryFn: async () => {
-      const response = await api.get("api/orders/prepared/");
-      return response.data;
+      try {
+        const response = await api.get("api/orders/prepared/");
+        return response.data;
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          if (error.response?.data.code === "user_inactive") {
+            router.push("/auth/signup/check-email/");
+          } else if (error.response?.data.code === "token_not_valid") {
+            toast.error(error.response?.data?.code || "An error occurred");
+            router.push("/auth/signin/");
+          }
+        } else {
+          toast.error(error.response?.data?.message || "An error occurred");
+        }
+      }
     },
   });
   return (

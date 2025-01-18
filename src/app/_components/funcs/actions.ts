@@ -40,24 +40,6 @@ export async function getCategory(categoryId: string) {
     }
   }
 }
-export async function getUserCartItems() {
-  const accessToken = getToken();
-  if (accessToken) {
-    try {
-      const response = await api.get("api/cart/items/");
-      return response.data;
-    } catch (error: any) {
-      if (error.response?.data?.code === "user_inactive") {
-        console.warn("User is inactive. Cannot fetch cart items.");
-        return []; // Return empty cart for inactive users
-      }
-      console.error(error);
-      throw error; // Let React Query handle other errors
-    }
-  } else {
-    return []; // Return empty cart for unauthenticated users
-  }
-}
 
 export async function getUserDetails() {
   const accessToken = getToken();
@@ -66,15 +48,11 @@ export async function getUserDetails() {
       const response = await api.get("auth/users/me/");
       return response.data;
     } catch (error: any) {
-      if (error.response?.data?.code === "user_inactive") {
-        console.warn("User is inactive. Cannot fetch user details.");
-        return null; // Return null for inactive users
-      }
-      console.error(error);
-      throw error; // Let React Query handle other errors
+      console.error("Error fetching user details:", error?.response?.data);
+      throw error;
     }
   } else {
-    return null; // Return null for unauthenticated users
+    return null;
   }
 }
 

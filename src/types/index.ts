@@ -112,8 +112,6 @@ export type ModalProps = {
   onClose: () => void;
   onNavigate: () => void;
   notVerified?: boolean;
-  title?: string;
-  description?: string;
 };
 export type ButtonProps = {
   children: React.ReactNode;

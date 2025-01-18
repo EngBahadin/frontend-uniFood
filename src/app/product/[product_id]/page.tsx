@@ -36,7 +36,11 @@ function ProductDetail({ params }: productParams) {
     router.back();
   };
   const handleNavigate = () => {
-    router.push("/auth/signin");
+    if (notVerified) {
+      router.push("/auth/signup/check-email");
+    } else {
+      router.push("/auth/signin");
+    }
   };
 
   const { data, isSuccess, isLoading } = useQuery({

@@ -40,7 +40,7 @@ const SignUpForm = () => {
 
     if (isSuccess) {
       toast.success("Registration submitted successfully!");
-      redirect("/signup/check-email/");
+      redirect("/auth/signup/check-email/");
     }
   }, [error, isError, isSuccess, errors, setErrors]);
 
@@ -68,7 +68,7 @@ const SignUpForm = () => {
   return (
     <form
       action={handleSubmit}
-      className={`flex flex-col ${!errors && "gap-4"} w-[80%] mx-auto mt-6 text-text-1-medium`}
+      className={`flex flex-col w-[80%] mx-auto mt-6 text-text-1-medium`}
     >
       <Input
         name="username"
@@ -114,11 +114,11 @@ const SignUpForm = () => {
         value={formData.re_password}
         onChange={handleChange}
       />
-      <div className="mt-6 flex flex-col items-center">
+      <div className="absolute bottom-[2%] z-10 w-[80%] flex flex-col items-center justify-center gap-y-2 right-[10%]">
         <Button isPending={isPending}>
           {isPending ? "Signing up..." : "Sign Up"}
         </Button>
-        <p className="mt-4 md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-black">
+        <p className=" md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-black">
           Already have an account?{" "}
           <Link
             className="text-primary md:text-text-2-semiBold sm:text-text-3-semiBold text-caption-1-semiBold underline"

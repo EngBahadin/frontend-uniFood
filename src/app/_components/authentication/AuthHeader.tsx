@@ -11,7 +11,7 @@ function AuthHeader({ title, description }: authHeaderProps) {
   return (
     <header className="flex flex-col mini_mobile:min-w-[330px] mini_mobile:px-0 px-4 ">
       <div className="flex flex-col justify-center">
-        <h2 className="sm:text-sub-heading-2-semiBold mini_mobile:text-body-3-semiBold text-text-1-semiBold text-primary text-center relative top-8">
+        <h2 className="md:text-sub-heading-2-semiBold sm:text-body-1-semiBold text-body-3-semiBold  text-primary text-center relative top-8">
           {title}
         </h2>
         <button
@@ -22,7 +22,7 @@ function AuthHeader({ title, description }: authHeaderProps) {
           <TfiArrowCircleLeft className=" text-black sm:w-8 sm:h-10 h-7 w-5 " />
         </button>
       </div>
-      <p className="text-center mt-2 sm:text-text-2-regular text-caption-2-regular text-gray-100">
+      <p className="text-center mt-2 md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular text-gray-100">
         {description}
       </p>
     </header>

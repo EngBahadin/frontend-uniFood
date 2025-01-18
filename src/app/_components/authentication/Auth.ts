@@ -16,7 +16,17 @@ export const getToken = () => {
   return token;
 };
 
-// for log out
+export const getUserEmail = () => {
+  const email = getCookie("user_email");
+  return email;
+};
+export const addUserEmail = (email: string) => {
+  setCookie("user_email", email);
+};
+export const removeUserEmail = () => {
+  deleteCookie("user_email");
+};
+
 export const removeTokens = () => {
   deleteCookie("access_token");
   deleteCookie("refresh_token");

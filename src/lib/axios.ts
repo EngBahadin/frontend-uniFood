@@ -33,13 +33,13 @@ api.interceptors.response.use(
   // Pass through if response is successful
   async (error) => {
     const originalRequest = error.config; // it gets back the original config
-    if (
+   /*  if (
       error.response?.status === 401 &&
       error.response.data.code === "user_inactive"
     ) {
       console.log("user is not verified");
       return Promise.reject(error);
-    }
+    } */
     if (error.response?.status === 401 && !originalRequest._retry) {
       // to avoid infinite loop
       originalRequest._retry = true;

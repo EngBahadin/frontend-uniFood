@@ -1,19 +1,34 @@
 "use client";
+import {
+  getUserEmail,
+  removeUserEmail,
+} from "@/app/_components/authentication/Auth";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
+import { apiClient } from "@/lib/axios";
 import { ThemeContext } from "@/lib/ThemeProvider";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const wssBaseURL = process.env.NEXT_PUBLIC_WSS_BASE_URL;
+
 function CheckEmail() {
   const router = useRouter();
   const { theme } = useContext(ThemeContext);
   const { refetch } = useContext(UserDetailsContext);
-  // web socket
+
+  const [timeLeft, setTimeLeft] = useState(0);
+
   useEffect(() => {
+    // Load stored time left from sessionStorage
+    const savedTime = parseInt(sessionStorage.getItem("timeLeft") || "0", 10);
+    if (savedTime > 0) {
+      setTimeLeft(savedTime);
+    }
+
+    // WebSocket logic
     let url = `${wssBaseURL}/ws/socket-server/`;
     console.log(url);
 
@@ -28,7 +43,7 @@ function CheckEmail() {
       );
     };
 
-    // to listen to events from server
+    // Listen to events from server
     socket.onmessage = function (event) {
       console.log("onmessage");
       let data = JSON.parse(event.data);
@@ -37,11 +52,48 @@ function CheckEmail() {
       }
       if (data.type === "success") {
         toast.success("account verified successfully");
-        refetch(); // to update the user details in context
+        removeUserEmail();
+        refetch(); // To update the user details in context
         router.push("/");
       }
     };
-  }, []);
+
+    return () => {
+      socket.close(); // Close socket connection on cleanup
+    };
+  }, [refetch, router]);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      sessionStorage.setItem("timeLeft", timeLeft.toString());
+    }
+
+    // Countdown logic
+    const countdownInterval = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(countdownInterval);
+          sessionStorage.removeItem("timeLeft");
+          return 0; // Reset countdown when it reaches 0
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(countdownInterval); // Cleanup interval on unmount
+  }, [timeLeft]);
+
+  const handleResend = async () => {
+    const email = getUserEmail();
+    console.log({ email: email });
+    if (timeLeft === 0) {
+      toast.info("Verification email resent. Please wait...");
+      await apiClient.post("/auth/users/resend_activation/", {
+        email: email,
+      });
+      setTimeLeft(60); // 60 seconds countdown
+    }
+  };
 
   return (
     <main className="py-[146px] bg-white flex flex-col">
@@ -67,6 +119,22 @@ function CheckEmail() {
           height={292}
           className="md:size-96 sm:size-80 size-72 object-contain mt-9"
         />
+
+        {/* Resend Verification Button */}
+        <div className="mt-6">
+          {timeLeft > 0 ? (
+            <p className="px-4 py-2 text-primary text-text-1-regular text-gray-500">
+              Resend in {timeLeft} seconds
+            </p>
+          ) : (
+            <button
+              className="px-4 py-2 bg-primary text-black text-text-1-medium rounded-md hover:bg-white hover:text-primary transition-all duration-500 hover:"
+              onClick={handleResend}
+            >
+              Resend Verification Link
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );

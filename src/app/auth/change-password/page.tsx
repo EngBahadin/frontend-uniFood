@@ -17,7 +17,7 @@ export default function ResetPassword() {
   const { validate, errors, setErrors } = useFormValidation();
   const { submit, isPending, isError, error, isSuccess } =
     useFormSubmission(ChangePassForm);
-    
+
   const router = useRouter();
 
   useEffect(() => {
@@ -31,10 +31,10 @@ export default function ResetPassword() {
     }
   }, [error, isError, isSuccess]);
 
-    const navigateToForgotPassword = () => {
-      removeTokens();
-      router.push("/auth/forgot-password");
-    };
+  const navigateToForgotPassword = () => {
+    removeTokens();
+    router.push("/auth/forgot-password");
+  };
 
   const handleSubmit = (formData: FormData) => {
     if (
@@ -82,6 +82,7 @@ export default function ResetPassword() {
           placeholder="Re enter New Password"
         />
         <button
+          type="button"
           onClick={navigateToForgotPassword}
           className="text-text-2-medium text-black hover:text-primary w-fit transition-all"
         >

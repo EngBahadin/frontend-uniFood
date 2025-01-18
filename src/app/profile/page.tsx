@@ -2,13 +2,20 @@
 import ChangeEmail from "../_components/ChangeEmail";
 import EditProfile from "../_components/EditProfile";
 import ProfileDetail from "../_components/ProfileDetail";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
+import { useRouter } from "next/navigation";
 
 function ProfilePage() {
   const [currentComponent, setCurrentComponent] = useState("");
-  const { email,id,profile_pic,username } = useContext(UserDetailsContext);
-
+  const router = useRouter();
+  const { email, id, profile_pic, username, error } =
+    useContext(UserDetailsContext);
+  useEffect(() => {
+    if (error && error.response.data?.code === "user_inactive") {
+      router.push("/auth/signup/check-email");
+    }
+  }, [error]);
   const handleComponent = (component: string) => {
     setCurrentComponent(component);
   };

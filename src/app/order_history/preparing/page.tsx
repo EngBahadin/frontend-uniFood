@@ -4,7 +4,9 @@ import OrderedFoodCartSkeleton from "@/app/_components/skeleton_loadings/Skeleto
 import api from "@/lib/axios";
 import { FoodItem } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { TbMoodEmpty } from "react-icons/tb";
+import { toast } from "sonner";
 export type OrderedFoods = OrderedFood[];
 export type OrderedFood = {
   id: number;
@@ -15,11 +17,25 @@ export type OrderedFood = {
   order_items: FoodItem[];
 };
 function PreparingPage() {
+  const router = useRouter();
   const { data, isPending } = useQuery({
     queryKey: ["preparing_orders"],
     queryFn: async () => {
-      const response = await api.get("api/orders/preparing/");
-      return response.data;
+      try {
+        const response = await api.get("api/orders/preparing/");
+        return response.data;
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          if (error.response?.data.code === "user_inactive") {
+            router.push("/auth/signup/check-email/");
+          } else if (error.response?.data.code === "token_not_valid") {
+            toast.error(error.response?.data?.code || "An error occurred");
+            router.push("/auth/signin/");
+          }
+        } else {
+          toast.error(error.response?.data?.message || "An error occurred");
+        }
+      }
     },
   });
   return (

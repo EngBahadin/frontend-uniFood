@@ -1,6 +1,6 @@
 import api, { apiAuth, apiClient } from "@/lib/axios";
 import { validateProps } from "../../../types";
-import { newToken, removeTokens } from "./Auth";
+import { newToken, removeTokens, addUserEmail } from "./Auth";
 
 export async function loginForm(formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
@@ -34,7 +34,9 @@ export async function signUpForm(formData: FormData) {
     const response = await apiAuth.post("/users/", formObject);
     const access = response.data.jwt_tokens.access;
     const refresh = response.data.jwt_tokens.refresh;
+    const email = response.data.email;
     newToken({ access, refresh });
+    addUserEmail(email);
   } catch (error: any) {
     let errorMessage: string;
     if (error.response) {

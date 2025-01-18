@@ -66,7 +66,11 @@ function Favorites({
     setIsModalOpen(false);
   };
   const handleNavigate = () => {
-    router.push("/auth/signin");
+    if (notVerified) {
+      router.push("/auth/signup/check-email");
+    } else {
+      router.push("/auth/signin");
+    }
   };
 
   return (
@@ -84,14 +88,6 @@ function Favorites({
       {isModalOpen && (
         <Modal
           notVerified={notVerified}
-          title={
-            notVerified ? "Email Verification Required!" : "Sign in Required!"
-          }
-          description={
-            notVerified
-              ? "Your account is not verified. Please check your email for the verification link to complete the process."
-              : "Please sign in to add items to your favorites. You can create an account during the sign-in process if needed."
-          }
           onNavigate={handleNavigate}
           onClose={handleCloseModal}
         />

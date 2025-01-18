@@ -28,7 +28,7 @@ export default function SignInForm() {
       toast.success("logged in");
       queryClient.refetchQueries({ queryKey: ["cartItemQuantity"] });
       refetch();
-      refetching(); 
+      refetching();
       redirect("/");
     } else if (isError && error) {
       toast.error(error.message);
@@ -75,11 +75,11 @@ export default function SignInForm() {
         <Button isPending={isPending}>Sign in</Button>
 
         <article>
-          <p className="sm:text-text-2-regular text-text-3-regular inline text-black">
+          <p className="md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular inline text-black">
             Do not have an account?{" "}
           </p>
           <Link
-            className="text-primary underline sm:text-text-2-medium text-text-3-medium"
+            className="text-primary underline md:text-text-2-regular sm:text-text-3-regular text-caption-1-regular"
             href="/auth/signup"
           >
             Create an account
