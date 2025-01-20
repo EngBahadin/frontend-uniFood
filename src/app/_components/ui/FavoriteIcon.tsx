@@ -14,9 +14,9 @@ function FavoriteIcon({
   const router = useRouter();
   const token = getToken();
   const handleNavigate = () => {
-    if (token && setOpenBar) {
-      setOpenBar(false);
+    if (token) {
       router.push("/favorites");
+      setOpenBar && setOpenBar(false);
     } else {
       toast.error("Please login to view your favorites");
     }
