@@ -3,15 +3,22 @@ import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
 import { CartContext } from "@/context/CartContext";
+import { getToken } from "../funcs";
+import { toast } from "sonner";
 
 function CartIcon({ searchFocus }: { searchFocus: boolean }) {
   const pathName = usePathname();
   const router = useRouter();
+  const token = getToken();
   const isCart = pathName === "/cart";
   const { cartItemQuantity } = useContext(CartContext);
 
   const handleNavigate = () => {
-    router.push("/cart");
+    if (token) {
+      router.push("/cart");
+    } else {
+      toast.error("Please login to view your cart");
+    }
   };
 
   return (

@@ -7,7 +7,6 @@ import FoodItem from "./ui/FoodItem";
 import FoodItemSkeleton from "./skeleton_loadings/FoodItemSkeleton";
 
 function CategoryItems({ categoryName, categoryId }: categoryItemsProps) {
-  // for scrolling right and left
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);

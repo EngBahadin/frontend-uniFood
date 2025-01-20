@@ -36,7 +36,9 @@ import { deleteAccount } from "@/app/_components/authentication/authActions";
 import { ChangePassForm } from "@/app/_components/authentication/authActions";
 import { getUserCartItems } from "./actions";
 import { updateQuantityItem } from "./actions";
+import FavoriteIcon from "../ui/FavoriteIcon";
 export {
+  FavoriteIcon,
   getUserCartItems,
   updateQuantityItem,
   ChangePassForm,

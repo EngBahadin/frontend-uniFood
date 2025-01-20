@@ -1,16 +1,15 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   AccountMenu,
   Category,
+  FavoriteIcon,
   SearchBar,
   ShoppingCart,
   SideBar,
 } from "./funcs";
-import FavoriteIcon from "./ui/FavoriteIcon";
 import { useContext, useState } from "react";
 import { ThemeContext } from "@/lib/ThemeProvider";
 import { IoSunnyOutline } from "react-icons/io5";

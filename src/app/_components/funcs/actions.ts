@@ -55,6 +55,20 @@ export async function getUserDetails() {
     return null;
   }
 }
+export async function getUserCartItems() {
+  const accessToken = getToken();
+  if (accessToken) {
+    try {
+      const response = await api.get("api/cart/items/");
+      return response.data;
+    } catch (error: any) {
+      console.error("Error fetching user details:", error?.response?.data);
+      throw error;
+    }
+  } else {
+    return null;
+  }
+}
 
 export async function updateQuantityItem(id: string, newQty: number) {
   await api.patch(`api/cart/items/${id}/`, {
