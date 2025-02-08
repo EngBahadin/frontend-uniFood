@@ -6,7 +6,7 @@ import api from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { getToken, Modal } from "./funcs";
-
+import { motion } from "framer-motion";
 function Favorites({
   food_item_id,
   isFavorite,
@@ -76,13 +76,21 @@ function Favorites({
   return (
     <>
       {isFavorite ? (
-        <span onClick={removeToFavorites} className="h-fit">
+        <motion.span
+          onClick={removeToFavorites}
+          className="h-fit"
+          whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 5, 0] }}
+        >
           <HiHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary active:scale-90" />
-        </span>
+        </motion.span>
       ) : (
-        <span onClick={addToFavorites} className="h-fit">
-          <HiOutlineHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary active:scale-90" />
-        </span>
+        <motion.span
+          whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 5, 0] }}
+          onClick={addToFavorites}
+          className="h-fit"
+        >
+          <HiOutlineHeart className="md:size-7 sm:size-6 size-5 stroke-[0.7px] cursor-pointer text-primary active:scale-90 hover:stroke-1" />
+        </motion.span>
       )}
 
       {isModalOpen && (

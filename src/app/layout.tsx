@@ -3,10 +3,9 @@ import "./globals.css";
 import Provider from "../lib/Providers";
 import { Toaster } from "sonner";
 import Navbar from "./_components/navbar";
-import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { CartContextProvider } from "@/context/CartContext";
-import { ThemeProvider } from "@/lib/ThemeProvider";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "UniFood",
@@ -16,18 +15,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
+  const locale = await getLocale();
+
   return (
-    <html lang="en">
-      <body className={`font-Poppins bg-white`}>
+    <html lang={locale}>
+      <body className={`font-Poppins bg-white overflow-hidden`}>
         <Provider>
-          <Navbar />
-          {children}
-          <Toaster richColors position="top-right" />
+          <NextIntlClientProvider messages={messages}>
+            <Navbar />
+            {children}
+            <Toaster richColors position="top-right" />
+          </NextIntlClientProvider>
         </Provider>
       </body>
     </html>

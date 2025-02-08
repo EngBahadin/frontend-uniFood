@@ -3,19 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { HiBars3 } from "react-icons/hi2";
 import { PiInfoLight } from "react-icons/pi";
 import { TbCategory, TbHomeFilled } from "react-icons/tb";
 import { Category } from "./funcs";
 import FavoriteIcon from "./ui/FavoriteIcon";
-import { ThemeContext } from "@/lib/ThemeProvider";
+import {  useTheme } from "@/lib/ThemeProvider";
 
 function SideBar() {
   const [openBar, setOpenBar] = useState(false);
   const pathName = usePathname();
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
+
   const classes =
     "flex items-center gap-3 hover:text-primary  hover:scale-105 active:scale-95 transition-all";
   const activeClasses =
@@ -34,7 +35,7 @@ function SideBar() {
           {openBar ? (
             <CgClose
               onClick={() => setOpenBar(false)}
-              className="sm:w-7 sm:h-7 w-6 h-6 cursor-pointer text-primary hover:scale-105 active:scale-95 transition-all"
+              className="sm:size-7 size-6 cursor-pointer text-primary hover:scale-105 active:scale-95 transition-all"
             />
           ) : (
             <HiBars3
@@ -57,10 +58,10 @@ function SideBar() {
 
         <article
           className={`${
-            openBar ? "sm:p-10 p-6" : "h-0 p-0"
+            openBar ? "sm:p-6 p-4" : "h-0 p-0"
           } overflow-hidden absolute  rounded-br-xl duration-300 ease-out bg-pure-white drop-shadow-md`}
         >
-          <div className="flex flex-col gap-y-4 text-gray-75 sm:text-text-1-regular text-text-3-regular">
+          <div className="flex flex-col sm:gap-y-4 gap-y-2 text-gray-75 sm:text-text-1-regular text-text-3-regular">
             <Link
               onClick={() => setOpenBar(false)}
               href="/"

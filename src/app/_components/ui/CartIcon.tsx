@@ -1,4 +1,6 @@
 "use client";
+
+import { motion, useAnimate } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import { HiOutlineShoppingCart, HiShoppingCart } from "react-icons/hi2";
@@ -12,38 +14,54 @@ function CartIcon({ searchFocus }: { searchFocus: boolean }) {
   const token = getToken();
   const isCart = pathName === "/cart";
   const { cartItemQuantity } = useContext(CartContext);
+  const [scope, animate] = useAnimate();
 
   const handleNavigate = () => {
     if (token) {
+      animate(
+        scope.current,
+        { x: [0, 500, 0], opacity: [0, 50, 30, 100] },
+        { x: { duration: 1.2, ease: "easeInOut" } }
+      );
       router.push("/cart");
     } else {
-      toast.error("Please login to view your cart");
+      toast.error("Please log in to view your cart");
     }
   };
 
+  const badgeColor = isCart ? "bg-primary" : "bg-pure-black";
+
   return (
-    <div className={`relative ${searchFocus ? "hidden sm:block" : "block"}`}>
+    <motion.div
+      ref={scope}
+      className={`relative ${searchFocus ? "hidden sm:block" : "block"}`}
+      whileHover={{
+        rotate: [0, 10, -10, 10, -10, 0],
+        transition: { duration: 0.5 },
+      }}
+    >
       {isCart ? (
-        <HiShoppingCart className="stroke-[0.01px] md:w-8 md:h-8 sm:w-7 sm:h-7 w-5 h-5 text-primary hover:scale-105 active:scale-95 transition-all" />
+        <HiShoppingCart
+          aria-label="View Cart"
+          className="stroke-[0.01px] md:size-8 size-7 text-primary hover:scale-105 cursor-pointer active:scale-95 transition-all"
+          onClick={handleNavigate}
+        />
       ) : (
         <HiOutlineShoppingCart
-          className="stroke-[0.7px] md:w-8 md:h-8 w-7 h-7  hover:text-primary cursor-pointer text-pure-black hover:scale-105 active:scale-95 transition-all"
+          aria-label="View Cart"
+          className="stroke-[0.7px] md:size-8 size-7 cursor-pointer text-pure-black hover:scale-105 active:scale-95 transition-all"
           onClick={handleNavigate}
         />
       )}
 
       {cartItemQuantity !== 0 && (
         <span
-          className={`absolute top-[-4px] right-[-4px] rounded-full sm:size-[18px] size-[14px] sm:border-[2.4px] border-[1.6px] border-pure-white flex items-center justify-center ${
-            isCart ? "bg-primary" : "bg-pure-black"
-          } overflow-hidden`}
+          className={`absolute top-[-4px] right-[-4px] rounded-full sm:size-[18px] size-[14px] sm:border-[2.4px] border-[1.6px] border-pure-white flex items-center justify-center ${badgeColor} overflow-hidden`}
         >
-          <p className="text-white  text-caption-2-medium">
-            {cartItemQuantity}
-          </p>
+          <p className="text-white text-caption-2-medium">{cartItemQuantity}</p>
         </span>
       )}
-    </div>
+    </motion.div>
   );
 }
 

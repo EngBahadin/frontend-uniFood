@@ -5,7 +5,7 @@ import {
 } from "@/app/_components/authentication/Auth";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
 import { apiClient } from "@/lib/axios";
-import { ThemeContext } from "@/lib/ThemeProvider";
+import { useTheme } from "@/lib/ThemeProvider";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,8 @@ const wssBaseURL = process.env.NEXT_PUBLIC_WSS_BASE_URL;
 
 function CheckEmail() {
   const router = useRouter();
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
+
   const { refetch } = useContext(UserDetailsContext);
 
   const [timeLeft, setTimeLeft] = useState(0);

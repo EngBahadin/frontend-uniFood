@@ -1,9 +1,8 @@
-'use client'
-import { ThemeContext } from "@/lib/ThemeProvider";
+"use client";
+import { useTheme } from "@/lib/ThemeProvider";
 import { DynamicLayoutProps } from "../../../types";
 import AuthHeader from "./AuthHeader";
 import Image from "next/image";
-import { useContext } from "react";
 
 export default function DynamicLayout({
   children,
@@ -11,8 +10,9 @@ export default function DynamicLayout({
   title,
 }: DynamicLayoutProps) {
   // Access the theme from cookies
-  const {theme} = useContext(ThemeContext);
-  alert
+  const { theme } = useTheme();
+
+  alert;
   return (
     <main className=" min-h-screen py-14 justify-center flex flex-col">
       <Image

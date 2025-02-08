@@ -11,6 +11,8 @@ export const config = {
     "/auth/delete-account",
     "/auth/signin",
     "/auth/signup",
+    "/((?!api|_next|_vercel\\..*).*)",
+    
   ],
 };
 

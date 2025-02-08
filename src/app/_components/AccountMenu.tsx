@@ -8,11 +8,14 @@ import { TiUser } from "react-icons/ti";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { CartContext } from "@/context/CartContext";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
+import LocaleSwitcher from "./locales/LocaleSwitcher";
+import { IoIosCog } from "react-icons/io";
 
 function AccountMenu() {
   const [accessToken, setAccessToken] = useState(false);
   const [openBar, setOpenBar] = useState(false);
-  const classes = "flex items-center gap-3 hover:text-primary text-black hover:scale-95 active:scale-90 transition-all ";
+  const classes =
+    "flex items-center gap-3 hover:text-primary text-black hover:scale-95 active:scale-90 transition-all ";
   const { setCartItemQuantity } = useContext(CartContext);
 
   // Accessing the individual values from UserDetailsContext
@@ -92,6 +95,18 @@ function AccountMenu() {
                 </span>
                 Order History
               </Link>
+              <Link
+                onClick={() => {
+                  setOpenBar(false);
+                }}
+                href="/setting"
+                className={classes}
+              >
+                <span>
+                  <IoIosCog className="sm:w-6 sm:h-6 w-5 h-5 hover:text-primary" />
+                </span>
+                Setting
+              </Link>
 
               <Link
                 onClick={() => {
@@ -122,6 +137,18 @@ function AccountMenu() {
                 <IoLogIn className="sm:w-6 sm:h-6 w-5 h-5 hover:text-primary" />
               </span>
               Log in
+            </Link>
+            <Link
+              onClick={() => {
+                setOpenBar(false);
+              }}
+              href="/setting"
+              className={classes}
+            >
+              <span>
+                <IoIosCog className="sm:w-6 sm:h-6 w-5 h-5 hover:text-primary" />
+              </span>
+              Setting
             </Link>
           </div>
         )}

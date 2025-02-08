@@ -1,10 +1,9 @@
 "use client";
-import { ThemeContext } from "@/lib/ThemeProvider";
+import { useTheme } from "@/lib/ThemeProvider";
 import Image from "next/image";
-import { useContext } from "react";
 
 function CheckEmail() {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
 
   return (
     <main className="py-[146px] bg-white flex flex-col">
