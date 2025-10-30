@@ -1,6 +1,6 @@
 # Uni Food Frontend
 
-Welcome to the Uni Food frontend project! This application is built with **TypeScript** and **Next.js**. Follow the steps below to set up and run the project locally.
+Welcome to the Uni Food frontend project! This application is built with **TypeScript** and **Next.js**. Follow the steps below to set up and run the project locally .
 
 ## Prerequisites
 
